@@ -1,0 +1,661 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Princess Sophia and the Noisy Shadow Demon</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Andika:ital,wght@0,400;0,700;1,400&family=Grandstander:wght@600;800;900&display=swap">
+<style>
+/* Layout: one picture-book spread at a time — illustration on top, read-aloud text below, big arrows to turn pages. Single night-concert look on purpose. */
+:root {
+  --night: #1b1240;
+  --night-2: #2e1a68;
+  --paper: #fff8fd;
+  --ink: #2a1640;
+  --pink: #ff4fa3;
+  --gold: #ffc83d;
+  --purple: #8a3fd1;
+  --orange: #ff7a1a;
+  --muted: #7d6a99;
+  --display: "Grandstander", "Comic Sans MS", "Chalkboard SE", system-ui, sans-serif;
+  --read: "Andika", "Trebuchet MS", system-ui, sans-serif;
+  color-scheme: dark;
+}
+html, body { height: 100%; }
+body { margin: 0; }
+body {
+  background:
+    radial-gradient(circle at 12% 18%, #ffffff55 0 1px, transparent 2px) 0 0 / 140px 140px,
+    radial-gradient(circle at 70% 60%, #ffffff40 0 1px, transparent 2px) 0 0 / 190px 190px,
+    linear-gradient(180deg, var(--night) 0%, var(--night-2) 100%);
+  background-attachment: fixed;
+  color: var(--ink);
+  font-family: var(--read);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 16px;
+  box-sizing: border-box;
+}
+.book {
+  width: max(min(100%, 300px), min(100%, 960px, calc((100dvh - 380px) * 1.6)));
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.page {
+  background: var(--paper);
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 0 0 4px #ffffff22, 0 18px 50px #0008, 0 0 60px #ff4fa333;
+}
+.stage { display: block; width: 100%; aspect-ratio: 8 / 5; max-width: 100%; cursor: pointer; touch-action: pan-y; }
+.stage svg { display: block; width: 100%; height: 100%; }
+.text {
+  padding: 18px clamp(16px, 4vw, 34px) 22px;
+  font-size: clamp(1.1rem, 2.4vw, 1.4rem);
+  line-height: 1.6;
+  min-height: 9em;
+}
+.text p { margin: 0 0 .5em; max-width: 64ch; }
+.text p:last-child { margin-bottom: 0; }
+.say { font-family: var(--display); font-weight: 800; color: var(--purple); }
+.her { font-family: var(--display); font-weight: 900; color: var(--pink); }
+.huge { font-family: var(--display); font-weight: 900; font-size: 1.7em; line-height: 1; color: var(--purple); }
+.note { font-style: italic; color: var(--muted); font-size: .88em; }
+.dad {
+  display: inline-block;
+  font: 900 1.12em/1.3 var(--display);
+  color: var(--orange);
+  transform: rotate(-1.5deg);
+}
+.whisper { font-size: .72em; letter-spacing: .12em; color: var(--muted); }
+.shout {
+  font-family: var(--display); font-weight: 900; color: var(--pink);
+  font-size: 1.3em; letter-spacing: .02em;
+}
+.sfx {
+  font: 900 1em var(--display);
+  color: #fff;
+  background: var(--pink);
+  border: 0;
+  border-radius: 999px;
+  padding: .05em .55em .12em;
+  margin: 0 .1em;
+  cursor: pointer;
+  box-shadow: 0 3px 0 #b81f6e;
+  transform: rotate(-3deg);
+  display: inline-block;
+  line-height: 1.3;
+}
+.sfx:nth-of-type(2n) { background: var(--purple); box-shadow: 0 3px 0 #5a2193; transform: rotate(2deg); }
+.sfx:nth-of-type(3n) { background: #ff8a1f; box-shadow: 0 3px 0 #b85a07; transform: rotate(-1deg); }
+.sfx.tiny { font-size: .8em; background: #4fb8ff; box-shadow: 0 3px 0 #2373a8; }
+.sfx:focus-visible, .nav button:focus-visible, .again:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+.sfx.go { animation: jiggle .45s ease; }
+@keyframes jiggle {
+  0% { transform: scale(1) rotate(-3deg); }
+  30% { transform: scale(1.35) rotate(6deg); }
+  60% { transform: scale(.9) rotate(-6deg); }
+  100% { transform: scale(1) rotate(-3deg); }
+}
+.cover-title {
+  font-family: var(--display); font-weight: 900;
+  font-size: clamp(1.7rem, 4.6vw, 2.8rem);
+  line-height: 1.05; margin: 0 0 .25em; color: var(--purple);
+  text-wrap: balance;
+}
+.cover-title span { color: var(--pink); }
+.cover-sub { font-family: var(--display); font-weight: 600; color: #6b4f8f; }
+.hint { font-size: .8em; color: var(--muted); }
+.again {
+  font: 800 1rem var(--display); color: #fff; background: var(--purple);
+  border: 0; border-radius: 999px; padding: .5em 1.2em; cursor: pointer;
+  box-shadow: 0 4px 0 #5a2193; margin-top: .4em;
+}
+.nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.nav button.arrow {
+  width: 64px; height: 64px; border-radius: 50%; border: 0; flex: none;
+  background: var(--gold); color: var(--ink); cursor: pointer;
+  box-shadow: 0 5px 0 #c08a0a; display: grid; place-items: center;
+}
+.nav button.arrow:active { transform: translateY(3px); box-shadow: 0 2px 0 #c08a0a; }
+.nav button.arrow:disabled { opacity: .3; cursor: default; }
+.dots { display: flex; flex-wrap: wrap; justify-content: center; gap: 7px; min-width: 0; }
+.dots button { width: 12px; height: 12px; padding: 0; border-radius: 50%; border: 0; background: #ffffff44; cursor: pointer; }
+.dots button[aria-current="true"] { background: var(--pink); transform: scale(1.35); }
+
+/* illustration motion */
+.bob, .sway, .wiggle, .shake, .boing, .floaty, .twinkle, .beam { transform-box: fill-box; }
+.bob { animation: bob 3s ease-in-out infinite; }
+.sway { animation: sway 1.4s ease-in-out infinite; transform-origin: 50% 100%; }
+.wiggle { animation: wiggle .5s ease-in-out infinite; transform-origin: 50% 100%; }
+.shake { animation: shake .3s linear infinite; transform-origin: 50% 100%; }
+.boing { animation: boing .7s ease-in-out infinite; transform-origin: 50% 100%; }
+.floaty { animation: floaty 2.6s ease-in-out infinite; }
+.twinkle { animation: twinkle 1.6s ease-in-out infinite alternate; transform-origin: center; }
+.beam { animation: beam 1.2s linear infinite; }
+.burst { transform-box: fill-box; transform-origin: center; animation: burst .7s ease-out forwards; pointer-events: none; }
+@keyframes bob { 50% { transform: translateY(-8px); } }
+@keyframes sway { 0%,100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
+@keyframes wiggle { 0%,100% { transform: rotate(-7deg) translateX(-3px); } 50% { transform: rotate(7deg) translateX(3px); } }
+@keyframes shake { 0%,100% { transform: rotate(0) } 25% { transform: rotate(-1.5deg) } 75% { transform: rotate(1.5deg) } }
+@keyframes boing { 0%,100% { transform: scale(1, 1); } 50% { transform: scale(1.06, .93); } }
+@keyframes floaty { 0%,100% { transform: translateY(0) rotate(-6deg); } 50% { transform: translateY(-14px) rotate(6deg); } }
+@keyframes twinkle { from { opacity: .35; transform: scale(.7); } to { opacity: 1; transform: scale(1.15); } }
+@keyframes beam { to { stroke-dashoffset: -60; } }
+@keyframes burst { from { transform: scale(.2); opacity: 1; } to { transform: scale(1.8) rotate(90deg); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .bob, .sway, .wiggle, .shake, .boing, .floaty, .twinkle, .beam, .sfx.go { animation: none !important; }
+}
+@media (max-width: 520px) {
+  .nav button.arrow { width: 54px; height: 54px; }
+  .text { min-height: 11em; }
+}
+</style>
+
+<main class="book">
+  <article class="page">
+    <div class="stage" id="stage"></div>
+    <div class="text" id="text" aria-live="polite"></div>
+  </article>
+  <nav class="nav" aria-label="Turn the page">
+    <button class="arrow" id="prev" aria-label="Previous page">
+      <svg width="30" height="30" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4 7 12l8 8" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="dots" id="dots"></div>
+    <button class="arrow" id="next" aria-label="Next page">
+      <svg width="30" height="30" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4l8 8-8 8" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </nav>
+</main>
+
+<script>
+/* ---------- Characters (change colors here) ---------- */
+const SOPHIA = { hair: 'curly', hairC: '#4e2b1a', hairHi: '#7d4e30', skin: '#c49f78', eye: '#6b3f22', dress: '#9b4fe0', dress2: '#ff7ac1', shoe: '#ff4fa3' };
+const LUNA   = { hair: 'straight', hairC: '#1e1a3a', hairHi: '#3a3470', skin: '#a8714f', eye: '#3b2418', dress: '#3f6fd8', dress2: '#bcd4ff', shoe: '#2c4fa8', clip: true };
+const RUBY   = { hair: 'buns', hairC: '#c4421f', hairHi: '#e46a3a', skin: '#f3d3ba', eye: '#3f7a3a', dress: '#e0314f', dress2: '#ffb340', shoe: '#a81d39' };
+const OL = '#3a1d4f';   // outline for princesses and props
+const OLG = '#120e3a';  // outline for Grumbo
+
+/* ---------- Drawing helpers ---------- */
+const star4 = (x, y, r, fill, cls = '') =>
+  `<path class="${cls}" d="M${x} ${y - r}Q${x} ${y} ${x + r} ${y}Q${x} ${y} ${x} ${y + r}Q${x} ${y} ${x - r} ${y}Q${x} ${y} ${x} ${y - r}Z" fill="${fill}"/>`;
+const note = (x, y, size, fill, glyph = '♪') =>
+  `<g class="floaty"><text x="${x}" y="${y}" font-size="${size}" fill="${fill}" stroke="${OL}" stroke-width="2" paint-order="stroke" font-family="Segoe UI Symbol, Apple Symbols, sans-serif" font-weight="700">${glyph}</text></g>`;
+function rng(seed) { let s = seed; return () => (s = (s * 16807) % 2147483647) / 2147483647; }
+
+const DEFS = `<defs>
+  <linearGradient id="skyNight" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#120a35"/><stop offset="1" stop-color="#4a2c94"/></linearGradient>
+  <linearGradient id="skyDusk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6f5cf0"/><stop offset=".6" stop-color="#c39bff"/><stop offset="1" stop-color="#ffb3dc"/></linearGradient>
+  <linearGradient id="skyDark" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#05030f"/><stop offset="1" stop-color="#22114a"/></linearGradient>
+  <linearGradient id="blade" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#c49bff"/><stop offset=".5" stop-color="#ffb3e6"/><stop offset="1" stop-color="#ffffff"/></linearGradient>
+  <radialGradient id="gBody" cx=".42" cy=".32" r=".8"><stop offset="0" stop-color="#6676ff"/><stop offset="1" stop-color="#232a96"/></radialGradient>
+  <linearGradient id="spotPink" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff4fa3" stop-opacity=".55"/><stop offset="1" stop-color="#ff4fa3" stop-opacity="0"/></linearGradient>
+  <linearGradient id="spotCyan" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5ff2ff" stop-opacity=".5"/><stop offset="1" stop-color="#5ff2ff" stop-opacity="0"/></linearGradient>
+  <linearGradient id="rainbow" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff4fa3"/><stop offset=".33" stop-color="#ffc83d"/><stop offset=".66" stop-color="#5ff2ff"/><stop offset="1" stop-color="#b06cff"/></linearGradient>
+  <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>`;
+
+function sky(kind) {
+  const id = { night: 'skyNight', dusk: 'skyDusk', dark: 'skyDark' }[kind];
+  let s = `<rect width="800" height="500" fill="url(#${id})"/>`;
+  if (kind !== 'dusk') {
+    const r = rng(kind === 'dark' ? 7 : 42);
+    for (let i = 0; i < 70; i++) s += `<circle cx="${(r() * 800).toFixed(1)}" cy="${(r() * 330).toFixed(1)}" r="${(r() * 1.6 + .4).toFixed(2)}" fill="#fff" opacity="${(.35 + r() * .65).toFixed(2)}"/>`;
+    for (let i = 0; i < 6; i++) s += star4(Math.round(r() * 780 + 10), Math.round(r() * 250 + 10), 6, '#fff6c9', 'twinkle');
+  } else {
+    s += `<circle cx="660" cy="120" r="46" fill="#fff3b0" opacity=".9"/>`;
+    s += `<g fill="#fff" opacity=".85"><ellipse cx="160" cy="90" rx="60" ry="20"/><ellipse cx="200" cy="76" rx="38" ry="22"/><ellipse cx="520" cy="60" rx="50" ry="16"/><ellipse cx="548" cy="48" rx="30" ry="18"/></g>`;
+  }
+  return s;
+}
+const moon = (x, y) => `<circle cx="${x}" cy="${y}" r="38" fill="#fff3c4" filter="url(#glow)"/><circle cx="${x + 16}" cy="${y - 10}" r="34" fill="#24165a"/>`;
+const ground = (night) => `<g stroke="${night ? '#1c1446' : '#4f8f3e'}" stroke-width="3">
+  <path d="M-5 430 Q200 400 400 428 T805 420 L805 505 L-5 505Z" fill="${night ? '#3a2f7a' : '#a6d98a'}"/>
+  <path d="M-5 455 Q240 438 470 458 T805 452 L805 505 L-5 505Z" fill="${night ? '#2b2263' : '#86c66e'}"/></g>`;
+
+function castle(x, y, s, night) {
+  const wall = night ? '#6a54b8' : '#efd6ff', tower = night ? '#7b63c9' : '#e2c0ff';
+  const roof = night ? '#b0407f' : '#ff7ac1', win = night ? '#ffd65a' : '#9fdcff';
+  const line = night ? '#2a1d5c' : '#7a4fa0';
+  const w = (wx, wy) => `<path d="M${wx} ${wy}v-16a7 7 0 0 1 14 0v16Z" fill="${win}"/>`;
+  return `<g transform="translate(${x} ${y}) scale(${s})"><g stroke="${line}" stroke-width="3.5" stroke-linejoin="round">
+    <rect x="-110" y="-140" width="220" height="140" fill="${wall}"/>
+    ${[-110, -80, -50, 30, 60, 90].map(cx => `<rect x="${cx}" y="-154" width="20" height="16" fill="${wall}"/>`).join('')}
+    <rect x="-150" y="-200" width="60" height="200" fill="${tower}"/>
+    <rect x="90" y="-200" width="60" height="200" fill="${tower}"/>
+    <rect x="-36" y="-250" width="72" height="250" fill="${tower}"/>
+    <path d="M-158 -200 L-120 -268 L-82 -200Z M82 -200 L120 -268 L158 -200Z M-46 -250 L0 -335 L46 -250Z" fill="${roof}"/>
+    <path d="M0 -335v-22l18 7-18 7" fill="#ffc83d"/>
+    ${w(-127, -150)}${w(113, -150)}${w(-7, -200)}${w(-7, -150)}${w(-80, -90)}${w(66, -90)}
+    <path d="M-24 0V-42Q0 -72 24 -42V0Z" fill="${night ? '#3c2a78' : '#9b4fe0'}"/>
+  </g></g>`;
+}
+const shield = (cx, cy, rx, ry, op = 1) =>
+  `<g opacity="${op}"><path d="M${cx - rx} ${cy}A${rx} ${ry} 0 0 1 ${cx + rx} ${cy}Z" fill="#ffc83d" opacity=".16"/>
+   <path d="M${cx - rx} ${cy}A${rx} ${ry} 0 0 1 ${cx + rx} ${cy}" fill="none" stroke="#ffd65a" stroke-width="5" filter="url(#glow)" class="beam" stroke-dasharray="40 20"/></g>`;
+const spot = (x1, x2, grad) => `<path d="M${x1} -10 L${x2 - 70} 500 L${x2 + 70} 500 Z" fill="url(#${grad})"/>`;
+
+/* ---------- Chibi princess: big head, small body. Origin at her feet, about 230 tall at scale 1. ---------- */
+const POSES = {
+  up:   { L: [-38, -56],  R: [62, -112] },
+  sing: { L: [-38, -56],  R: [28, -96], front: true },
+  drum: { L: [-34, -50],  R: [34, -50] },
+  wave: { L: [-64, -118], R: [64, -118] },
+  nose: { L: [-7, -114],  R: [7, -114], front: true },
+  hold: { L: [-38, -56],  R: [48, -70] },
+};
+const ring = (r, angles) => angles.map(a => [Math.round(r * Math.cos(a * Math.PI / 180)), Math.round(-140 - r * Math.sin(a * Math.PI / 180))]);
+const CURLS = [...ring(58, [235, 215, 190, 165, 140, 115, 90, 65, 40, 15, -10, -35, -55]), [-72, -140], [72, -140], [-68, -112], [68, -112], [-58, -88], [58, -88]];
+const BANGS = [[-34, -178], [-17, -187], [0, -190], [17, -187], [34, -178], [-47, -162], [47, -162]];
+
+function princess(o) {
+  const p = Object.assign({ x: 400, y: 450, s: 1, pose: 'up', prop: null, cls: '', hairCls: '' }, o);
+  const P = POSES[p.pose];
+  const { skin: sk, dress: d, dress2: d2, hairC: h, hairHi: hh } = p;
+  const st = `stroke="${OL}" stroke-width="3" stroke-linejoin="round"`;
+  let g = '';
+  // hair behind the head
+  if (p.hair === 'curly') {
+    g += `<g class="${p.hairCls}">` + CURLS.map(([x, y]) => `<circle cx="${x}" cy="${y}" r="21" fill="${h}" ${st}/>`).join('')
+      + CURLS.map(([x, y]) => `<path d="M${x - 8} ${y + 4}q8 -12 16 0" stroke="${hh}" stroke-width="3.5" fill="none" stroke-linecap="round"/>`).join('') + `</g>`;
+  } else if (p.hair === 'straight') {
+    g += `<path d="M-60 -140Q-63 -206 0 -206Q63 -206 60 -140L66 -78Q0 -66 -66 -78Z" fill="${h}" ${st}/>`;
+  } else {
+    g += `<circle cx="-48" cy="-190" r="24" fill="${h}" ${st}/><circle cx="48" cy="-190" r="24" fill="${h}" ${st}/>`;
+  }
+  // stubby legs, puffy skirt
+  g += `<rect x="-14" y="-24" width="11" height="22" rx="5" fill="${d2}" ${st}/><rect x="3" y="-24" width="11" height="22" rx="5" fill="${d2}" ${st}/>
+    <ellipse cx="-10" cy="-4" rx="12" ry="6.5" fill="${p.shoe}" ${st}/><ellipse cx="10" cy="-4" rx="12" ry="6.5" fill="${p.shoe}" ${st}/>
+    <path d="M-20 -74L20 -74Q54 -42 52 -20Q0 -6 -52 -20Q-54 -42 -20 -74Z" fill="${d}" ${st}/>
+    <path d="M-52 -20Q0 -6 52 -20L51 -30Q0 -17 -51 -30Z" fill="${d2}"/>
+    ${[[-30, -36], [12, -52], [32, -34], [-8, -30], [-14, -58]].map(([x, y]) => star4(x, y, 4.5, '#fff')).join('')}`;
+  // arms (outlined), bodice, sleeves
+  const arm = (sx, [hx, hy]) => `<path d="M${sx} -80L${hx} ${hy}" stroke="${OL}" stroke-width="13" stroke-linecap="round"/><path d="M${sx} -80L${hx} ${hy}" stroke="${sk}" stroke-width="7.5" stroke-linecap="round"/><circle cx="${hx}" cy="${hy}" r="7.5" fill="${sk}" stroke="${OL}" stroke-width="2.5"/>`;
+  g += arm(-14, P.L) + arm(14, P.R);
+  g += `<path d="M-16 -92Q0 -96 16 -92L21 -72L-21 -72Z" fill="${d2}" ${st}/>
+    <rect x="-22" y="-77" width="44" height="7" rx="3.5" fill="#ffd34d" ${st} stroke-width="2"/><circle cx="0" cy="-73.5" r="3.5" fill="#ff4fa3"/>
+    <circle cx="-18" cy="-86" r="9" fill="${d}" ${st}/><circle cx="18" cy="-86" r="9" fill="${d}" ${st}/>
+    <circle cx="0" cy="-140" r="52" fill="${sk}" ${st}/>`;
+  // face: big shiny chibi eyes
+  if (p.pose === 'nose') {
+    g += `<path d="M-28 -140l12 7-12 7M28 -140l-12 7 12 7" stroke="${OL}" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M-11 -103q5.5 -6 11 0t11 0" stroke="${OL}" stroke-width="3.5" fill="none" stroke-linecap="round"/>`;
+  } else {
+    for (const ex of [-20, 20]) {
+      g += `<ellipse cx="${ex}" cy="-132" rx="10" ry="13" fill="${OL}"/><ellipse cx="${ex}" cy="-128" rx="7.5" ry="8.5" fill="${p.eye}"/>
+        <circle cx="${ex + 3.5}" cy="-137" r="4.2" fill="#fff"/><circle cx="${ex - 3.5}" cy="-125" r="2" fill="#fff"/>
+        <path d="M${ex + (ex > 0 ? 8 : -8)} -142l${ex > 0 ? 6 : -6} -5" stroke="${OL}" stroke-width="3" stroke-linecap="round"/>`;
+    }
+    g += p.pose === 'sing'
+      ? `<ellipse cx="0" cy="-106" rx="6.5" ry="8.5" fill="#8a1f3d" stroke="${OL}" stroke-width="2.5"/>`
+      : `<path d="M-10 -110Q0 -95 10 -110Z" fill="#8a1f3d" stroke="${OL}" stroke-width="2.5" stroke-linejoin="round"/>`;
+  }
+  g += `<ellipse cx="-34" cy="-113" rx="9" ry="5.5" fill="#ff6f9f" opacity=".55"/><ellipse cx="34" cy="-113" rx="9" ry="5.5" fill="#ff6f9f" opacity=".55"/>`;
+  // front hair + crown
+  let crownY = -194;
+  if (p.hair === 'curly') {
+    g += `<g class="${p.hairCls}">` + BANGS.map(([x, y]) => `<circle cx="${x}" cy="${y}" r="15" fill="${h}" ${st}/><path d="M${x - 6} ${y + 3}q6 -9 12 0" stroke="${hh}" stroke-width="3" fill="none" stroke-linecap="round"/>`).join('') + `</g>`;
+    crownY = -212;
+  } else {
+    g += `<path d="M-54 -146Q-56 -196 0 -196Q56 -196 54 -146Q30 -170 0 -166Q-30 -170 -54 -146Z" fill="${h}" ${st}/>`;
+    if (p.clip) g += `<path d="M30 -186a10 10 0 1 0 13 13a8 8 0 1 1 -13 -13Z" fill="#ffd65a" ${st} stroke-width="2"/>`;
+    if (p.hair === 'buns') g += `<path d="M-70 -172l-10 10M70 -172l10 10" stroke="#ffd34d" stroke-width="5" stroke-linecap="round"/>`;
+  }
+  g += crown(0, crownY, 20);
+  if (P.front) g += [P.L, P.R].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="8" fill="${sk}" stroke="${OL}" stroke-width="2.5"/>`).join('');
+  // props
+  if (p.prop === 'sword') g += sword(P.R[0], P.R[1], p.pose === 'up' ? 18 : 40);
+  if (p.prop === 'mic') g += `<g transform="translate(${P.R[0]} ${P.R[1]}) rotate(-35)"><rect x="-3.5" y="-6" width="7" height="22" rx="3.5" fill="#3a2a55" stroke="${OL}" stroke-width="2"/><circle cx="0" cy="-12" r="9" fill="#dfe6ff" stroke="${OL}" stroke-width="2.5"/></g>`;
+  if (p.prop === 'sticks') g += `<g stroke="#f5d9a8" stroke-width="4.5" stroke-linecap="round"><path d="M${P.L[0]} ${P.L[1]}l14 16"/><path d="M${P.R[0]} ${P.R[1]}l-14 16"/></g><circle cx="${P.L[0] + 14}" cy="${P.L[1] + 16}" r="4.5" fill="#ffd34d" stroke="${OL}" stroke-width="1.5"/><circle cx="${P.R[0] - 14}" cy="${P.R[1] + 16}" r="4.5" fill="#ffd34d" stroke="${OL}" stroke-width="1.5"/>`;
+  return `<g transform="translate(${p.x} ${p.y}) scale(${p.s})"><g class="${p.cls}">${g}</g></g>`;
+}
+const crown = (cx, by, w) => `<path d="M${cx - w} ${by}L${cx - w} ${by - 15}L${cx - w / 2} ${by - 6}L${cx} ${by - 20}L${cx + w / 2} ${by - 6}L${cx + w} ${by - 15}L${cx + w} ${by}Z" fill="#ffc83d" stroke="${OL}" stroke-width="2.5" stroke-linejoin="round"/><circle cx="${cx}" cy="${by - 6}" r="${w / 5}" fill="#ff4fa3"/>`;
+function sword(hx, hy, ang) {
+  return `<g transform="translate(${hx} ${hy}) rotate(${ang})">
+    <rect x="-4" y="-2" width="8" height="16" rx="3.5" fill="#b06cff" stroke="${OL}" stroke-width="2"/><circle cx="0" cy="16" r="5.5" fill="#ffd34d" stroke="${OL}" stroke-width="2"/>
+    <path d="M-7 -9L-7 -86L0 -101L7 -86L7 -9Z" fill="url(#blade)" stroke="${OL}" stroke-width="2.5" stroke-linejoin="round" filter="url(#glow)"/>
+    <path d="M0 -15V-88" stroke="#fff" stroke-width="2" opacity=".9"/>
+    <rect x="-17" y="-11" width="34" height="8" rx="4" fill="#ffd34d" stroke="${OL}" stroke-width="2"/><circle cx="0" cy="-7" r="3.5" fill="#ff4fa3"/>
+  </g>`;
+}
+function drum(x, y, s) {
+  return `<g transform="translate(${x} ${y}) scale(${s})"><g stroke="${OL}" stroke-width="3" stroke-linejoin="round">
+    <path d="M-36 -62V-4A36 9 0 0 0 36 -4V-62Z" fill="#e0314f"/>
+    <path d="M-36 -52L-24 -16L-12 -52L0 -16L12 -52L24 -16L36 -52" stroke="#ffd34d" stroke-width="4" fill="none"/>
+    <ellipse cx="0" cy="-62" rx="36" ry="10" fill="#fff4e0"/>
+  </g></g>`;
+}
+
+/* ---------- Grumbo: round chibi shadow demon. Origin at his feet, about 330 tall at scale 1. ---------- */
+function grumbo(o) {
+  const p = Object.assign({ x: 600, y: 480, s: 1, mood: 'grin', cls: 'bob', crown: false }, o);
+  const st = `stroke="${OLG}" stroke-width="6" stroke-linejoin="round"`;
+  let g = `<ellipse cx="-152" cy="-112" rx="34" ry="22" transform="rotate(-25 -152 -112)" fill="#2a3399" ${st}/>
+    <ellipse cx="152" cy="-112" rx="34" ry="22" transform="rotate(25 152 -112)" fill="#2a3399" ${st}/>
+    <path d="M-92 -232Q-125 -280 -112 -330Q-82 -288 -48 -262Z" fill="#b06cff" ${st}/>
+    <path d="M48 -262Q82 -288 112 -330Q125 -280 92 -232Z" fill="#b06cff" ${st}/>
+    <ellipse cx="-72" cy="-6" rx="44" ry="17" fill="#1b2170" ${st}/><ellipse cx="72" cy="-6" rx="44" ry="17" fill="#1b2170" ${st}/>
+    <path d="M-150 -10C-176 -140 -110 -272 0 -272C110 -272 176 -140 150 -10Q0 14 -150 -10Z" fill="url(#gBody)" ${st}/>
+    <ellipse cx="0" cy="-58" rx="92" ry="44" fill="#8a96ff" opacity=".28"/>
+    <g stroke="#5ff2ff" stroke-width="5" fill="none" stroke-linecap="round" filter="url(#glow)" opacity=".9">
+      <path d="M-126 -140q18 -22 6 -52"/><path d="M126 -140q-18 -22 -6 -52"/><path d="M-80 -28q20 -24 40 0t40 0t40 0t40 0"/>
+    </g>`;
+  const brows = (l, r) => `<path d="${l}" stroke="${OLG}" stroke-width="13" stroke-linecap="round" fill="none"/><path d="${r}" stroke="${OLG}" stroke-width="13" stroke-linecap="round" fill="none"/>`;
+  const ew = `stroke="${OLG}" stroke-width="5"`;
+  if (p.mood === 'cute') {
+    g += `<circle cx="-48" cy="-170" r="42" fill="#fff" ${ew}/><circle cx="48" cy="-170" r="42" fill="#fff" ${ew}/>
+      <circle cx="-44" cy="-163" r="28" fill="${OLG}"/><circle cx="52" cy="-163" r="28" fill="${OLG}"/>
+      <circle cx="-34" cy="-176" r="10" fill="#fff"/><circle cx="62" cy="-176" r="10" fill="#fff"/>
+      <circle cx="-52" cy="-152" r="4.5" fill="#fff"/><circle cx="44" cy="-152" r="4.5" fill="#fff"/>
+      <ellipse cx="-100" cy="-112" rx="24" ry="13" fill="#ff7ac1" opacity=".75"/><ellipse cx="100" cy="-112" rx="24" ry="13" fill="#ff7ac1" opacity=".75"/>
+      <path d="M-26 -100q13 18 26 0q13 18 26 0" stroke="${OLG}" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`;
+  } else if (p.mood === 'surprised') {
+    g += `<circle cx="-48" cy="-176" r="40" fill="#fff" ${ew}/><circle cx="46" cy="-176" r="38" fill="#fff" ${ew}/>
+      <circle cx="-46" cy="-174" r="9" fill="${OLG}"/><circle cx="44" cy="-174" r="9" fill="${OLG}"/>
+      ${brows('M-88 -236Q-52 -262 -16 -240', 'M14 -240Q50 -262 86 -236')}
+      <ellipse cx="0" cy="-84" rx="24" ry="30" fill="#2a0b3d" ${ew}/>`;
+  } else {
+    g += `<circle cx="-50" cy="-178" r="40" fill="#fff" ${ew}/><circle cx="44" cy="-174" r="31" fill="#fff" ${ew}/>
+      <circle cx="-38" cy="-168" r="15" fill="${OLG}"/><circle cx="53" cy="-183" r="11" fill="${OLG}"/>
+      <circle cx="-33" cy="-174" r="5" fill="#fff"/><circle cx="56" cy="-187" r="3.5" fill="#fff"/>`;
+    if (p.mood === 'grin') {
+      g += brows('M-92 -230L-24 -214', 'M18 -210L76 -226');
+      g += `<path d="M-90 -118Q0 -96 90 -121Q56 -38 0 -38Q-58 -38 -90 -118Z" fill="#2a0b3d" ${ew}/>`;
+      g += [-62, -38, -14, 34, 58].map(x => { const t = (x + 90) / 180, y = (1 - t) ** 2 * -118 + 2 * (1 - t) * t * -96 + t * t * -121; return `<rect x="${x - 8}" y="${(y - 1).toFixed(1)}" width="16" height="16" rx="3" fill="#fff"/>`; }).join('');
+      g += `<ellipse cx="12" cy="-54" rx="30" ry="12" fill="#ff6fa8"/>`;
+    } else {
+      g += brows(p.mood === 'roar' ? 'M-92 -238L-22 -210' : 'M-90 -230L-24 -216', p.mood === 'roar' ? 'M16 -208L80 -234' : 'M18 -212L76 -226');
+      g += `<ellipse cx="0" cy="-86" rx="72" ry="52" fill="#2a0b3d" ${ew}/><ellipse cx="0" cy="-56" rx="40" ry="15" fill="#ff6fa8"/>
+        <path d="M-58 -122l12 22 12 -24 12 22 12 -24 12 22 12 -24 12 22 12 -20Z" fill="#fff"/>
+        <path d="M-44 -46l10 -16 10 16 10 -16 10 16 10 -16 10 16 10 -16 10 16Z" fill="#fff"/>`;
+    }
+  }
+  if (p.crown) g += `<g transform="translate(0 -262) scale(2.2)">${crown(0, 0, 20)}</g>`;
+  return `<g transform="translate(${p.x} ${p.y}) scale(${p.s})"><g class="${p.cls}">${g}</g></g>`;
+}
+const bird = (x, y, s, c) => `<g transform="translate(${x} ${y}) scale(${s})" class="floaty"><g stroke="${OL}" stroke-width="2.5" stroke-linejoin="round"><circle r="15" fill="${c}"/><path d="M-4 -2q-14 -16 -22 2Z" fill="${c}"/><path d="M13 -3l12 4-12 4Z" fill="#ffb340"/></g><circle cx="5" cy="-5" r="3" fill="${OL}"/></g>`;
+const iceCream = (x, y, s) => `<g transform="translate(${x} ${y}) scale(${s})" class="floaty"><g stroke="${OL}" stroke-width="2.5" stroke-linejoin="round"><path d="M-15 0L0 40L15 0Z" fill="#e8b46a"/><circle cx="-7" cy="-6" r="12" fill="#ff9ad0"/><circle cx="8" cy="-8" r="12" fill="#c9f2ff"/><circle cx="0" cy="-20" r="11" fill="#fff3a6"/><circle cx="0" cy="-33" r="5" fill="#e0314f"/></g></g>`;
+const zzz = (x, y, s, c = '#fff') => `<g class="floaty"><text x="${x}" y="${y}" font-family="Grandstander, sans-serif" font-weight="900" font-size="${s}" fill="${c}" stroke="${OL}" stroke-width="3" paint-order="stroke">Z<tspan font-size="${s * .75}" dy="-8">z</tspan><tspan font-size="${s * .55}" dy="-8">z</tspan></text></g>`;
+const word = (x, y, s, txt, fill, rot = 0, stroke = OL) => `<g transform="translate(${x} ${y}) rotate(${rot})"><text text-anchor="middle" font-family="Grandstander, sans-serif" font-weight="900" font-size="${s}" fill="${fill}" stroke="${stroke}" stroke-width="${s / 8}" paint-order="stroke" stroke-linejoin="round">${txt}</text></g>`;
+const stink = (x, y, s) => `<g transform="translate(${x} ${y}) scale(${s})" class="floaty" opacity=".85"><g stroke="#3f7a1f" stroke-width="3"><circle r="22" fill="#9be15d"/><circle cx="22" cy="-8" r="18" fill="#b5ef6e"/><circle cx="-18" cy="-12" r="16" fill="#86d04a"/></g><path d="M-6 -40q-8 -10 0 -20M8 -40q8 -10 0 -20" stroke="#86d04a" stroke-width="4" fill="none" stroke-linecap="round"/></g>`;
+const sparkles = (pts, c = '#ffd65a') => pts.map(([x, y, r]) => star4(x, y, r || 9, c, 'twinkle')).join('');
+const heart = (x, y, s, c) => `<g transform="translate(${x} ${y}) scale(${s})" class="floaty"><path d="M0 -6c-10 -14 -30 -4 -20 12l20 18 20 -18c10 -16 -10 -26 -20 -12Z" fill="${c}" stroke="${OL}" stroke-width="2.5" stroke-linejoin="round"/></g>`;
+const scroll = (x, y) => `<g transform="translate(${x} ${y}) rotate(3)"><g stroke="${OL}" stroke-width="3.5" stroke-linejoin="round">
+    <rect x="-150" y="-128" width="300" height="250" rx="6" fill="#fff4dc"/>
+    <rect x="-166" y="-148" width="332" height="28" rx="14" fill="#f0d9a8"/><rect x="-166" y="112" width="332" height="28" rx="14" fill="#f0d9a8"/></g>
+    <text text-anchor="middle" font-family="Grandstander, sans-serif" font-weight="900" fill="${OL}">
+      <tspan x="0" y="-74" font-size="38" fill="#ff4fa3">THE RULE</tspan>
+      <tspan x="0" y="-26" font-size="22">Daddy has to say</tspan>
+      <tspan x="0" y="12" font-size="34" fill="#8a3fd1">EVERY WORD</tspan>
+      <tspan x="0" y="50" font-size="20">in this book.</tspan>
+      <tspan x="0" y="86" font-size="17" font-weight="600">(Even the silly ones.)</tspan>
+    </text></g>`;
+
+/* ---------- Scenes ---------- */
+const S = {
+  cover: () => sky('night') + moon(670, 85) + castle(400, 440, 1.05, true) + shield(400, 445, 300, 300, .6) +
+    grumbo({ x: 725, y: 470, s: .42, mood: 'grin' }) + ground(true) +
+    princess({ ...LUNA, x: 215, y: 470, s: .95, pose: 'sing', prop: 'mic', cls: 'sway' }) +
+    princess({ ...RUBY, x: 585, y: 470, s: .95, pose: 'drum', prop: 'sticks', cls: 'sway' }) + drum(585, 472, .7) +
+    princess({ ...SOPHIA, x: 400, y: 480, s: 1.15, pose: 'up', prop: 'sword', cls: 'bob' }) +
+    sparkles([[80, 120], [300, 60, 7], [520, 120], [120, 300, 7], [760, 250, 7]]),
+
+  rule: () => sky('dusk') + ground(false) + scroll(540, 255) +
+    princess({ ...SOPHIA, x: 215, y: 482, s: 1.45, pose: 'hold', cls: 'bob' }) +
+    sparkles([[380, 90, 8], [720, 420, 8], [90, 120, 7]], '#fff'),
+
+  hair: () => sky('dusk') + castle(120, 445, .7, false) + ground(false) +
+    princess({ ...SOPHIA, x: 410, y: 490, s: 1.7, pose: 'wave', hairCls: 'boing' }) +
+    sparkles([[250, 110], [610, 90, 12], [650, 300], [220, 290, 7], [570, 200, 6]], '#fff') +
+    word(660, 430, 46, 'BOING!', '#ff4fa3', 8),
+
+  band: () => sky('night') + spot(150, 220, 'spotPink') + spot(400, 400, 'spotCyan') + spot(650, 580, 'spotPink') +
+    `<rect x="40" y="440" width="720" height="70" rx="10" fill="#8a3fd1" stroke="${OL}" stroke-width="3"/><rect x="42" y="442" width="716" height="12" fill="#b06cff"/>` +
+    `<g transform="translate(400 62) rotate(-3)"><rect x="-210" y="-34" width="420" height="62" rx="31" fill="#ff4fa3" stroke="#fff" stroke-width="4"/><text text-anchor="middle" y="12" font-family="Grandstander, sans-serif" font-weight="900" font-size="34" fill="#fff">THE SPARKLE SWORDS</text></g>` +
+    princess({ ...LUNA, x: 200, y: 448, s: 1.05, pose: 'sing', prop: 'mic', cls: 'sway' }) +
+    princess({ ...RUBY, x: 600, y: 448, s: 1.05, pose: 'drum', prop: 'sticks', cls: 'sway' }) + drum(600, 452, .78) +
+    princess({ ...SOPHIA, x: 400, y: 456, s: 1.22, pose: 'up', prop: 'sword', cls: 'bob' }) +
+    note(90, 200, 44, '#ffc83d') + note(700, 190, 48, '#5ff2ff', '♫') + note(290, 150, 36, '#ff7ac1') + note(530, 140, 40, '#fff', '♫'),
+
+  shield: () => sky('night') + moon(110, 90) + castle(400, 445, 1.1, true) + shield(400, 450, 330, 340, 1) + ground(true) +
+    princess({ ...LUNA, x: 320, y: 480, s: .55, pose: 'sing', prop: 'mic', cls: 'sway' }) +
+    princess({ ...SOPHIA, x: 400, y: 484, s: .62, pose: 'up', prop: 'sword', cls: 'sway' }) +
+    princess({ ...RUBY, x: 480, y: 480, s: .55, pose: 'drum', prop: 'sticks', cls: 'sway' }) + drum(480, 482, .4) +
+    note(240, 300, 34, '#ffd65a') + note(550, 260, 38, '#ffd65a', '♫') + note(330, 180, 30, '#fff') + note(470, 140, 34, '#ffd65a') + word(620, 190, 30, '...PICKLE BOTTOM?!', '#9be15d', 6),
+
+  burp: () => sky('dark') + castle(200, 455, .85, true) + grumbo({ x: 560, y: 540, s: 1.25, mood: 'grin' }) + ground(true) +
+    `<g class="floaty"><g stroke="#3f7a1f" stroke-width="3"><circle cx="330" cy="150" r="46" fill="#9be15d"/><circle cx="290" cy="120" r="30" fill="#b5ef6e"/><circle cx="370" cy="115" r="26" fill="#86d04a"/></g></g>` +
+    word(330, 165, 40, 'BURP!', '#fff', -8) + word(120, 475, 30, 'RUMBLE', '#ffc83d', -4) + word(700, 480, 30, 'RUMBLE', '#ffc83d', 5),
+
+  grumbo: () => sky('dark') + spot(400, 400, 'spotCyan') + grumbo({ x: 400, y: 560, s: 1.42, mood: 'grin', cls: 'bob' }) +
+    stink(110, 420, 1.1) + stink(690, 410, 1.2) + word(150, 110, 44, 'TOE JAM?!', '#9be15d', -8) +
+    sparkles([[700, 90, 8], [620, 200, 6], [80, 250, 6]], '#fff'),
+
+  chomp: () => sky('dark') + grumbo({ x: 400, y: 545, s: 1.2, mood: 'chomp', cls: 'shake' }) + ground(true) +
+    bird(160, 170, 1.3, '#5fc8ff') + bird(650, 140, 1.2, '#ffd65a') + iceCream(130, 330, 1.3) + zzz(610, 320, 46, '#ffd65a') +
+    note(240, 110, 40, '#ff7ac1') + note(560, 230, 36, '#5ff2ff', '♫') +
+    `<g stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".6"><path d="M200 190l60 40M195 340l70 -10M610 170l-60 50M600 300l-70 0"/></g>` +
+    word(400, 70, 56, 'CHOMP!', '#ff4fa3', -4, '#fff'),
+
+  showtime: () => sky('night') + spot(120, 190, 'spotCyan') + spot(400, 400, 'spotPink') + spot(680, 610, 'spotCyan') + ground(true) +
+    princess({ ...LUNA, x: 180, y: 474, s: 1.1, pose: 'sing', prop: 'mic', cls: 'sway' }) +
+    princess({ ...RUBY, x: 620, y: 474, s: 1.1, pose: 'drum', prop: 'sticks', cls: 'sway' }) + drum(620, 478, .82) +
+    princess({ ...SOPHIA, x: 400, y: 486, s: 1.45, pose: 'up', prop: 'sword', cls: 'bob' }) +
+    sparkles([[80, 90], [290, 60, 8], [540, 80], [730, 120, 8]]) + word(400, 52, 40, 'SHOWTIME!', '#ffc83d', -3),
+
+  stinky: () => sky('night') + ground(true) + grumbo({ x: 610, y: 470, s: .92, mood: 'roar', cls: 'shake' }) +
+    stink(450, 250, 1.4) + stink(390, 160, 1) + stink(480, 110, .8) +
+    princess({ ...LUNA, x: 90, y: 472, s: .9, pose: 'nose' }) +
+    princess({ ...SOPHIA, x: 215, y: 478, s: 1.02, pose: 'nose' }) +
+    princess({ ...RUBY, x: 340, y: 472, s: .9, pose: 'nose' }) +
+    word(150, 110, 44, 'EWWW!', '#9be15d', -6) + word(660, 70, 40, 'TOOT!', '#ffc83d', 6) +
+    `<g stroke="#ffc83d" stroke-width="5" stroke-linecap="round"><path d="M505 478l-20 8M715 478l20 8M530 490l-14 12M690 490l14 12"/></g>`,
+
+  sword: () => sky('night') + ground(true) +
+    `<path d="M345 165Q490 40 590 240" fill="none" stroke="url(#rainbow)" stroke-width="18" stroke-linecap="round" stroke-dasharray="40 20" class="beam" filter="url(#glow)"/>` +
+    grumbo({ x: 640, y: 472, s: .8, mood: 'surprised', cls: 'shake' }) +
+    princess({ ...SOPHIA, x: 230, y: 484, s: 1.42, pose: 'up', prop: 'sword', cls: 'bob' }) +
+    note(430, 160, 40, '#ffc83d') + note(520, 120, 36, '#ff7ac1', '♫') + note(470, 260, 32, '#5ff2ff') +
+    word(400, 56, 40, 'SHWING-A-DING-DING!', '#ffc83d', -3),
+
+  wiggle: () => sky('night') + spot(120, 150, 'spotPink') + spot(400, 330, 'spotCyan') + spot(680, 520, 'spotPink') + ground(true) +
+    grumbo({ x: 660, y: 470, s: .62, mood: 'surprised', cls: 'wiggle' }) +
+    princess({ ...LUNA, x: 110, y: 474, s: .95, pose: 'wave', cls: 'wiggle' }) +
+    princess({ ...SOPHIA, x: 280, y: 480, s: 1.12, pose: 'wave', cls: 'wiggle' }) +
+    princess({ ...RUBY, x: 450, y: 474, s: .95, pose: 'wave', cls: 'wiggle' }) +
+    `<g stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" opacity=".75"><path d="M40 430q-12 -14 0 -28M180 430q12 -14 0 -28M200 430q-12 -14 0 -28M360 430q12 -14 0 -28M380 430q-12 -14 0 -28M520 430q12 -14 0 -28"/></g>` +
+    word(400, 60, 46, 'WIGGLE WOBBLE!', '#ff4fa3', -4, '#fff'),
+
+  shrink: () => sky('night') + ground(true) +
+    grumbo({ x: 130, y: 462, s: .5 }) + grumbo({ x: 340, y: 462, s: .3, mood: 'surprised' }) + grumbo({ x: 500, y: 462, s: .17, mood: 'surprised' }) +
+    grumbo({ x: 640, y: 462, s: .07, mood: 'cute' }) +
+    `<g fill="#ffd65a" opacity=".85"><circle cx="248" cy="380" r="5"/><circle cx="264" cy="380" r="5"/><circle cx="420" cy="410" r="4"/><circle cx="434" cy="410" r="4"/><circle cx="560" cy="430" r="3.5"/><circle cx="572" cy="430" r="3.5"/></g>` +
+    `<g transform="translate(700 380)">${star4(0, 0, 46, '#ffc83d', 'twinkle')}</g>` + word(700, 300, 48, 'POP!', '#ff4fa3', 8, '#fff') +
+    sparkles([[600, 380, 8], [760, 440, 7], [650, 330, 6]], '#fff'),
+
+  squeak: () => sky('night') + ground(true) +
+    princess({ ...SOPHIA, x: 320, y: 482, s: 1.45, pose: 'hold' }) +
+    grumbo({ x: 390, y: 376, s: .13, mood: 'cute' }) +
+    bird(520, 170, 1.1, '#5fc8ff') + bird(640, 120, 1, '#ffd65a') + iceCream(710, 260, 1) + zzz(560, 330, 34, '#ffd65a') +
+    note(470, 240, 34, '#ff7ac1') + note(600, 70, 32, '#5ff2ff', '♫') +
+    word(470, 320, 26, 'squeak!', '#5fc8ff', -8, '#fff') + word(640, 430, 34, 'HONK-SHOOO!', '#ffc83d', -3),
+
+  friends: () => sky('dusk') + ground(false) +
+    princess({ ...LUNA, x: 140, y: 478, s: 1, pose: 'wave', cls: 'sway' }) +
+    princess({ ...SOPHIA, x: 300, y: 486, s: 1.2, pose: 'wave', cls: 'sway' }) +
+    princess({ ...RUBY, x: 660, y: 478, s: 1, pose: 'wave', cls: 'sway' }) +
+    grumbo({ x: 470, y: 476, s: .22, mood: 'cute', crown: true }) + drum(535, 478, .45) +
+    heart(440, 320, 1, '#ff4fa3') + heart(520, 290, .7, '#ff7ac1') +
+    sparkles([[90, 80], [560, 70, 8], [740, 200, 7], [400, 140, 7]], '#fff'),
+
+  end: () => sky('night') + moon(660, 85) + castle(400, 445, 1.1, true) + shield(400, 450, 330, 340, 1) + ground(true) +
+    zzz(250, 200, 30) + note(330, 150, 26, '#ffd65a') + note(480, 170, 24, '#fff', '♫') +
+    grumbo({ x: 300, y: 474, s: .06, mood: 'cute', crown: true }) + word(300, 435, 18, 'squeak!', '#5fc8ff', -8, '#fff') +
+    word(400, 60, 46, 'THE END', '#ffc83d', -2),
+};
+
+/* ---------- Story text ---------- */
+const sfx = (snd, label, cls = '') => `<button type="button" class="sfx ${cls}" data-snd="${snd}">${label}</button>`;
+const her = `<span class="her">Sophia</span>`;
+const dad = t => `<span class="dad">${t}</span>`;
+const note_ = t => `<span class="note">${t}</span>`;
+const PAGES = [
+  { scene: 'cover', alt: 'Princess Sophia holding up her glowing sword with Princess Luna and Princess Ruby. A big blue shadow demon peeks out behind the castle.',
+    html: `<h1 class="cover-title">Princess Sophia <span>and the</span> Noisy Shadow Demon</h1>
+      <p class="cover-sub">A book Daddy has to read EXACTLY the way it's written.</p>
+      <p class="hint">Tap the bright words to hear their sounds. Tap the yellow arrow to start!</p>` },
+  { scene: 'rule', alt: 'Princess Sophia standing next to a giant scroll that says: The Rule. Daddy has to say every word in this book.',
+    html: `<p>Hi, ${her}! Are you listening? Good.</p>
+      <p>This book has one rule: everything written here, Daddy has to <span class="huge">SAY.</span></p>
+      <p>Even the silly words. Even the <b>VERY</b> silly words.</p>
+      <p>No skipping, Daddy. ${note_('(Sophia is watching you.)')}</p>` },
+  { scene: 'hair', alt: 'Princess Sophia waving, with her big curly brown hair bouncing.',
+    html: `<p>This is Princess Sophia. Hey, wait a minute... that's <b>YOU!</b></p>
+      <p>She has curly, swirly, twirly hair. ${sfx('boing', 'BOING!')} ${sfx('boing', 'BOING!')} ${sfx('boing', 'BOING!')}</p>
+      <p>She is brave. She is sparkly. And she is the BOSS of this book.</p>
+      <p>${note_('Daddy, say this:')} ${dad('“Yes, Princess Sophia. You are the boss of me.”')}</p>` },
+  { scene: 'band', alt: 'The three princesses on a stage under a sign that says The Sparkle Swords.',
+    html: `<p>Sophia has a band. It's called <span class="shout">THE SPARKLE SWORDS!</span></p>
+      <p>Princess Luna sings. Princess Ruby drums. And Princess Sophia has a magic sword that SINGS when she swings it!</p>
+      <p>${sfx('swish', 'SWISH!')} <span class="say">“La!”</span> ${sfx('swish', 'SWOOSH!')} <span class="say">“La-LA!”</span></p>` },
+  { scene: 'shield', alt: 'The princesses singing in front of the castle. Their music makes a glowing golden dome over it.',
+    html: `<p>Every night, the Sparkle Swords sing a song that makes a golden <b>Glitter Shield</b> over the castle. ${sfx('hum', 'HUMMM...')}</p>
+      <p>${note_('Daddy, sing the song in your highest, squeakiest voice:')} ${dad('“La-dee-DAAA, sparkle-sparkle... PICKLE BOTTOM!”')}</p>
+      <p>Pickle bottom?! That's not in the song! ${note_('Too late, Daddy. You already sang it.')}</p>` },
+  { scene: 'burp', alt: 'The sky is dark. A huge blue demon with purple horns and a goofy grin rises behind the hills and burps a green cloud.',
+    html: `<p>But one night... the sky went dark.</p>
+      <p>The ground went ${sfx('rumble', 'RUMBLE... RUMBLE...')}</p>
+      <p>And then... ${sfx('burp', 'BUUURP!')}</p>
+      <p>Out popped a shadow demon as big as a mountain and as blue as a blueberry!</p>` },
+  { scene: 'grumbo', alt: 'A close-up of the big blue demon grinning, with green stink clouds around his feet.',
+    html: `<p>${note_('Daddy, you have to do the monster voice now. Big and grumbly. Ready?')}</p>
+      <p>${dad('“I am GRUMBO! I am BIG! I am BLUE! And I have STINKY TOE JAM!”')}</p>
+      <p>${her}, did Daddy just say <b>toe jam</b>? He did!</p>
+      <p>${dad('“And I do NOT like singing! RAAAWR!”')} ${sfx('roar', 'RAAAWR!')}</p>` },
+  { scene: 'chomp', alt: 'Grumbo with his mouth wide open, gobbling birds, an ice cream cone, and music notes.',
+    html: `<p>Grumbo gobbled up ALL the songs in the kingdom.</p>
+      <p>${sfx('chomp', 'CHOMP!')} The birds' tweet-tweet. ${sfx('chomp', 'CHOMP!')} The ice cream truck's ding-ding. ${sfx('chomp', 'CHOMP!')} Even the King's snore!</p>
+      <p>${note_('Daddy, read the next part in a teeny-tiny whisper.')} <span class="whisper">it was so quiet, you could hear a butterfly burp.</span></p>` },
+  { scene: 'showtime', alt: 'The three princesses in a heroic pose under pink and blue spotlights.',
+    html: `<p>But Princess Sophia was NOT scared. She jumped up and said, <span class="say">“Sparkle Swords, it's SHOWTIME!”</span></p>
+      <p>${her}, you shout it too. Daddy, you shout it with her. One, two, three...</p>
+      <p><span class="shout">SPARKLE SWORDS, LET'S GO!</span></p>` },
+  { scene: 'stinky', alt: 'Grumbo stomping and roaring while green stink clouds float toward the princesses, who are holding their noses.',
+    html: `<p>Grumbo stomped. ${sfx('stomp', 'STOMP!')} ${sfx('stomp', 'STOMP!')} And then Grumbo did a big... stinky... ${sfx('toot', 'TOOT!')}</p>
+      <p><span class="say">“EWWWW!”</span> said the princesses.</p>
+      <p>${note_('Daddy, say this:')} ${dad('“It wasn\'t me! ...Okay, maybe it was a LITTLE bit me.”')}</p>` },
+  { scene: 'sword', alt: 'Sophia swings her glowing sword and a rainbow of music flies at a very surprised Grumbo.',
+    html: `<p>Sophia swung her magic sword. ${sfx('swish', 'SWISH!')}</p>
+      <p>${note_('Daddy, you have to make the sword noise:')} ${dad('“SHWING-a-ding-DING!”')}</p>
+      <p>Luna sang high: ${sfx('la', 'La-la-LAAA!')} Ruby drummed loud: ${sfx('boom', 'BOOM-BA-BOOM!')}</p>
+      <p>Grumbo's eyes went BOINK.</p>` },
+  { scene: 'wiggle', alt: 'The three princesses and Grumbo all wiggling and dancing under spotlights.',
+    html: `<p>Then the princesses did their secret move: the <b>Wiggle Wobble!</b></p>
+      <p>Everybody has to do it. Yes, Daddy. You too. Stand up!</p>
+      <p>Wiggle your bottom and say: ${dad('“I am a wiggly, jiggly JELLY PRINCESS!”')}</p>
+      <p>${her}, was Daddy wiggly enough? Do it AGAIN, Daddy!</p>` },
+  { scene: 'shrink', alt: 'Grumbo shown four times, getting smaller and smaller until he is teeny tiny, with a big POP.',
+    html: `<p>The music was SO sparkly that Grumbo started to shrink!</p>
+      <p>Mountain-big... house-big... puppy-big... ${sfx('pop', 'POP!')}</p>
+      <p><span class="huge">teeny-tiny!</span></p>` },
+  { scene: 'squeak', alt: 'Sophia holds a jellybean-sized Grumbo in her hand. Birds, ice cream, and music notes fly out of him.',
+    html: `<p>Now Grumbo was as small as a jellybean. ${sfx('squeak', 'squeak!', 'tiny')}</p>
+      <p>All the songs came tumbling back out! ${sfx('twinkle', 'Tweet-tweet!')} ${sfx('ding', 'Ding-ding!')}</p>
+      <p>And the King's snore. ${note_('Daddy, do the King\'s snore. Louder. LOUDER!')} ${sfx('honk', 'HONK-SHOOOOO!')}</p>` },
+  { scene: 'friends', alt: 'The three princesses waving next to tiny Grumbo, who now wears a tiny crown and has a tiny drum.',
+    html: `<p>Sophia picked him up. <span class="say">“Grumbo, were you grumpy because nobody ever sang WITH you?”</span></p>
+      <p>${note_('Daddy, answer in your tiniest, squeakiest Grumbo voice:')} ${dad('“Squeak.”')}</p>
+      <p>That meant yes. So Sophia gave him a teeny crown and a teeny drum, and Grumbo became the smallest Sparkle Sword ever!</p>` },
+  { scene: 'end', alt: 'The castle at night under the golden Glitter Shield, with tiny Grumbo singing at the bottom.',
+    html: `<p>Now every night, the Sparkle Swords sing, the Glitter Shield glows gold, and a teeny-tiny voice sings along. ${sfx('squeak', 'squeak!', 'tiny')}</p>
+      <p>${her}, did Daddy read EVERY word? Then he gets to say one last thing:</p>
+      <p>${dad('“Goodnight, Princess Sophia. Goodnight, my boss.”')}</p>
+      <p><b>The End.</b> <button type="button" class="again" id="again">Read it again!</button></p>` },
+];
+
+/* ---------- Sounds (made in the browser, no files) ---------- */
+let ac;
+function A() { if (!ac) ac = new (window.AudioContext || window.webkitAudioContext)(); if (ac.state === 'suspended') ac.resume(); return ac; }
+function tone(f0, f1, d, type = 'sine', v = .3, t0 = 0, vib = 0) {
+  const a = A(), t = a.currentTime + t0, o = a.createOscillator(), g = a.createGain();
+  o.type = type; o.frequency.setValueAtTime(f0, t); o.frequency.exponentialRampToValueAtTime(f1, t + d);
+  if (vib) { const l = a.createOscillator(), lg = a.createGain(); l.frequency.value = vib; lg.gain.value = f0 * .12; l.connect(lg).connect(o.frequency); l.start(t); l.stop(t + d + .05); }
+  g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(v, t + .02); g.gain.exponentialRampToValueAtTime(.0001, t + d);
+  const f = a.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = type === 'sawtooth' ? 900 : 8000;
+  o.connect(f).connect(g).connect(a.destination); o.start(t); o.stop(t + d + .05);
+}
+function noise(d, f0, f1, v = .3, t0 = 0, type = 'bandpass') {
+  const a = A(), t = a.currentTime + t0, len = Math.floor(a.sampleRate * d), b = a.createBuffer(1, len, a.sampleRate), ch = b.getChannelData(0);
+  for (let i = 0; i < len; i++) ch[i] = Math.random() * 2 - 1;
+  const src = a.createBufferSource(), f = a.createBiquadFilter(), g = a.createGain();
+  src.buffer = b; f.type = type; f.Q.value = 1.2; f.frequency.setValueAtTime(f0, t); f.frequency.exponentialRampToValueAtTime(f1, t + d);
+  g.gain.setValueAtTime(v, t); g.gain.exponentialRampToValueAtTime(.0001, t + d);
+  src.connect(f).connect(g).connect(a.destination); src.start(t);
+}
+const SOUNDS = {
+  boing: () => { tone(180, 720, .1, 'triangle', .35); tone(720, 260, .22, 'triangle', .3, .1); },
+  twinkle: () => [1319, 1568, 1976, 2637].forEach((f, i) => tone(f, f, .18, 'sine', .14, i * .07)),
+  swish: () => noise(.32, 500, 5000, .5),
+  la: () => [523, 659, 784, 1047].forEach((f, i) => tone(f, f * 1.003, i === 3 ? .5 : .2, 'triangle', .25, i * .16, i === 3 ? 6 : 0)),
+  hum: () => { tone(220, 222, 1.2, 'sine', .2); tone(330, 331, 1.2, 'sine', .1); tone(440, 441, 1.2, 'sine', .06); },
+  rumble: () => { noise(1.1, 140, 60, .7, 0, 'lowpass'); tone(55, 45, 1.1, 'sine', .3); },
+  burp: () => tone(120, 70, .65, 'sawtooth', .45, 0, 22),
+  chomp: () => { tone(320, 90, .09, 'square', .2); tone(280, 80, .09, 'square', .2, .12); },
+  stomp: () => { tone(130, 38, .35, 'sine', .7); noise(.12, 300, 80, .4, 0, 'lowpass'); },
+  roar: () => { tone(170, 85, .9, 'sawtooth', .4, 0, 14); noise(.9, 900, 300, .25); },
+  toot: () => tone(96, 70, .75, 'sawtooth', .5, 0, 28),
+  boom: () => [0, .22, .33].forEach(t => tone(150, 45, .3, 'sine', .7, t)),
+  pop: () => { tone(380, 1400, .07, 'sine', .4); [1568, 2093].forEach((f, i) => tone(f, f, .15, 'sine', .1, .08 + i * .06)); },
+  squeak: () => { tone(1500, 2700, .09, 'sine', .25); tone(2700, 1900, .1, 'sine', .22, .09); },
+  ding: () => [1760, 1760].forEach((f, i) => tone(f, f * .99, .35, 'sine', .2, i * .22)),
+  honk: () => { tone(85, 115, .55, 'sawtooth', .45, 0, 9); noise(.7, 3000, 6000, .2, .6, 'highpass'); },
+};
+
+/* ---------- Book controls ---------- */
+const stage = document.getElementById('stage'), text = document.getElementById('text');
+const prev = document.getElementById('prev'), next = document.getElementById('next'), dots = document.getElementById('dots');
+let cur = 0;
+PAGES.forEach((_, i) => {
+  const b = document.createElement('button');
+  b.type = 'button'; b.setAttribute('aria-label', i === 0 ? 'Cover' : `Page ${i}`);
+  b.onclick = () => go(i); dots.appendChild(b);
+});
+function go(i) {
+  cur = Math.max(0, Math.min(PAGES.length - 1, i));
+  const p = PAGES[cur];
+  stage.innerHTML = `<svg viewBox="0 0 800 500" role="img" aria-label="${p.alt}">${DEFS}${S[p.scene]()}</svg>`;
+  text.innerHTML = p.html;
+  prev.disabled = cur === 0; next.disabled = cur === PAGES.length - 1;
+  [...dots.children].forEach((d, j) => d.setAttribute('aria-current', j === cur));
+  const again = document.getElementById('again'); if (again) again.onclick = () => go(0);
+}
+prev.onclick = () => go(cur - 1);
+next.onclick = () => go(cur + 1);
+document.addEventListener('keydown', e => { if (e.key === 'ArrowRight') go(cur + 1); if (e.key === 'ArrowLeft') go(cur - 1); });
+text.addEventListener('click', e => {
+  const b = e.target.closest('.sfx'); if (!b) return;
+  try { SOUNDS[b.dataset.snd]?.(); } catch (err) {}
+  b.classList.remove('go'); void b.offsetWidth; b.classList.add('go');
+});
+// tap the picture for a sparkle; swipe to turn pages
+let sx = null;
+stage.addEventListener('pointerdown', e => { sx = e.clientX; });
+stage.addEventListener('pointerup', e => {
+  const dx = sx === null ? 0 : e.clientX - sx; sx = null;
+  if (Math.abs(dx) > 50) return go(cur + (dx < 0 ? 1 : -1));
+  const svg = stage.querySelector('svg'); if (!svg) return;
+  const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY;
+  const q = pt.matrixTransform(svg.getScreenCTM().inverse());
+  const colors = ['#ffc83d', '#ff4fa3', '#5ff2ff', '#b06cff', '#fff'];
+  const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+  g.innerHTML = star4(Math.round(q.x), Math.round(q.y), 22, colors[Math.floor(Math.random() * colors.length)], 'burst');
+  svg.appendChild(g); setTimeout(() => g.remove(), 750);
+  try { const f = [1568, 1760, 2093, 2349][Math.floor(Math.random() * 4)]; tone(f, f, .2, 'sine', .12); } catch (err) {}
+});
+go(0);
+</script>
+</html>
