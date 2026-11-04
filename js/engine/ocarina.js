@@ -28,7 +28,7 @@
       if (pos + 1 === tune.length) {
         box.classList.add('solved');
         setTimeout(() => SB.audio.play('gate-open'), 350);
-        document.getElementById('next')?.classList.add('nudge');
+        document.dispatchEvent(new CustomEvent('sb:solved'));
       }
     } else {
       box.dataset.pos = 0;

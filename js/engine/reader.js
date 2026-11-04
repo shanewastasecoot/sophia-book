@@ -202,9 +202,48 @@
   }
   const currentSheet = () => el.viewport.querySelector('.sheet.current');
 
+  /* ---------- Quest checkpoints: a page with a treasure to find or a tune to play must be finished
+     before reading past it (arrows, swipes, the Pages menu and links all stop there). On by default
+     for books with treasures; a book can turn it off with gated: false. ---------- */
+  const solvedKey = book => 'sb-solved-' + book.id;
+  const gated = book => book.gated ?? !!book.items?.length;
+  function pageDone(book, i) {
+    const p = book.pages[i];
+    if (p.pickup && !SB.items.has(book, p.pickup.item)) return false;
+    if (p.ocarina && !SB.store.get(solvedKey(book), []).includes(p.id || i)) return false;
+    return true;
+  }
+  // the furthest page that can be reached right now
+  function furthest(book) {
+    if (gated(book)) for (let i = 0; i < book.pages.length; i++) if (!pageDone(book, i)) return i;
+    return book.pages.length - 1;
+  }
+  // Tried to read on too soon: say what's missing and wiggle it.
+  function remind() {
+    const page = state.book.pages[state.i], s = currentSheet();
+    if (page.pickup) {
+      const it = SB.items.def(page.pickup.item);
+      SB.items.hint(`Find the ${it?.name || 'treasure'} first!`, page.pickup.item);
+      const ring = s?.querySelector('.pickup');
+      ring?.classList.remove('look'); void ring?.getBoundingClientRect(); ring?.classList.add('look');
+    } else if (page.ocarina) {
+      SB.items.hint('Play the Gate Song to open the gates!');
+      const box = s?.querySelector('.ocarina');
+      box?.classList.remove('oops'); void box?.offsetWidth; box?.classList.add('oops');
+      box?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    }
+    SB.audio.play('boing');
+  }
+
   function show(i, dir = 0) {
     const book = state.book;
     if (i < 0 || i >= book.pages.length) return false;
+    const max = furthest(book);
+    if (i > max) {
+      if (state.i === max) { remind(); return false; }
+      i = max; // a menu tap or link past a checkpoint lands on the checkpoint instead
+      if (i === state.i) return false;
+    }
     const old = currentSheet();
     if (old && i === state.i) return false;
     state.i = i;
@@ -277,6 +316,10 @@
     document.title = book.title;
     el.prev.disabled = i === 0;
     el.next.disabled = i === n - 1;
+    // waiting on a treasure or the tune: the arrow looks sleepy but still answers with a reminder
+    const locked = i < n - 1 && i >= furthest(book);
+    el.next.classList.toggle('locked', locked);
+    if (locked) el.next.classList.remove('nudge');
     el.fill.style.width = `${(i / (n - 1 || 1)) * 100}%`;
     el.label.textContent = i === 0 ? 'Cover' : `Page ${i} of ${n - 1}`;
     el.live.textContent = `${page.title || ''}. ${el.label.textContent}`;
@@ -295,6 +338,7 @@
   // without the treasures already collected, so drop them and let them be rebuilt.
   function restart() {
     SB.items.reset();
+    SB.store.set(solvedKey(state.book), []);
     for (const s of ready.values()) s.remove();
     ready.clear();
     show(0, -1);
@@ -414,11 +458,12 @@
     el.tocBooks.hidden = SB.books.length < 2;
     el.tocBooks.innerHTML = SB.books.map(b =>
       `<button type="button" class="toc-book" role="tab" data-book="${esc(b.id)}" aria-selected="${b === book}">${esc(b.short || b.title)}</button>`).join('');
+    const max = furthest(book);
     el.tocList.innerHTML = book.pages.map((p, i) => {
-      const cur = book === state.book && i === state.i;
-      return `<li><button type="button" class="toc-item" data-book="${esc(book.id)}" data-i="${i}" ${cur ? 'aria-current="page"' : ''}>
+      const cur = book === state.book && i === state.i, locked = i > max;
+      return `<li><button type="button" class="toc-item${locked ? ' locked' : ''}" data-book="${esc(book.id)}" data-i="${i}" ${cur ? 'aria-current="page"' : ''} ${locked ? 'disabled' : ''}>
         <span class="thumb" data-book="${esc(book.id)}" data-i="${i}"></span>
-        <span class="toc-label">${i === 0 ? '' : `<b>${i}.</b> `}${esc(p.title || `Page ${i}`)}</span></button></li>`;
+        <span class="toc-label">${i === 0 ? '' : `<b>${i}.</b> `}${locked ? '🔒 Keep reading to unlock' : esc(p.title || `Page ${i}`)}</span></button></li>`;
     }).join('');
     // Thumbnails are drawn only when they scroll into view.
     thumbObserver?.disconnect();
@@ -516,6 +561,14 @@
       else if (e.key === 'ArrowLeft') go(-1);
       else if (e.key === 'Home') show(0, -1);
       else if (e.key === 'End') show(state.book.pages.length - 1, 1);
+    });
+    // A treasure picked up or the tune played: the way on is open, so the next arrow bounces.
+    const unlocked = () => { updateChrome(); if (!el.next.disabled && !el.next.classList.contains('locked')) el.next.classList.add('nudge'); };
+    document.addEventListener('sb:progress', unlocked);
+    document.addEventListener('sb:solved', () => {
+      const book = state.book, id = book.pages[state.i].id || state.i, solved = SB.store.get(solvedKey(book), []);
+      if (!solved.includes(id)) SB.store.set(solvedKey(book), [...solved, id]);
+      unlocked();
     });
     window.addEventListener('hashchange', () => {
       const want = `#${state.book.id}/${state.book.pages[state.i].id || state.i}`;

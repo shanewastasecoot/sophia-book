@@ -43,6 +43,7 @@
     target.classList.add('taken');
     setTimeout(() => target.closest('.layer-pickup')?.remove(), 450);
     toast(it);
+    document.dispatchEvent(new CustomEvent('sb:progress'));
   }
 
   // The item arcs up and into the bag button, then the bag bumps.
@@ -63,10 +64,11 @@
     a.onfinish = () => { f.remove(); updateBadge(true); };
   }
 
-  function toast(it) {
+  function toast(it, kicker = 'You found', name = it.name + '!') {
+    el.toasts.querySelectorAll('.toast.hint').forEach(t => t.remove()); // one reminder at a time
     const t = document.createElement('div');
-    t.className = 'toast';
-    t.innerHTML = `${iconSVG(it, 'toast-icon')}<div><p class="toast-kicker">You found</p><p class="toast-name">${it.name}!</p></div>`;
+    t.className = 'toast' + (kicker === 'You found' ? '' : ' hint');
+    t.innerHTML = `${it ? iconSVG(it, 'toast-icon') : ''}<div><p class="toast-kicker">${kicker}</p><p class="toast-name">${name}</p></div>`;
     el.toasts.appendChild(t);
     setTimeout(() => t.classList.add('leaving'), 2600);
     setTimeout(() => t.remove(), 3100);
@@ -118,6 +120,10 @@
   SB.items = {
     init, pickupLayer,
     setBook(b) { book = b; updateBadge(false); },
+    has: (b, id) => SB.store.get('sb-items-' + b.id, []).includes(id),
+    def,
+    // a reminder toast, e.g. "Wait! Find the Pink Music Shell first!"
+    hint(text, itemId) { toast(def(itemId), 'Wait!', text); },
     // "Read it again!" empties the bag so every treasure can be found again
     reset() { if (!book?.items?.length) return; SB.store.set(key(), []); updateBadge(false); },
     isOpen: () => el.panel && !el.panel.hidden,
