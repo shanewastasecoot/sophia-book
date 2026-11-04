@@ -148,6 +148,10 @@ button { font: inherit; touch-action: manipulation; }
   backface-visibility: hidden;
   will-change: transform;
 }
+/* The page and its words are scroll boxes, and a browser only reads touch-action up to the nearest scroll box,
+   so each needs its own pan-y; otherwise the phone claims sideways drags and the swipe never reaches the reader. */
+.sheet, .copy, .media { touch-action: pan-y; }
+.media, .media img { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; -webkit-user-drag: none; }
 .sheet.current { z-index: 2; }
 /* Next/previous pages wait directly underneath the (opaque) current page, already painted and frozen,
    so turning only reveals a finished page. While swiping, the page you're heading to is the one peeking out. */
@@ -223,6 +227,37 @@ img.layer { object-fit: cover; }
 .media.frame-torn { -webkit-mask: var(--mask-torn) center / 100% 100% no-repeat; mask: var(--mask-torn) center / 100% 100% no-repeat; }
 .media.frame-bleed { background: var(--app-bg-2); }
 .layer-illustration img { display: block; width: 100%; height: 100%; }
+/* Portrait phones: the picture goes nearly edge to edge and a little taller (sides trimmed slightly). */
+@media (orientation: portrait) and (max-width: 640px) {
+  .viewport { padding-left: max(6px, env(safe-area-inset-left, 0px)); padding-right: max(6px, env(safe-area-inset-right, 0px)); }
+  .media { aspect-ratio: 3 / 2; }
+  .media.frame-vignette, .media.frame-oval { width: calc(100% - 6px); margin-top: 3px; }
+}
+
+/* "Make it bigger" button on the picture's corner, and the full-screen picture it opens. */
+.zoom-btn {
+  /* top-left: over the picture whether the words sit below it (portrait) or beside it (landscape) */
+  position: absolute; z-index: 6; top: 12px; left: 12px; width: 40px; height: 40px;
+  display: grid; place-items: center; padding: 0; border: 0; border-radius: 50%; cursor: pointer;
+  background: #0006; color: #fff; box-shadow: 0 2px 8px #0005;
+}
+.zoom-btn svg { width: 22px; height: 22px; }
+.zoom-btn:active { transform: scale(.9); }
+.zoom {
+  position: fixed; inset: 0; z-index: 50; background: #000e;
+  opacity: 0; transition: opacity .2s ease; touch-action: none;
+  -webkit-user-select: none; user-select: none;
+}
+.zoom.open { opacity: 1; }
+.zoom-stage { position: absolute; inset: 0; display: grid; place-items: center; }
+.zoom-stage img, .zoom-stage svg { display: block; width: 100%; height: 100%; object-fit: contain; -webkit-user-drag: none; }
+.zoom-close { position: absolute; top: calc(env(safe-area-inset-top, 0px) + 10px); right: calc(env(safe-area-inset-right, 0px) + 10px); color: #fff; background: #ffffff26; }
+.zoom-hint {
+  position: absolute; left: 0; right: 0; bottom: calc(env(safe-area-inset-bottom, 0px) + 18px); margin: 0;
+  text-align: center; color: #fffc; font: 700 .95rem/1.3 var(--display); padding-inline: 20px; pointer-events: none;
+}
+@media (orientation: landscape) { .zoom-hint { display: none; } }
+
 .thumb { -webkit-mask: var(--mask-vignette) center / 100% 100% no-repeat; mask: var(--mask-vignette) center / 100% 100% no-repeat; position: relative; }
 .thumb > * { position: absolute; inset: 0; }
 .thumb img { width: 100%; height: 100%; object-fit: cover; }

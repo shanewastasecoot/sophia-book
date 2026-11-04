@@ -9,7 +9,8 @@ It runs as a plain website with no build step. Turn on GitHub Pages (Settings â†
 ## Reading it
 
 - Swipe left or right on the page, tap the big arrows, or use the arrow keys.
-- Tap the colored sound words to hear them, and tap the picture for a sparkle.
+- Tap the colored sound words to hear them, and tap a drawn picture for a sparkle.
+- Tap the corner button (or a painted picture) to see the picture full screen; swipe there to turn pages, tap to close.
 - The â˜° button opens the Pages menu, with picture thumbnails and a switcher for each book.
 - The speaker button turns sound off and on (it remembers your choice).
 - The address links to the exact page, e.g. `#sparkle-swords/grumbo`.

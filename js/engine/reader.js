@@ -37,7 +37,8 @@
   function snapSize() {
     const m = currentSheet()?.querySelector('.media') || el.viewport;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    const w = Math.round(m.clientWidth * dpr), h = Math.round(w / 1.6);
+    // the picture box is 8:5 on most screens but taller on portrait phones
+    const w = Math.round(m.clientWidth * dpr), h = Math.round((m.clientHeight ? m.clientHeight * dpr : w / 1.6));
     return w > 0 ? { w, h } : null;
   }
   async function ensureSnapshot(book, i) {
@@ -192,6 +193,7 @@
         <canvas class="layer layer-fx" aria-hidden="true"></canvas>
         ${SB.items.pickupLayer(page)}
       </div>
+      <button class="zoom-btn" type="button" aria-label="Make the picture bigger"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       <span class="ink-frame" aria-hidden="true"></span>
       <div class="copy">${page.chapter ? SB.art.ui.chapter(page.chapter.n, page.chapter.title) : ''}${page.text || ''}${page.ocarina ? SB.ocarina.render(page.ocarina) : ''}</div>`;
     if (painted) sheet.dataset.mode = 'picture';
@@ -323,11 +325,64 @@
         const flick = Math.abs(dx) / dt > .5 && Math.abs(dx) > 30;
         if (!((Math.abs(dx) > 70 || flick) && go(dx < 0 ? 1 : -1))) reset(s);
       } else if (e.target.closest('.media')) {
-        sparkle(e);
+        // a painted picture opens big; a drawn scene gets a sparkle where you tapped
+        if (currentSheet()?.dataset.mode === 'picture') openZoom(); else sparkle(e);
       }
       start = null; dragging = false; delete el.viewport.dataset.peek;
     });
     el.viewport.addEventListener('pointercancel', () => { if (dragging) reset(currentSheet()); start = null; dragging = false; delete el.viewport.dataset.peek; });
+    el.viewport.addEventListener('click', e => { if (e.target.closest('.zoom-btn')) openZoom(); });
+    // stop the browser from starting an image drag (desktop) or a long-press menu, which would swallow the swipe
+    el.viewport.addEventListener('dragstart', e => e.preventDefault());
+  }
+
+  /* ---------- Big picture: the current page's picture, full screen. Swipe to turn pages, tap to close. ---------- */
+  const zoom = {};
+  function fillZoom() {
+    const s = currentSheet(); if (!s || !zoom.el) return;
+    const img = s.querySelector('.layer-illustration img');
+    const svg = !img && artSVG(state.book, state.i);
+    zoom.stage.innerHTML = img ? `<img src="${esc(img.currentSrc || img.src)}" alt="">`
+      : svg ? svg.replace('xMidYMid slice', 'xMidYMid meet') : '';
+  }
+  function openZoom() {
+    if (!zoom.el) {
+      zoom.el = document.createElement('div');
+      zoom.el.className = 'zoom'; zoom.el.hidden = true;
+      zoom.el.setAttribute('role', 'dialog'); zoom.el.setAttribute('aria-label', 'Big picture');
+      zoom.el.innerHTML = `<div class="zoom-stage"></div>
+        <button class="icon-btn zoom-close" type="button" aria-label="Close the big picture"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/></svg></button>
+        <p class="zoom-hint">Turn the phone sideways for an even bigger picture</p>`;
+      zoom.stage = zoom.el.querySelector('.zoom-stage');
+      document.body.appendChild(zoom.el);
+      let start = null;
+      zoom.el.addEventListener('pointerdown', e => { start = { x: e.clientX, y: e.clientY }; });
+      zoom.el.addEventListener('pointerup', e => {
+        if (!start) return;
+        const dx = e.clientX - start.x, dy = e.clientY - start.y; start = null;
+        if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) zoomTurn(dx < 0 ? 1 : -1);
+        else if (Math.abs(dx) < 12 && Math.abs(dy) < 12) closeZoom();
+      });
+      zoom.el.addEventListener('pointercancel', () => { start = null; });
+      zoom.el.addEventListener('dragstart', e => e.preventDefault());
+    }
+    fillZoom();
+    zoom.el.hidden = false;
+    void zoom.el.offsetWidth;
+    zoom.el.classList.add('open');
+  }
+  function closeZoom() {
+    if (!zoom.el || zoom.el.hidden) return false;
+    zoom.el.classList.remove('open');
+    setTimeout(() => { if (!zoom.el.classList.contains('open')) { zoom.el.hidden = true; zoom.stage.replaceChildren(); } }, 200);
+    return true;
+  }
+  const zoomOpen = () => zoom.el && !zoom.el.hidden;
+  function zoomTurn(dir) {
+    if (!go(dir)) return;
+    fillZoom();
+    // a painted picture may be found a moment after the page turns
+    setTimeout(() => { if (zoomOpen()) fillZoom(); }, TURN_MS + 100);
   }
 
   // Tap the picture: a star pops where you tapped.
@@ -441,6 +496,11 @@
       if (a?.dataset.action === 'open-book') openBook(a.dataset.book, 0);
     });
     document.addEventListener('keydown', e => {
+      if (zoomOpen()) {
+        if (e.key === 'Escape') closeZoom();
+        else if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') zoomTurn(e.key === 'ArrowRight' ? 1 : -1);
+        return;
+      }
       if (e.key === 'Escape') return closeToc();
       if (!el.toc.hidden || SB.items.isOpen() || e.target.closest('input, textarea, .pickup')) return;
       if (e.key === 'ArrowRight') go(1);
