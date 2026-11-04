@@ -291,6 +291,15 @@
     show(i, 0) || updateChrome();
   }
 
+  // "Read it again!": back to the cover with an empty treasure bag. Pages built ahead of time were made
+  // without the treasures already collected, so drop them and let them be rebuilt.
+  function restart() {
+    SB.items.reset();
+    for (const s of ready.values()) s.remove();
+    ready.clear();
+    show(0, -1);
+  }
+
   /* ---------- Swipe: the page follows your finger, then turns or springs back ---------- */
   function initGestures() {
     let start = null, dragging = false;
@@ -492,7 +501,7 @@
       const s = e.target.closest('.sfx');
       if (s) { SB.audio.play(s.dataset.snd); s.classList.remove('go'); void s.offsetWidth; s.classList.add('go'); return; }
       const a = e.target.closest('[data-action]');
-      if (a?.dataset.action === 'restart') show(0, -1);
+      if (a?.dataset.action === 'restart') restart();
       if (a?.dataset.action === 'open-book') openBook(a.dataset.book, 0);
     });
     document.addEventListener('keydown', e => {

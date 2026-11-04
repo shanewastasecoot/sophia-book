@@ -118,6 +118,8 @@
   SB.items = {
     init, pickupLayer,
     setBook(b) { book = b; updateBadge(false); },
+    // "Read it again!" empties the bag so every treasure can be found again
+    reset() { if (!book?.items?.length) return; SB.store.set(key(), []); updateBadge(false); },
     isOpen: () => el.panel && !el.panel.hidden,
   };
 })(window.SB);
