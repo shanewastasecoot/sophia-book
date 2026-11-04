@@ -164,6 +164,10 @@ img.layer { object-fit: cover; }
 .layer-fx, .layer-pickup, .layer-pickup svg, .layer-snap { pointer-events: none; }
 /* Bitmap snapshot of the scene, shown while a page waits or turns; fades out once the live scene is ready. */
 .sheet[data-mode="live"] .layer-snap { opacity: 0; transition: opacity .25s ease; }
+/* A painted picture (img/<book>/<page>.png) replaces the drawn scene. */
+.sheet[data-mode="picture"] :is(.layer-art, .layer-snap) { display: none; }
+.layer-illustration.arriving { animation: picture-in .45s ease both; }
+@keyframes picture-in { from { opacity: 0; } }
 .copy {
   flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain;
   padding: clamp(14px, 2.5vw, 26px) clamp(16px, 4vw, 36px) clamp(18px, 3vw, 30px);

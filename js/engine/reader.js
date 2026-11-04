@@ -54,6 +54,7 @@
     return size && bitmaps.get(`${book.id}/${i}@${size.w}x${size.h}`);
   }
   function showSnapshot(sheet, bmp) {
+    if (sheet.dataset.mode === 'picture') return true;   // a painting is already a plain image
     const c = sheet.querySelector('.layer-snap');
     if (!c || !bmp) return false;
     if (!sheet.dataset.snapped) {
@@ -71,7 +72,7 @@
     return true;
   }
   function goLive(sheet, book, i) {
-    if (sheet.dataset.mode === 'live') return;
+    if (sheet.dataset.mode === 'live' || sheet.dataset.mode === 'picture') return;
     const art = sheet.querySelector('.layer-art');
     if (!art.firstChild) art.innerHTML = artSVG(book, i);
     if (sheet.dataset.mode !== 'snap') { sheet.dataset.mode = 'live'; return; }
@@ -79,6 +80,36 @@
     requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(() => {
       if (sheet.classList.contains('current')) sheet.dataset.mode = 'live';
     }, 120)));
+  }
+
+  /* ---------- Painted pictures ----------
+     Drop a painting at img/<book id>/<page id>.png (or .webp / .jpg) and that page shows it instead of
+     the drawn scene. Pages without one keep their drawing, so paintings can be added a few at a time. */
+  const pictureNow = new Map(), pictureLookups = new Map();
+  function findPicture(book, i) {
+    const page = book.pages[i], key = book.id + '/' + i;
+    if (page.illustration?.src) return Promise.resolve(null);   // the page names its own picture
+    if (!pictureLookups.has(key)) {
+      pictureLookups.set(key, (async () => {
+        for (const ext of ['png', 'webp', 'jpg']) {
+          const src = `img/${book.id}/${page.id}.${ext}`;
+          try { const im = new Image(); im.src = src; await im.decode(); pictureNow.set(key, src); return src; } catch (e) { /* not there */ }
+        }
+        pictureNow.set(key, null);
+        return null;
+      })());
+    }
+    return pictureLookups.get(key);
+  }
+  const knownPicture = (book, i) => pictureNow.get(book.id + '/' + i);
+
+  // A page that was showing its drawing when its painting turned up: fade the painting in over it.
+  function usePicture(sheet, src) {
+    if (sheet.dataset.mode === 'picture') return;
+    const media = sheet.querySelector('.media');
+    media.insertAdjacentHTML('afterbegin', illustrationHTML({ illustration: { src } }, true).replace('layer-illustration', 'layer-illustration arriving'));
+    sheet.dataset.mode = 'picture';
+    setTimeout(() => { sheet.querySelector('.layer-art')?.replaceChildren(); }, 450);
   }
 
   /* Full-frame illustration (PNG / WebP / SVG file) for a page, as a <picture> with a WebP source. */
@@ -117,7 +148,7 @@
         artBody(book, j); preloadImages(book.pages[j]);
         const key = book.id + '/' + j;
         if (Math.abs(j - state.i) !== 1 || state.book !== book || ready.has(key)) return;
-        const bmp = await ensureSnapshot(book, j);
+        const bmp = (await findPicture(book, j)) ? null : await ensureSnapshot(book, j);
         if (Math.abs(j - state.i) !== 1 || state.book !== book || ready.has(key)) return;
         const s = buildSheet(book, j, bmp);
         s.classList.add('waiting'); s.inert = true; s.setAttribute('aria-hidden', 'true');
@@ -151,9 +182,10 @@
     sheet.dataset.page = i;
     sheet.style.setProperty('--seed', i % 7); // shifts the watercolor wash so each page's paper differs
     const imgs = (page.images || []).map(im => `<img class="layer" src="${esc(im.src)}" alt="${esc(im.alt || '')}" loading="lazy" decoding="async">`).join('');
+    const painted = knownPicture(book, i);
     sheet.innerHTML = `
       <div class="media frame-${esc(frameOf(book, page))}" role="img" aria-label="${esc(page.alt || page.illustration?.alt || '')}">
-        ${illustrationHTML(page, true)}
+        ${illustrationHTML(painted ? { illustration: { src: painted } } : page, true)}
         <div class="layer layer-art"></div>
         <canvas class="layer layer-snap" aria-hidden="true"></canvas>
         ${imgs}
@@ -162,7 +194,8 @@
       </div>
       <span class="ink-frame" aria-hidden="true"></span>
       <div class="copy">${page.chapter ? SB.art.ui.chapter(page.chapter.n, page.chapter.title) : ''}${page.text || ''}${page.ocarina ? SB.ocarina.render(page.ocarina) : ''}</div>`;
-    if (!showSnapshot(sheet, bmp)) goLive(sheet, book, i);   // no bitmap yet: draw the live scene right away
+    if (painted) sheet.dataset.mode = 'picture';
+    else if (!showSnapshot(sheet, bmp)) goLive(sheet, book, i);   // no bitmap yet: draw the live scene right away
     return sheet;
   }
   const currentSheet = () => el.viewport.querySelector('.sheet.current');
@@ -182,6 +215,7 @@
     sheet.classList.add('current');
     if (!sheet.isConnected) el.viewport.appendChild(sheet);
     pruneWaiting(book, i);
+    findPicture(book, i).then(src => { if (src && sheet.classList.contains('current')) usePicture(sheet, src); });
     const turning = !!(old && dir && !SB.prefersReducedMotion());
 
     if (old) {
@@ -328,6 +362,7 @@
       const b = SB.getBook(t.dataset.book), i = +t.dataset.i;
       t.innerHTML = illustrationHTML(b.pages[i], false) + artSVG(b, i);
       t.classList.add('ready');
+      findPicture(b, i).then(src => { if (src) t.innerHTML = illustrationHTML({ illustration: { src } }, false); });
     };
     if ('IntersectionObserver' in window) {
       thumbObserver = new IntersectionObserver(entries => entries.forEach(en => {
