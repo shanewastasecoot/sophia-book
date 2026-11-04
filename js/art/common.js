@@ -13,7 +13,15 @@
     <linearGradient id="spotPink" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff4fa3" stop-opacity=".55"/><stop offset="1" stop-color="#ff4fa3" stop-opacity="0"/></linearGradient>
     <linearGradient id="spotCyan" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5ff2ff" stop-opacity=".5"/><stop offset="1" stop-color="#5ff2ff" stop-opacity="0"/></linearGradient>
     <linearGradient id="rainbow" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff4fa3"/><stop offset=".33" stop-color="#ffc83d"/><stop offset=".66" stop-color="#5ff2ff"/><stop offset="1" stop-color="#b06cff"/></linearGradient>
-    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>`);
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <!-- Hand-inked jitter: a slow warp bends straight lines like a wobbly pen, then a fine grit
+         roughens the edges like pencil on paper. Used on scenes (SVG) and UI frames (CSS filter: url()). -->
+    <filter id="sketch-filter" x="-3%" y="-3%" width="106%" height="106%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.028" numOctaves="2" seed="7" result="warp"/>
+      <feDisplacementMap in="SourceGraphic" in2="warp" scale="4" xChannelSelector="R" yChannelSelector="G" result="wobbly"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="1" seed="3" result="grit"/>
+      <feDisplacementMap in="wobbly" in2="grit" scale="1.6" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>`);
 
   /* ---------- Cast (change colors here) ---------- */
   const cast = {

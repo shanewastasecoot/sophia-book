@@ -9,23 +9,41 @@
   const el = {};
   const state = { book: null, i: -1, tocBook: null };
 
-  /* ---------- Art cache: a page's SVG is generated the first time it's needed, then reused ---------- */
+  /* ---------- Art cache: a page's SVG is generated the first time it's needed, then reused.
+     Scenes are drawn through #sketch-filter (hand-inked wobble) unless the page or book sets sketch: false. ---------- */
   const cache = new Map();
+  const sketchy = (book, page) => (page.sketch ?? book.sketch ?? true) && !document.documentElement.classList.contains('no-sketch');
   function artSVG(book, i) {
     const key = book.id + '/' + i;
     if (!cache.has(key)) {
       const page = book.pages[i];
-      cache.set(key, `<svg viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">${page.art ? page.art() : ''}</svg>`);
+      const body = page.art ? page.art() : '';
+      cache.set(key, body && `<svg viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">${sketchy(book, page) ? `<g filter="url(#sketch-filter)">${body}</g>` : body}</svg>`);
     }
     return cache.get(key);
   }
+
+  /* Full-frame illustration (PNG / WebP / SVG file) for a page, as a <picture> with a WebP source. */
+  function illustrationHTML(page, eager) {
+    const il = page.illustration;
+    if (!il?.src) return '';
+    const style = `object-fit:${il.fit || 'cover'};object-position:${il.focus || '50% 50%'}`;
+    return `<picture class="layer layer-illustration">
+      ${il.webp ? `<source type="image/webp" srcset="${esc(il.webp)}">` : ''}
+      <img src="${esc(il.src)}" alt="" style="${style}" ${il.width ? `width="${il.width}" height="${il.height}"` : ''}
+        loading="${eager ? 'eager' : 'lazy'}" decoding="async" ${eager ? 'fetchpriority="high"' : ''}></picture>`;
+  }
+  const frameOf = (book, page) => page.illustration?.frame || page.frame || book.frame || 'vignette';
+
   const preloaded = new Set();
   function preloadImages(page) {
-    for (const im of page.images || []) {
-      if (preloaded.has(im.src)) continue;
-      preloaded.add(im.src);
+    const srcs = (page.images || []).map(im => im.src);
+    if (page.illustration) srcs.push(page.illustration.webp || page.illustration.src);
+    for (const src of srcs) {
+      if (!src || preloaded.has(src)) continue;
+      preloaded.add(src);
       const link = document.createElement('link');
-      link.rel = 'prefetch'; link.as = 'image'; link.href = im.src;
+      link.rel = 'prefetch'; link.as = 'image'; link.href = src;
       document.head.appendChild(link);
     }
   }
@@ -43,14 +61,17 @@
     const sheet = document.createElement('article');
     sheet.className = 'sheet';
     sheet.dataset.page = i;
+    sheet.style.setProperty('--seed', i % 7); // shifts the watercolor wash so each page's paper differs
     const imgs = (page.images || []).map(im => `<img class="layer" src="${esc(im.src)}" alt="${esc(im.alt || '')}" loading="lazy" decoding="async">`).join('');
     sheet.innerHTML = `
-      <div class="media">
-        <div class="layer layer-art" role="img" aria-label="${esc(page.alt || '')}">${artSVG(book, i)}</div>
+      <div class="media frame-${esc(frameOf(book, page))}" role="img" aria-label="${esc(page.alt || page.illustration?.alt || '')}">
+        ${illustrationHTML(page, true)}
+        <div class="layer layer-art">${artSVG(book, i)}</div>
         ${imgs}
         <canvas class="layer layer-fx" aria-hidden="true"></canvas>
         ${SB.items.pickupLayer(page)}
       </div>
+      <span class="ink-frame" aria-hidden="true"></span>
       <div class="copy">${page.chapter ? SB.art.ui.chapter(page.chapter.n, page.chapter.title) : ''}${page.text || ''}${page.ocarina ? SB.ocarina.render(page.ocarina) : ''}</div>`;
     return sheet;
   }
@@ -184,7 +205,11 @@
     }).join('');
     // Thumbnails are drawn only when they scroll into view.
     thumbObserver?.disconnect();
-    const fill = t => { t.innerHTML = artSVG(SB.getBook(t.dataset.book), +t.dataset.i); t.classList.add('ready'); };
+    const fill = t => {
+      const b = SB.getBook(t.dataset.book), i = +t.dataset.i;
+      t.innerHTML = illustrationHTML(b.pages[i], false) + artSVG(b, i);
+      t.classList.add('ready');
+    };
     if ('IntersectionObserver' in window) {
       thumbObserver = new IntersectionObserver(entries => entries.forEach(en => {
         if (en.isIntersecting) { fill(en.target); thumbObserver.unobserve(en.target); }

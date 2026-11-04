@@ -1,0 +1,89 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://shanewastasecoot.github.io/sophia-book/schema/story.schema.json",
+  "title": "Storybook",
+  "description": "A book for the Sophia reader: its settings, treasures and pages. Book 2's data in js/books/mermaid-city.story.js follows this shape.",
+  "type": "object",
+  "required": ["id", "title", "pages"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9-]+$", "description": "Used in the URL, e.g. #mermaid-city/kelp" },
+    "title": { "type": "string" },
+    "short": { "type": "string", "description": "Short title for the top bar and the book switcher" },
+    "hero": { "type": "string", "description": "Name that {name} turns into", "default": "Sophia" },
+    "theme": { "$ref": "#/definitions/theme" },
+    "frame": { "$ref": "#/definitions/frame", "description": "Default illustration frame for every page" },
+    "sketch": { "type": "boolean", "default": true, "description": "Draw SVG scenes through the hand-inked #sketch-filter" },
+    "items": { "type": "array", "items": { "$ref": "#/definitions/item" } },
+    "pages": { "type": "array", "minItems": 1, "items": { "$ref": "#/definitions/page" } }
+  },
+  "definitions": {
+    "theme": { "type": "string", "enum": ["sparkle-night", "mermaid-deep", "mermaid-lagoon"], "description": "A world theme from js/engine/themes.js" },
+    "frame": {
+      "type": "string",
+      "enum": ["vignette", "oval", "torn", "bleed"],
+      "description": "vignette: soft painted edge on all sides (default). oval: storybook cameo. torn: full width, ragged bottom edge. bleed: plain edge-to-edge."
+    },
+    "item": {
+      "type": "object",
+      "required": ["id", "name"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "desc": { "type": "string", "description": "Shown in the treasure bag once found" }
+      }
+    },
+    "illustration": {
+      "type": "object",
+      "description": "A full-frame painted or drawn picture file. It sits under any SVG `scene`, so a scene can add animated bits on top of a painting.",
+      "required": ["src"],
+      "properties": {
+        "src": { "type": "string", "description": "PNG, JPEG or SVG file, relative to index.html, e.g. img/mermaid-city/kelp.png" },
+        "webp": { "type": "string", "description": "Optional smaller WebP version; browsers that support it load this instead" },
+        "alt": { "type": "string", "description": "Used when the page has no `alt` of its own" },
+        "width": { "type": "integer", "description": "Pixel size of the file (prevents layout jumps)" },
+        "height": { "type": "integer" },
+        "fit": { "type": "string", "enum": ["cover", "contain"], "default": "cover" },
+        "focus": { "type": "string", "default": "50% 50%", "description": "Which part stays in view when the picture is cropped (CSS object-position)" },
+        "frame": { "$ref": "#/definitions/frame" }
+      }
+    },
+    "page": {
+      "type": "object",
+      "required": ["id", "text"],
+      "anyOf": [{ "required": ["scene"] }, { "required": ["illustration"] }],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+        "title": { "type": "string", "description": "Label in the Pages menu" },
+        "chapter": {
+          "type": "object", "required": ["n", "title"],
+          "properties": { "n": { "type": "integer", "minimum": 1 }, "title": { "type": "string" } }
+        },
+        "scene": { "type": "string", "description": "Key of an SVG scene drawn in the book's .js file" },
+        "illustration": { "$ref": "#/definitions/illustration" },
+        "frame": { "$ref": "#/definitions/frame" },
+        "sketch": { "type": "boolean", "description": "Turn the hand-inked filter off for this page's SVG scene" },
+        "theme": { "$ref": "#/definitions/theme" },
+        "fx": { "type": "string", "enum": ["sparkles", "bubbles", "glow"], "description": "Animated canvas effect over the picture" },
+        "pickup": {
+          "type": "object", "required": ["item", "x", "y"],
+          "description": "A treasure to tap in the picture. x/y are in the 800 x 500 picture box.",
+          "properties": {
+            "item": { "type": "string" },
+            "x": { "type": "number", "minimum": 0, "maximum": 800 },
+            "y": { "type": "number", "minimum": 0, "maximum": 500 },
+            "size": { "type": "number", "default": 80 }
+          }
+        },
+        "ocarina": {
+          "type": "object", "required": ["tune"],
+          "properties": { "tune": { "type": "array", "minItems": 1, "items": { "type": "string", "enum": ["pink", "blue", "gold"] } } }
+        },
+        "alt": { "type": "string", "description": "What the picture shows, for screen readers" },
+        "text": {
+          "type": "array", "items": { "type": "string" },
+          "description": "One string per paragraph. Markup: {name} {sfx:sound|LABEL} {say:…} {pip:…} {shout:…} {huge:…} {whisper:…} {b:…}, or a paragraph of just {divider}."
+        }
+      }
+    }
+  }
+}

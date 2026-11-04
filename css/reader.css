@@ -5,13 +5,14 @@
    Sparkleton defaults so the page looks right before the script runs. */
 :root {
   --app-bg-1: #1b1240; --app-bg-2: #2e1a68; --star: #ffffff55; --chrome-ink: #ffffff;
-  --paper: #fff8fd; --ink: #2a1640; --muted: #7d6a99;
+  --paper: #fbf3e4; --ink: #3a2440; --muted: #7a6584;
+  --ink-line: #3a1d4fb0; --chrome-line: #ffffffa6; --grain: .55; --wash: .45;
   --accent: #ff4fa3; --accent-shadow: #b81f6e;
   --accent-2: #8a3fd1; --accent-2-shadow: #5a2193;
   --accent-3: #ff7a1a; --accent-3-shadow: #b85a07;
   --btn: #ffc83d; --btn-ink: #2a1640; --btn-shadow: #c08a0a; --btn-glow: 0 0 0 transparent;
   --glow: #ff4fa333;
-  --panel: #fff8fd; --panel-strong: #fff8fd; --panel-blur: 0px; --panel-border: #ffffff22;
+  --panel: #fbf3e4; --panel-strong: #fbf3e4; --panel-blur: 0px; --panel-border: #ffffff22;
   --bar-bg: transparent; --chip: #0000000f; --text-glow: none;
   --sfx-1: #ff4fa3; --sfx-1-shadow: #b81f6e; --sfx-2: #8a3fd1; --sfx-2-shadow: #5a2193;
   --sfx-3: #ff7a1a; --sfx-3-shadow: #b85a07; --sfx-tiny: #4fb8ff; --sfx-tiny-shadow: #2373a8;
@@ -29,6 +30,19 @@
   --turn: 520ms;
   --spring: cubic-bezier(.34, 1.56, .64, 1);
   --ease-out: cubic-bezier(.2, .8, .2, 1);
+
+  /* ----- Storybook textures, generated in the browser from SVG noise (no image files) -----
+     grain:  fine pencil-paper speckle        fibers: long cold-press paper fibers
+     wash:   big soft watercolor blooms        */
+  --tex-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .34 0 0 0 0 .27 0 0 0 0 .22 1.25 0 0 0 -.5'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  --tex-fibers: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='420'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.01 .12' numOctaves='2' seed='5' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .42 0 0 0 0 .34 .6 0 0 0 -.3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E");
+  --tex-wash: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='760' height='760'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.0045' numOctaves='4' seed='9' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .78 0 0 0 0 .62 0 0 0 0 .66 1.6 0 0 0 -.62'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23w)'/%3E%3C/svg%3E");
+
+  /* ----- Painterly illustration edges (alpha masks). A rounded shape is warped by noise and
+     softly blurred, so the picture fades out like watercolor bleeding into the paper. ----- */
+  --mask-vignette: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 500' preserveAspectRatio='none'%3E%3Cfilter id='e' x='-10%25' y='-10%25' width='120%25' height='120%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.011 .017' numOctaves='3' seed='11'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='36' xChannelSelector='R' yChannelSelector='G'/%3E%3CfeGaussianBlur stdDeviation='3'/%3E%3C/filter%3E%3Crect x='26' y='24' width='748' height='452' rx='48' fill='%23fff' filter='url(%23e)'/%3E%3C/svg%3E");
+  --mask-oval: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 500' preserveAspectRatio='none'%3E%3Cfilter id='e' x='-10%25' y='-10%25' width='120%25' height='120%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.012 .018' numOctaves='3' seed='4'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='30' xChannelSelector='R' yChannelSelector='G'/%3E%3CfeGaussianBlur stdDeviation='6'/%3E%3C/filter%3E%3Cellipse cx='400' cy='250' rx='372' ry='226' fill='%23fff' filter='url(%23e)'/%3E%3C/svg%3E");
+  --mask-torn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 500' preserveAspectRatio='none'%3E%3Cfilter id='e' x='-5%25' y='-5%25' width='110%25' height='110%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.035' numOctaves='3' seed='2'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='20' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3Crect x='-30' y='-30' width='860' height='510' fill='%23fff' filter='url(%23e)'/%3E%3C/svg%3E");
   color-scheme: dark;
 }
 
@@ -129,7 +143,7 @@ button { font: inherit; touch-action: manipulation; }
 }
 .sheet.current { z-index: 1; }
 .sheet.settle { transition: transform .25s var(--ease-out); }
-.media { position: relative; flex: none; width: 100%; aspect-ratio: 8 / 5; max-width: 100%; overflow: hidden; background: var(--app-bg-2); cursor: pointer; }
+.media { position: relative; flex: none; width: 100%; aspect-ratio: 8 / 5; max-width: 100%; overflow: hidden; cursor: pointer; }
 .layer { position: absolute; inset: 0; width: 100%; height: 100%; }
 .layer-art svg, .layer-pickup svg { display: block; width: 100%; height: 100%; }
 img.layer { object-fit: cover; }
@@ -141,6 +155,55 @@ img.layer { object-fit: cover; }
 }
 .copy p { margin: 0 0 .55em; max-width: 62ch; }
 .copy p:last-child { margin-bottom: 0; }
+
+/* ---------- Storybook look: watercolor paper, pencil grain, hand-inked frames ---------- */
+/* Watercolor wash soaks into the page background (below the app). */
+body::before {
+  content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background: var(--tex-wash) 0 0 / 760px 760px;
+  mix-blend-mode: multiply; opacity: var(--wash);
+}
+/* Paper grain + fibers over everything, so flat colors read as paint on paper. */
+body::after {
+  content: ""; position: fixed; inset: 0; z-index: 15; pointer-events: none;
+  background: var(--tex-grain) 0 0 / 220px 220px, var(--tex-fibers) 0 0 / 420px 420px;
+  mix-blend-mode: multiply; opacity: var(--grain);
+}
+/* Each page gets its own blotchy watercolor wash, so no two pages look machine-flat. */
+.sheet::before {
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; border-radius: inherit;
+  background: var(--tex-wash) calc(var(--seed, 0) * 137px) calc(var(--seed, 0) * 91px) / 760px 760px;
+  mix-blend-mode: multiply; opacity: calc(var(--wash) * .7);
+}
+.sheet > .media, .sheet > .copy { position: relative; z-index: 1; }
+/* Hand-inked border just inside the page edge (the filter wobbles the straight lines). */
+.ink-frame {
+  position: absolute; inset: 7px; z-index: 3; pointer-events: none;
+  border: 2.5px solid var(--ink-line);
+  border-radius: max(6px, calc(var(--radius) - 6px));
+  filter: url(#sketch-filter);
+}
+/* Pencil rings around the round buttons, chapter ornaments drawn with the same wobbly pen. */
+.nav-btn, .icon-btn { position: relative; }
+.nav-btn::after, .icon-btn::after {
+  content: ""; position: absolute; inset: -4px; pointer-events: none;
+  border: 2px solid var(--chrome-line); border-radius: inherit;
+  filter: url(#sketch-filter);
+}
+.chapter-orn, .divider svg, .toast-icon, .slot-icon { filter: url(#sketch-filter); }
+
+/* Illustration frames. Set per page with "frame" (or "illustration.frame"), or per book.
+   vignette (default): soft painted edge on all four sides   oval: storybook cameo
+   torn: full width with a ragged bottom edge                bleed: plain edge-to-edge box */
+.media.frame-vignette, .media.frame-oval { width: calc(100% - 20px); margin: 10px auto 0; }
+.media.frame-vignette { -webkit-mask: var(--mask-vignette) center / 100% 100% no-repeat; mask: var(--mask-vignette) center / 100% 100% no-repeat; }
+.media.frame-oval { -webkit-mask: var(--mask-oval) center / 100% 100% no-repeat; mask: var(--mask-oval) center / 100% 100% no-repeat; }
+.media.frame-torn { -webkit-mask: var(--mask-torn) center / 100% 100% no-repeat; mask: var(--mask-torn) center / 100% 100% no-repeat; }
+.media.frame-bleed { background: var(--app-bg-2); }
+.layer-illustration img { display: block; width: 100%; height: 100%; }
+.thumb { -webkit-mask: var(--mask-vignette) center / 100% 100% no-repeat; mask: var(--mask-vignette) center / 100% 100% no-repeat; position: relative; }
+.thumb > * { position: absolute; inset: 0; }
+.thumb img { width: 100%; height: 100%; object-fit: cover; }
 
 /* Page turn: the old page swings away on its spine (with a glint of light across it)
    while the new one settles in underneath and its words float up one by one. */
@@ -380,6 +443,7 @@ img.layer { object-fit: cover; }
   .nav-btn { width: 48px; height: 48px; }
   .sheet { width: 100%; flex-direction: row; }
   .media { width: auto; height: 100%; max-width: 60%; }
+  .media.frame-vignette, .media.frame-oval { margin: 8px 0 8px 8px; height: calc(100% - 16px); width: auto; }
   .copy { font-size: clamp(.95rem, .8rem + .9vh, 1.15rem); padding: 12px 18px; }
   .toasts { top: 56px; }
 }

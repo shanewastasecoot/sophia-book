@@ -38,6 +38,18 @@ js/books/mermaid-city.story.js    book 2's words and page structure, as plain JS
 js/books/mermaid-city.js          book 2's scene drawings, treasure icons and sounds
 ```
 
+### Storybook look
+
+Scenes are drawn through `#sketch-filter` (an SVG noise filter that wobbles lines like a hand-inked pen); turn it off per book or page with `"sketch": false`, or for everything by adding the class `no-sketch` to `<html>`. Paper grain, fibers and watercolor washes are generated from SVG noise in `css/reader.css` (`--tex-*`) and blended with `mix-blend-mode: multiply`; their strength is set per theme (`--grain`, `--wash`).
+
+Pictures can be code-drawn SVG scenes, image files, or both. To use a painted picture, give the page an `illustration`:
+
+```json
+"illustration": { "src": "img/mermaid-city/kelp.png", "webp": "img/mermaid-city/kelp.webp", "width": 1600, "height": 1000, "focus": "50% 40%", "frame": "vignette" }
+```
+
+`frame` is `vignette` (soft painted edges, the default), `oval`, `torn` (ragged bottom edge) or `bleed` (plain box). The full page format is in `schema/story.schema.json`.
+
 Book 2's story text uses a small markup so it can live in JSON: `{name}`, `{sfx:glub|GLUB!}`, `{say:…}`, `{pip:…}`, `{shout:…}`, `{huge:…}`, `{whisper:…}`, `{b:…}`, and a paragraph of just `{divider}`. Pages can also have `chapter`, `pickup` and `ocarina` fields (documented at the top of the story file).
 
 Scripts are plain `<script defer>` files that add to `window.SB`, so the book also works when opened from disk (ES modules would not).

@@ -5,14 +5,16 @@
 (function (SB) {
   const SPARKLE = {
     '--app-bg-1': '#1b1240', '--app-bg-2': '#2e1a68', '--star': '#ffffff55', '--chrome-ink': '#ffffff',
-    '--paper': '#fff8fd', '--ink': '#2a1640', '--muted': '#7d6a99',
+    '--paper': '#fbf3e4', '--ink': '#3a2440', '--muted': '#7a6584',
+    // storybook texture: pencil line color, paper grain and watercolor wash strength (0..1)
+    '--ink-line': '#3a1d4fb0', '--chrome-line': '#ffffffa6', '--grain': '.55', '--wash': '.45',
     '--accent': '#ff4fa3', '--accent-shadow': '#b81f6e',
     '--accent-2': '#8a3fd1', '--accent-2-shadow': '#5a2193',
     '--accent-3': '#ff7a1a', '--accent-3-shadow': '#b85a07',
     '--btn': '#ffc83d', '--btn-ink': '#2a1640', '--btn-shadow': '#c08a0a', '--btn-glow': '0 0 0 transparent',
     '--glow': '#ff4fa333',
-    // panels: solid paper here, frosted glass in the ocean themes
-    '--panel': '#fff8fd', '--panel-strong': '#fff8fd', '--panel-blur': '0px', '--panel-border': '#ffffff22',
+    // panels: warm watercolor paper here, frosted glass in the ocean themes
+    '--panel': '#fbf3e4', '--panel-strong': '#fbf3e4', '--panel-blur': '0px', '--panel-border': '#ffffff22',
     '--bar-bg': 'transparent', '--chip': '#0000000f',
     '--text-glow': 'none',
     // sound-word pills (always white text)
@@ -33,6 +35,7 @@
     ...SPARKLE,
     '--app-bg-1': '#020c1f', '--app-bg-2': '#053a4a', '--star': '#5ff2ff1f', '--chrome-ink': '#e4fbff',
     '--paper': '#061e34', '--ink': '#e4fbff', '--muted': '#8fc6d1',
+    '--ink-line': '#9ff6ff99', '--chrome-line': '#9ff6ff99', '--grain': '.3', '--wash': '.3',
     '--accent': '#ff5fd2', '--accent-shadow': '#9c2a7e',
     '--accent-2': '#5ff2ff', '--accent-2-shadow': '#1a8fa3',
     '--accent-3': '#ffc06b', '--accent-3-shadow': '#b9772a',
