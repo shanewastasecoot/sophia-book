@@ -40,7 +40,13 @@ js/books/mermaid-city.js          book 2's scene drawings, treasure icons and so
 
 ### Storybook look
 
-Scenes are drawn through `#sketch-filter` (an SVG noise filter that wobbles lines like a hand-inked pen); turn it off per book or page with `"sketch": false`, or for everything by adding the class `no-sketch` to `<html>`. Paper grain, fibers and watercolor washes are generated from SVG noise in `css/reader.css` (`--tex-*`) and blended with `mix-blend-mode: multiply`; their strength is set per theme (`--grain`, `--wash`).
+Scenes get a hand-inked wobble baked into their shapes when a page is first drawn (`js/engine/sketch.js` nudges every point by a smooth noise field), so it costs nothing while characters animate. Turn it off per book or page with `"sketch": false`, or for everything by adding the class `no-sketch` to `<html>`. The live `#sketch-filter` is used only on small static UI pieces (page frame, button rings, ornaments). Paper grain, fibers and watercolor washes are generated from SVG noise in `css/reader.css` (`--tex-*`) and painted as static background layers with `background-blend-mode: multiply`.
+
+### Keeping it smooth on phones
+
+- Nothing expensive runs per frame: no live SVG filters on animated scenes, no full-screen blend overlays, and the frosted-glass blur is only used on mouse/trackpad devices.
+- The next and previous pages are built after a turn finishes and wait, already painted and frozen, under the current page, so a turn only reveals a finished page (and a swipe peeks at the right one).
+- The ocean backdrop renders at 1x resolution and pauses during page turns; canvas effects start after the turn.
 
 Pictures can be code-drawn SVG scenes, image files, or both. To use a painted picture, give the page an `illustration`:
 

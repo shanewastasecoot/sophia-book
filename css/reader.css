@@ -50,10 +50,14 @@
 [hidden] { display: none !important; }
 html, body { height: 100%; margin: 0; }
 body {
+  /* watercolor wash + grain soak into the background color (multiply), painted once */
   background:
+    var(--tex-wash) 0 0 / 760px 760px,
+    var(--tex-grain) 0 0 / 220px 220px,
     radial-gradient(circle at 12% 18%, var(--star) 0 1px, transparent 2px) 0 0 / 140px 140px,
     radial-gradient(circle at 70% 60%, var(--star) 0 1px, transparent 2px) 0 0 / 190px 190px,
     linear-gradient(180deg, var(--app-bg-1), var(--app-bg-2));
+  background-blend-mode: multiply, multiply, normal, normal, normal;
   background-color: var(--app-bg-1);
   color: var(--ink);
   font-family: var(--read);
@@ -66,10 +70,13 @@ body {
 button { font: inherit; touch-action: manipulation; }
 :focus-visible { outline: 3px solid var(--btn); outline-offset: 3px; }
 
-/* Frosted glass: any surface using the panel tokens. Solid paper in Sparkleton (blur 0). */
-.glass, .sheet, .toc, .bag-panel, .toast {
-  -webkit-backdrop-filter: blur(var(--panel-blur)) saturate(150%);
-  backdrop-filter: blur(var(--panel-blur)) saturate(150%);
+/* Frosted glass, only in the ocean worlds and only on mouse/trackpad devices. On phones the blur would be
+   recomputed every frame (the bubbles behind it never stop moving), so touch screens get a solid panel instead. */
+@media (hover: hover) and (pointer: fine) {
+  :root[data-world^="mermaid"] :is(.sheet, .toc, .bag-panel, .toast) {
+    -webkit-backdrop-filter: blur(var(--panel-blur)) saturate(150%);
+    backdrop-filter: blur(var(--panel-blur)) saturate(150%);
+  }
 }
 
 /* ---------- Backdrop (ocean worlds): bubbles + caustic light behind everything ---------- */
@@ -141,7 +148,14 @@ button { font: inherit; touch-action: manipulation; }
   backface-visibility: hidden;
   will-change: transform;
 }
-.sheet.current { z-index: 1; }
+.sheet.current { z-index: 2; }
+/* Next/previous pages wait directly underneath the (opaque) current page, already painted and frozen,
+   so turning only reveals a finished page. While swiping, the page you're heading to is the one peeking out. */
+.sheet.waiting { z-index: 0; pointer-events: none; }
+.sheet.waiting, .sheet.waiting * { animation-play-state: paused !important; }
+.viewport[data-peek="next"] .sheet.waiting[data-side="next"],
+.viewport[data-peek="prev"] .sheet.waiting[data-side="prev"] { z-index: 1; }
+@media (hover: hover) and (pointer: fine) { .sheet.waiting { visibility: hidden; } } /* desktops don't need the head start */
 .sheet.settle { transition: transform .25s var(--ease-out); }
 .media { position: relative; flex: none; width: 100%; aspect-ratio: 8 / 5; max-width: 100%; overflow: hidden; cursor: pointer; }
 .layer { position: absolute; inset: 0; width: 100%; height: 100%; }
@@ -156,26 +170,28 @@ img.layer { object-fit: cover; }
 .copy p { margin: 0 0 .55em; max-width: 62ch; }
 .copy p:last-child { margin-bottom: 0; }
 
-/* ---------- Storybook look: watercolor paper, pencil grain, hand-inked frames ---------- */
-/* Watercolor wash soaks into the page background (below the app). */
-body::before {
-  content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
-  background: var(--tex-wash) 0 0 / 760px 760px;
-  mix-blend-mode: multiply; opacity: var(--wash);
+/* ---------- Storybook look: watercolor paper, pencil grain, hand-inked frames ----------
+   Textures are painted as static background layers blended with multiply. (Full-screen blend overlays
+   looked the same but made the phone re-blend the whole screen on every animation frame.) */
+.sheet {
+  background:
+    var(--tex-grain) 0 0 / 220px 220px,
+    var(--tex-fibers) 0 0 / 420px 420px,
+    var(--tex-wash) calc(var(--seed, 0) * 137px) calc(var(--seed, 0) * 91px) / 760px 760px,
+    var(--panel);
+  background-blend-mode: multiply, multiply, multiply, normal;
+  contain: layout paint;
 }
-/* Paper grain + fibers over everything, so flat colors read as paint on paper. */
-body::after {
-  content: ""; position: fixed; inset: 0; z-index: 15; pointer-events: none;
-  background: var(--tex-grain) 0 0 / 220px 220px, var(--tex-fibers) 0 0 / 420px 420px;
-  mix-blend-mode: multiply; opacity: var(--grain);
+/* Grain over the picture on its own GPU layer: drawn once, never repainted while the scene animates. */
+.media::after {
+  content: ""; position: absolute; inset: 0; z-index: 5; pointer-events: none;
+  background: var(--tex-grain) 0 0 / 220px 220px; opacity: calc(var(--grain) * .6);
+  will-change: transform;
 }
-/* Each page gets its own blotchy watercolor wash, so no two pages look machine-flat. */
-.sheet::before {
-  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; border-radius: inherit;
-  background: var(--tex-wash) calc(var(--seed, 0) * 137px) calc(var(--seed, 0) * 91px) / 760px 760px;
-  mix-blend-mode: multiply; opacity: calc(var(--wash) * .7);
-}
+/* The picture gets its own layer too, so its painted-edge mask is applied by the GPU. */
+.media { will-change: transform; }
 .sheet > .media, .sheet > .copy { position: relative; z-index: 1; }
+@media (pointer: coarse) { .sheet, .toast { background-color: var(--paper); } } /* solid on touch: no blur, no see-through */
 /* Hand-inked border just inside the page edge (the filter wobbles the straight lines). */
 .ink-frame {
   position: absolute; inset: 7px; z-index: 3; pointer-events: none;
@@ -207,13 +223,13 @@ body::after {
 
 /* Page turn: the old page swings away on its spine (with a glint of light across it)
    while the new one settles in underneath and its words float up one by one. */
-.sheet.out-next, .sheet.out-prev { z-index: 2; pointer-events: none; animation: var(--turn) cubic-bezier(.45, 0, .7, .4) forwards; }
+.sheet.out-next, .sheet.out-prev { z-index: 3; pointer-events: none; animation: var(--turn) cubic-bezier(.45, 0, .7, .4) forwards; }
 .sheet.out-next { transform-origin: 0% 50%; animation-name: turn-next; }
 .sheet.out-prev { transform-origin: 100% 50%; animation-name: turn-prev; }
 .sheet.out-next::after, .sheet.out-prev::after {
-  content: ""; position: absolute; inset: 0; pointer-events: none;
-  background: linear-gradient(100deg, transparent 35%, #ffffff66 50%, transparent 65%) 0 0 / 300% 100%;
-  animation: sheen var(--turn) ease-in forwards;
+  content: ""; position: absolute; inset: 0; z-index: 4; pointer-events: none;
+  background: linear-gradient(100deg, transparent 35%, #ffffff66 50%, transparent 65%);
+  animation: sheen var(--turn) ease-in forwards;   /* moves with transform, so the GPU slides it */
 }
 .sheet.out-prev::after { animation-direction: reverse; }
 .sheet.in { animation: settle-in var(--turn) var(--ease-out) both; }
@@ -225,7 +241,7 @@ body::after {
 @keyframes turn-next { to { transform: rotateY(-75deg) translateX(-8%); opacity: 0; } }
 @keyframes turn-prev { to { transform: rotateY(75deg) translateX(8%); opacity: 0; } }
 @keyframes settle-in { from { transform: scale(.95); opacity: .5; } }
-@keyframes sheen { from { background-position: 100% 0; } to { background-position: 0% 0; } }
+@keyframes sheen { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
 @keyframes rise { from { transform: translateY(10px); opacity: 0; } }
 
 /* ---------- Bottom nav ---------- */
@@ -372,7 +388,9 @@ body::after {
   position: fixed; z-index: 21; left: 0; right: 0; bottom: 0;
   max-height: min(82dvh, 720px);
   display: flex; flex-direction: column;
-  background: var(--panel-strong); color: var(--ink);
+  background: var(--tex-grain) 0 0 / 220px 220px, var(--tex-fibers) 0 0 / 420px 420px, var(--panel-strong);
+  background-blend-mode: multiply, multiply, normal;
+  color: var(--ink);
   border: 1px solid var(--panel-border);
   border-radius: 22px 22px 0 0;
   box-shadow: 0 -10px 40px #0006, 0 0 40px var(--glow);

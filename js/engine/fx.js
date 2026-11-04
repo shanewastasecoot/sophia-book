@@ -41,17 +41,27 @@
     },
   };
 
+  // A soft glowing dot, painted once per color and then stamped (much cheaper than a gradient per dot per frame).
+  const sprites = {};
+  function glowSprite(rgb) {
+    if (sprites[rgb]) return sprites[rgb];
+    const s = document.createElement('canvas'); s.width = s.height = 64;
+    const g = s.getContext('2d'), gr = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+    gr.addColorStop(0, `rgba(${rgb},1)`); gr.addColorStop(.35, `rgba(${rgb},.45)`); gr.addColorStop(1, `rgba(${rgb},0)`);
+    g.fillStyle = gr; g.fillRect(0, 0, 64, 64);
+    return (sprites[rgb] = s);
+  }
   registry.glow = {
     init: s => { s.p = Array.from({ length: 26 }, () => ({ x: rand(0, 1), y: rand(.05, .95), r: rand(6, 16), ph: rand(0, 6.3), sp: rand(.15, .4), c: ['125,252,217', '95,242,255', '180,140,255'][Math.floor(rand(0, 3))] })); },
     frame(c, s, w, h, t) {
       const k = w / 800;
       for (const p of s.p) {
         const x = (p.x + Math.sin(t * p.sp + p.ph) * .03) * w, y = (p.y + Math.cos(t * p.sp * .8 + p.ph) * .03) * h;
-        const a = .35 + .45 * (Math.sin(t * 1.3 + p.ph) + 1) / 2, r = p.r * k;
-        const g = c.createRadialGradient(x, y, 0, x, y, r * 2.4);
-        g.addColorStop(0, `rgba(${p.c},${a})`); g.addColorStop(.35, `rgba(${p.c},${a * .45})`); g.addColorStop(1, `rgba(${p.c},0)`);
-        c.fillStyle = g; c.beginPath(); c.arc(x, y, r * 2.4, 0, Math.PI * 2); c.fill();
+        const size = p.r * k * 4.8;
+        c.globalAlpha = .35 + .45 * (Math.sin(t * 1.3 + p.ph) + 1) / 2;
+        c.drawImage(glowSprite(p.c), x - size / 2, y - size / 2, size, size);
       }
+      c.globalAlpha = 1;
     },
   };
 
@@ -66,7 +76,7 @@
     const state = {}; def.init(state);
     let w = 0, h = 0, raf = 0, alive = true;
     const size = () => {
-      const r = canvas.getBoundingClientRect(), dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const r = canvas.getBoundingClientRect(), dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       w = r.width; h = r.height;
       canvas.width = Math.max(1, Math.round(w * dpr)); canvas.height = Math.max(1, Math.round(h * dpr));
       c.setTransform(dpr, 0, 0, dpr, 0, 0);

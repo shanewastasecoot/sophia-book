@@ -22,17 +22,17 @@
     frame(c, s, w, h, t) {
       // far: caustic light rays, barely moved by the camera
       c.globalCompositeOperation = 'lighter';
+      if (s.rayH !== h) { s.ray = c.createLinearGradient(0, 0, 0, h * .95); s.ray.addColorStop(0, 'rgba(140,255,236,1)'); s.ray.addColorStop(1, 'rgba(140,255,236,0)'); s.rayH = h; }
+      c.fillStyle = s.ray;
       for (const r of s.rays) {
         const x = wrap(r.x + Math.sin(t * r.sp + r.ph) * .025 - cam.x * .12, 1.25) - .12;
-        const a = .045 + .045 * (Math.sin(t * r.sp * 1.8 + r.ph) + 1) / 2;
-        const g = c.createLinearGradient(0, 0, 0, h * .95);
-        g.addColorStop(0, `rgba(140,255,236,${a})`); g.addColorStop(1, 'rgba(140,255,236,0)');
-        c.fillStyle = g;
+        c.globalAlpha = .045 + .045 * (Math.sin(t * r.sp * 1.8 + r.ph) + 1) / 2;
         c.beginPath();
         c.moveTo(x * w, 0); c.lineTo((x + r.w) * w, 0);
         c.lineTo((x + r.w * 2.6 + .1) * w, h * .95); c.lineTo((x + .05) * w, h * .95);
         c.closePath(); c.fill();
       }
+      c.globalAlpha = 1;
       // middle: shimmering caustic net under the surface
       c.lineWidth = 1.4;
       const step = Math.max(12, w / 90);
@@ -64,15 +64,17 @@
 
   function resize() {
     if (!canvas) return;
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const dpr = 1; // soft, blurry-by-nature light and bubbles: full device resolution would cost 4-9x the pixels for no visible gain
     w = window.innerWidth; h = window.innerHeight;
     canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
     c.setTransform(dpr, 0, 0, dpr, 0, 0);
     if (kind && SB.prefersReducedMotion()) drawOnce();
   }
   function drawOnce() { c.clearRect(0, 0, w, h); kinds[kind].frame(c, state, w, h, 2); }
+  let heldUntil = 0;
   function loop(ms) {
     if (!kind) return;
+    if (performance.now() < heldUntil) { raf = requestAnimationFrame(loop); return; } // page is turning
     cam.x += (target.x - cam.x) * .05;
     cam.y += (target.y - cam.y) * .05;
     c.clearRect(0, 0, w, h);
@@ -106,5 +108,6 @@
       run();
     },
     setPage(i) { target.page = i; aim(); },
+    hold(ms) { heldUntil = performance.now() + ms; },
   };
 })(window.SB);

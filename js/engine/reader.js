@@ -5,20 +5,23 @@
   const $ = id => document.getElementById(id);
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
   const idle = window.requestIdleCallback || (fn => setTimeout(fn, 150));
+  const TURN_MS = 520; // keep in step with --turn in css/reader.css
 
   const el = {};
   const state = { book: null, i: -1, tocBook: null };
 
   /* ---------- Art cache: a page's SVG is generated the first time it's needed, then reused.
-     Scenes are drawn through #sketch-filter (hand-inked wobble) unless the page or book sets sketch: false. ---------- */
+     The hand-inked wobble is baked into the shapes here (js/engine/sketch.js), once per page,
+     unless the page or book sets sketch: false. ---------- */
   const cache = new Map();
   const sketchy = (book, page) => (page.sketch ?? book.sketch ?? true) && !document.documentElement.classList.contains('no-sketch');
   function artSVG(book, i) {
     const key = book.id + '/' + i;
     if (!cache.has(key)) {
       const page = book.pages[i];
-      const body = page.art ? page.art() : '';
-      cache.set(key, body && `<svg viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">${sketchy(book, page) ? `<g filter="url(#sketch-filter)">${body}</g>` : body}</svg>`);
+      let body = page.art ? page.art() : '';
+      if (body && sketchy(book, page)) body = SB.sketch.apply(body);
+      cache.set(key, body && `<svg viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">${body}</svg>`);
     }
     return cache.get(key);
   }
@@ -47,11 +50,38 @@
       document.head.appendChild(link);
     }
   }
-  // Warm the pages a reader is most likely to open next, when the browser is idle.
+  // Warm the pages a reader is most likely to open next, when the browser is idle: draw their art,
+  // fetch their pictures, and lay the next/previous pages invisibly under the current one (animations
+  // paused) so the browser has already painted them. A tap then only has to reveal a finished page.
+  const ready = new Map();
   function prefetchAround(book, i) {
     for (const j of [i + 1, i - 1, i + 2]) {
       if (j < 0 || j >= book.pages.length) continue;
-      idle(() => { artSVG(book, j); preloadImages(book.pages[j]); });
+      idle(() => {
+        artSVG(book, j); preloadImages(book.pages[j]);
+        const key = book.id + '/' + j;
+        if (Math.abs(j - state.i) !== 1 || state.book !== book || ready.has(key)) return;
+        const s = buildSheet(book, j);
+        s.classList.add('waiting'); s.inert = true; s.setAttribute('aria-hidden', 'true');
+        s.dataset.side = j > state.i ? 'next' : 'prev';
+        el.viewport.prepend(s);
+        ready.set(key, s);
+      });
+    }
+  }
+  function takeSheet(book, i) {
+    const key = book.id + '/' + i, s = ready.get(key);
+    if (!s) return buildSheet(book, i);
+    ready.delete(key);
+    s.classList.remove('waiting'); s.inert = false; s.removeAttribute('aria-hidden');
+    return s;
+  }
+  // Drop waiting pages that are no longer next to the current one.
+  function pruneWaiting(book, i) {
+    for (const [key, s] of ready) {
+      const [b, j] = key.split('/');
+      if (b !== book.id || Math.abs(+j - i) !== 1) { s.remove(); ready.delete(key); }
+      else s.dataset.side = +j > i ? 'next' : 'prev';
     }
   }
 
@@ -87,31 +117,53 @@
 
     SB.applyTheme(page.theme || book.theme);
     // Fast taps: drop any page still mid-turn so only one page is ever leaving.
-    el.viewport.querySelectorAll('.sheet:not(.current)').forEach(s => s.remove());
-    const sheet = buildSheet(book, i);
+    el.viewport.querySelectorAll('.sheet.out-next, .sheet.out-prev').forEach(s => s.remove());
+    const sheet = takeSheet(book, i);
     sheet.classList.add('current');
-    el.viewport.appendChild(sheet);
+    if (!sheet.isConnected) el.viewport.appendChild(sheet);
+    pruneWaiting(book, i);
+    const turning = !!(old && dir && !SB.prefersReducedMotion());
 
     if (old) {
       old.classList.remove('current', 'in', 'settle');
       old.setAttribute('aria-hidden', 'true');
       old.inert = true;
-      if (dir && !SB.prefersReducedMotion()) {
+      if (turning) {
         old.classList.add(dir > 0 ? 'out-next' : 'out-prev');
         sheet.classList.add('in');
-        const drop = () => old.remove();
-        old.addEventListener('animationend', drop, { once: true });
+        // Once it has turned away, the old page is exactly the "previous page": keep it waiting underneath.
+        const oldKey = book.id + '/' + old.dataset.page;
+        const drop = () => {
+          if (!old.isConnected || !old.classList.contains(dir > 0 ? 'out-next' : 'out-prev')) return;
+          if (state.book === book && Math.abs(+old.dataset.page - state.i) === 1 && !ready.has(oldKey)) {
+            old.className = 'sheet waiting'; old.style.transform = '';
+            old.dataset.side = +old.dataset.page > state.i ? 'next' : 'prev';
+            ready.set(oldKey, old);
+          } else old.remove();
+        };
+        old.addEventListener('animationend', e => { if (e.target === old) drop(); });
         setTimeout(drop, 800);
       } else {
         old.remove();
       }
     }
 
-    SB.fx.start(sheet.querySelector('.layer-fx'), page.fx);
+    // While the page turns, give it the whole frame budget: hold the canvases, start them after.
+    const canvas = sheet.querySelector('.layer-fx');
+    if (turning) {
+      SB.fx.stop();
+      SB.backdrop.hold(TURN_MS);
+      clearTimeout(show.fxTimer);
+      show.fxTimer = setTimeout(() => { if (sheet.isConnected && sheet.classList.contains('current')) SB.fx.start(canvas, page.fx); }, TURN_MS);
+    } else {
+      SB.fx.start(canvas, page.fx);
+    }
     SB.backdrop.setPage(i);
     el.next.classList.remove('nudge');
     updateChrome();
-    prefetchAround(book, i);
+    // Prepare the neighbours only after the turn has finished, so building them never steals turn frames.
+    clearTimeout(show.prefetchTimer);
+    show.prefetchTimer = setTimeout(() => { if (state.book === book && state.i === i) prefetchAround(book, i); }, turning ? TURN_MS + 80 : 0);
     history.replaceState(null, '', `#${book.id}/${page.id || i}`);
     return true;
   }
@@ -132,7 +184,7 @@
 
   function openBook(id, page = 0) {
     const book = SB.getBook(id) || SB.books[0];
-    if (state.book !== book) { state.book = book; state.i = -1; el.viewport.querySelectorAll('.sheet').forEach(s => s.remove()); SB.items.setBook(book); }
+    if (state.book !== book) { state.book = book; state.i = -1; ready.clear(); el.viewport.querySelectorAll('.sheet').forEach(s => s.remove()); SB.items.setBook(book); }
     const i = typeof page === 'number' ? page : Math.max(0, book.pages.findIndex(p => p.id === page));
     show(i, 0) || updateChrome();
   }
@@ -158,6 +210,7 @@
         try { el.viewport.setPointerCapture(e.pointerId); } catch (err) {}
       }
       if (dragging) {
+        el.viewport.dataset.peek = dx < 0 ? 'next' : 'prev';
         const atEdge = (dx > 0 && state.i === 0) || (dx < 0 && state.i === state.book.pages.length - 1);
         const s = currentSheet();
         if (s) s.style.transform = `translateX(${dx * (atEdge ? .2 : .65)}px) rotate(${dx * .008}deg)`;
@@ -172,9 +225,9 @@
       } else if (e.target.closest('.media')) {
         sparkle(e);
       }
-      start = null; dragging = false;
+      start = null; dragging = false; delete el.viewport.dataset.peek;
     });
-    el.viewport.addEventListener('pointercancel', () => { if (dragging) reset(currentSheet()); start = null; dragging = false; });
+    el.viewport.addEventListener('pointercancel', () => { if (dragging) reset(currentSheet()); start = null; dragging = false; delete el.viewport.dataset.peek; });
   }
 
   // Tap the picture: a star pops where you tapped.
