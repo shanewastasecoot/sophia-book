@@ -161,7 +161,9 @@ button { font: inherit; touch-action: manipulation; }
 .layer { position: absolute; inset: 0; width: 100%; height: 100%; }
 .layer-art svg, .layer-pickup svg { display: block; width: 100%; height: 100%; }
 img.layer { object-fit: cover; }
-.layer-fx, .layer-pickup, .layer-pickup svg { pointer-events: none; }
+.layer-fx, .layer-pickup, .layer-pickup svg, .layer-snap { pointer-events: none; }
+/* Bitmap snapshot of the scene, shown while a page waits or turns; fades out once the live scene is ready. */
+.sheet[data-mode="live"] .layer-snap { opacity: 0; transition: opacity .25s ease; }
 .copy {
   flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain;
   padding: clamp(14px, 2.5vw, 26px) clamp(16px, 4vw, 36px) clamp(18px, 3vw, 30px);

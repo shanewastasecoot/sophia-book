@@ -47,6 +47,7 @@ Scenes get a hand-inked wobble baked into their shapes when a page is first draw
 - Nothing expensive runs per frame: no live SVG filters on animated scenes, no full-screen blend overlays, and the frosted-glass blur is only used on mouse/trackpad devices.
 - The next and previous pages are built after a turn finishes and wait, already painted and frozen, under the current page, so a turn only reveals a finished page (and a swipe peeks at the right one).
 - The ocean backdrop renders at 1x resolution and pauses during page turns; canvas effects start after the turn.
+- Pages that are waiting or turning show a bitmap snapshot of their scene (`js/engine/raster.js`), so a turn never waits for the phone to paint a big SVG tile by tile. Once a page settles, the live animated scene takes over and the snapshot fades out. The paper textures and painted-edge masks are also turned into PNGs once at startup.
 
 Pictures can be code-drawn SVG scenes, image files, or both. To use a painted picture, give the page an `illustration`:
 

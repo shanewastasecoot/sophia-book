@@ -15,15 +15,70 @@
      unless the page or book sets sketch: false. ---------- */
   const cache = new Map();
   const sketchy = (book, page) => (page.sketch ?? book.sketch ?? true) && !document.documentElement.classList.contains('no-sketch');
-  function artSVG(book, i) {
+  function artBody(book, i) {
     const key = book.id + '/' + i;
     if (!cache.has(key)) {
       const page = book.pages[i];
       let body = page.art ? page.art() : '';
       if (body && sketchy(book, page)) body = SB.sketch.apply(body);
-      cache.set(key, body && `<svg viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">${body}</svg>`);
+      cache.set(key, body);
     }
     return cache.get(key);
+  }
+  const artSVG = (book, i) => {
+    const body = artBody(book, i);
+    return body && `<svg viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">${body}</svg>`;
+  };
+
+  /* ---------- Snapshots: each scene as a ready-made bitmap (js/engine/raster.js) ----------
+     Waiting and turning pages show the bitmap, which phones can move instantly. Once a page has
+     settled, the live animated SVG is put in underneath and the bitmap fades away. */
+  const bitmaps = new Map();
+  function snapSize() {
+    const m = currentSheet()?.querySelector('.media') || el.viewport;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const w = Math.round(m.clientWidth * dpr), h = Math.round(w / 1.6);
+    return w > 0 ? { w, h } : null;
+  }
+  async function ensureSnapshot(book, i) {
+    const size = snapSize(), body = artBody(book, i);
+    if (!size || !body || !SB.raster) return null;
+    const key = `${book.id}/${i}@${size.w}x${size.h}`;
+    if (bitmaps.has(key)) return bitmaps.get(key);
+    const bmp = await SB.raster.snapshot(`${book.id}/${i}`, body, size.w, size.h);
+    if (bmp) { bitmaps.set(key, bmp); while (bitmaps.size > 8) bitmaps.delete(bitmaps.keys().next().value); }
+    return bmp;
+  }
+  function readySnapshot(book, i) {
+    const size = snapSize();
+    return size && bitmaps.get(`${book.id}/${i}@${size.w}x${size.h}`);
+  }
+  function showSnapshot(sheet, bmp) {
+    const c = sheet.querySelector('.layer-snap');
+    if (!c || !bmp) return false;
+    if (!sheet.dataset.snapped) {
+      try {
+        c.width = bmp.width; c.height = bmp.height;
+        c.getContext('2d').drawImage(bmp, 0, 0);
+      } catch (e) {            // bitmap no longer usable: stay with the live scene
+        for (const [k, v] of bitmaps) if (v === bmp) bitmaps.delete(k);
+        return false;
+      }
+      sheet.dataset.snapped = '1';
+    }
+    sheet.dataset.mode = 'snap';
+    sheet.querySelector('.layer-art').replaceChildren();   // drop the live SVG: nothing left to repaint
+    return true;
+  }
+  function goLive(sheet, book, i) {
+    if (sheet.dataset.mode === 'live') return;
+    const art = sheet.querySelector('.layer-art');
+    if (!art.firstChild) art.innerHTML = artSVG(book, i);
+    if (sheet.dataset.mode !== 'snap') { sheet.dataset.mode = 'live'; return; }
+    // let the live scene paint underneath for a moment, then fade the bitmap away
+    requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(() => {
+      if (sheet.classList.contains('current')) sheet.dataset.mode = 'live';
+    }, 120)));
   }
 
   /* Full-frame illustration (PNG / WebP / SVG file) for a page, as a <picture> with a WebP source. */
@@ -51,17 +106,20 @@
     }
   }
   // Warm the pages a reader is most likely to open next, when the browser is idle: draw their art,
-  // fetch their pictures, and lay the next/previous pages invisibly under the current one (animations
-  // paused) so the browser has already painted them. A tap then only has to reveal a finished page.
+  // snapshot it, fetch their pictures, and lay the next/previous pages (as bitmaps, animations paused)
+  // under the current one. A tap then only has to reveal a finished page.
   const ready = new Map();
   function prefetchAround(book, i) {
+    idle(() => ensureSnapshot(book, i));   // the current page too, so it can turn away as a bitmap
     for (const j of [i + 1, i - 1, i + 2]) {
       if (j < 0 || j >= book.pages.length) continue;
-      idle(() => {
-        artSVG(book, j); preloadImages(book.pages[j]);
+      idle(async () => {
+        artBody(book, j); preloadImages(book.pages[j]);
         const key = book.id + '/' + j;
         if (Math.abs(j - state.i) !== 1 || state.book !== book || ready.has(key)) return;
-        const s = buildSheet(book, j);
+        const bmp = await ensureSnapshot(book, j);
+        if (Math.abs(j - state.i) !== 1 || state.book !== book || ready.has(key)) return;
+        const s = buildSheet(book, j, bmp);
         s.classList.add('waiting'); s.inert = true; s.setAttribute('aria-hidden', 'true');
         s.dataset.side = j > state.i ? 'next' : 'prev';
         el.viewport.prepend(s);
@@ -86,7 +144,7 @@
   }
 
   /* ---------- Sheets ---------- */
-  function buildSheet(book, i) {
+  function buildSheet(book, i, bmp = readySnapshot(book, i)) {
     const page = book.pages[i];
     const sheet = document.createElement('article');
     sheet.className = 'sheet';
@@ -96,13 +154,15 @@
     sheet.innerHTML = `
       <div class="media frame-${esc(frameOf(book, page))}" role="img" aria-label="${esc(page.alt || page.illustration?.alt || '')}">
         ${illustrationHTML(page, true)}
-        <div class="layer layer-art">${artSVG(book, i)}</div>
+        <div class="layer layer-art"></div>
+        <canvas class="layer layer-snap" aria-hidden="true"></canvas>
         ${imgs}
         <canvas class="layer layer-fx" aria-hidden="true"></canvas>
         ${SB.items.pickupLayer(page)}
       </div>
       <span class="ink-frame" aria-hidden="true"></span>
       <div class="copy">${page.chapter ? SB.art.ui.chapter(page.chapter.n, page.chapter.title) : ''}${page.text || ''}${page.ocarina ? SB.ocarina.render(page.ocarina) : ''}</div>`;
+    if (!showSnapshot(sheet, bmp)) goLive(sheet, book, i);   // no bitmap yet: draw the live scene right away
     return sheet;
   }
   const currentSheet = () => el.viewport.querySelector('.sheet.current');
@@ -129,6 +189,7 @@
       old.setAttribute('aria-hidden', 'true');
       old.inert = true;
       if (turning) {
+        showSnapshot(old, readySnapshot(book, +old.dataset.page));   // turn away as a bitmap, not a live scene
         old.classList.add(dir > 0 ? 'out-next' : 'out-prev');
         sheet.classList.add('in');
         // Once it has turned away, the old page is exactly the "previous page": keep it waiting underneath.
@@ -154,9 +215,14 @@
       SB.fx.stop();
       SB.backdrop.hold(TURN_MS);
       clearTimeout(show.fxTimer);
-      show.fxTimer = setTimeout(() => { if (sheet.isConnected && sheet.classList.contains('current')) SB.fx.start(canvas, page.fx); }, TURN_MS);
+      show.fxTimer = setTimeout(() => {
+        if (!sheet.isConnected || !sheet.classList.contains('current')) return;
+        SB.fx.start(canvas, page.fx);
+        goLive(sheet, book, i);
+      }, TURN_MS);
     } else {
       SB.fx.start(canvas, page.fx);
+      goLive(sheet, book, i);
     }
     SB.backdrop.setPage(i);
     el.next.classList.remove('nudge');
@@ -357,6 +423,8 @@
     });
 
     SB.items.init();
+    // Turn the noise textures and edge masks into plain images, and fetch the font for scene snapshots.
+    idle(() => { SB.raster.bakeTextures(); SB.raster.fonts(); });
     initGestures();
     updateSoundBtn();
     routeFromHash();
