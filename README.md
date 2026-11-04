@@ -1,6 +1,8 @@
 # sophia-book
 
-**Princess Sophia and the Noisy Shadow Demon**: a silly, sparkly picture book that Daddy has to read exactly the way it's written. Book two, **Sophia's Mermaid City Adventure**, is started.
+**Princess Sophia and the Noisy Shadow Demon**: a silly, sparkly picture book that Daddy has to read exactly the way it's written.
+
+**Sophia and the Mermaid City**: book two, a splashy underwater quest. Collect the Ocarina and three Music Shells, then play the Gate Song to open Mermaid City.
 
 It runs as a plain website with no build step. Turn on GitHub Pages (Settings → Pages → deploy from `main`, root folder), or open `index.html` straight from disk.
 
@@ -18,16 +20,25 @@ It runs as a plain website with no build step. Turn on GitHub Pages (Settings �
 index.html                 app shell; lists every script in load order
 css/reader.css             layout, page turns, Pages menu, text styles (colors come from themes)
 js/engine/core.js          window.SB namespace, registerBook / registerTheme
-js/engine/themes.js        world themes (CSS variables): sparkle-night, mermaid-deep, mermaid-lagoon
+js/engine/themes.js        world themes (CSS variables, incl. frosted-glass panels): sparkle-night, mermaid-deep, mermaid-lagoon
+js/engine/backdrop.js      animated parallax backdrop behind the reader (ocean: caustic light + bubbles)
 js/engine/audio.js         sound effects made in the browser; SB.audio.register() adds more
 js/engine/fx.js            canvas effects over the art: sparkles, bubbles, glow; SB.fx.register() adds more
+js/engine/items.js         treasure bag: tap-to-collect pickups, "You found…" toasts, bag panel
+js/engine/ocarina.js       the playable Gate Song puzzle
 js/engine/reader.js        page rendering, gestures, menu, prefetching (no book-specific code)
 js/art/common.js           the cast (Sophia, Luna, Ruby, Grumbo), props, text helpers
+js/art/ui.js               chapter headers, scene dividers, and the JSON story markup
 js/art/kingdom.js          Sparkleton scenery
-js/art/ocean.js            Mermaid City scenery
-js/books/sparkle-swords.js book 1, as data
-js/books/mermaid-city.js   book 2, a starter with two pages
+js/art/ocean.js            underwater scenery
+js/art/sea-friends.js      Pip, Wigglebottom the octopus, the city gates, kelp, bubble vents, cave
+js/art/treasures.js        treasure icons (Ocarina, Music Shells)
+js/books/sparkle-swords.js        book 1, as data
+js/books/mermaid-city.story.js    book 2's words and page structure, as plain JSON
+js/books/mermaid-city.js          book 2's scene drawings, treasure icons and sounds
 ```
+
+Book 2's story text uses a small markup so it can live in JSON: `{name}`, `{sfx:glub|GLUB!}`, `{say:…}`, `{pip:…}`, `{shout:…}`, `{huge:…}`, `{whisper:…}`, `{b:…}`, and a paragraph of just `{divider}`. Pages can also have `chapter`, `pickup` and `ocarina` fields (documented at the top of the story file).
 
 Scripts are plain `<script defer>` files that add to `window.SB`, so the book also works when opened from disk (ES modules would not).
 

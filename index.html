@@ -19,23 +19,35 @@
 <script defer src="js/engine/themes.js"></script>
 <script defer src="js/engine/audio.js"></script>
 <script defer src="js/engine/fx.js"></script>
+<script defer src="js/engine/backdrop.js"></script>
+<script defer src="js/engine/items.js"></script>
+<script defer src="js/engine/ocarina.js"></script>
 <!-- Art: shared cast, then scenery per setting -->
 <script defer src="js/art/common.js"></script>
+<script defer src="js/art/ui.js"></script>
 <script defer src="js/art/kingdom.js"></script>
 <script defer src="js/art/ocean.js"></script>
-<!-- Books: add a new book by adding its file here -->
+<script defer src="js/art/sea-friends.js"></script>
+<script defer src="js/art/treasures.js"></script>
+<!-- Books: add a new book by adding its file(s) here -->
 <script defer src="js/books/sparkle-swords.js"></script>
+<script defer src="js/books/mermaid-city.story.js"></script>
 <script defer src="js/books/mermaid-city.js"></script>
 <!-- Reader boots last -->
 <script defer src="js/engine/reader.js"></script>
 </head>
 <body>
+<canvas class="backdrop" id="backdrop" aria-hidden="true"></canvas>
 <div class="app" id="app">
   <header class="bar">
     <button type="button" class="icon-btn" id="tocBtn" aria-label="Pages" aria-expanded="false" aria-controls="toc">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
     </button>
     <h1 class="bar-title" id="title">Princess Sophia</h1>
+    <button type="button" class="icon-btn bag-btn" id="bagBtn" aria-label="Treasure bag" hidden>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7.5Q4 11 4.5 16.5Q5 21 12 21Q19 21 19.5 16.5Q20 11 15 7.5Z" fill="currentColor"/><path d="M8.5 7.5Q12 9 15.5 7.5" fill="none" stroke="var(--app-bg-1)" stroke-width="1.6" stroke-linecap="round"/><path d="M9.5 7.2L8 3.5Q12 5 16 3.5L14.5 7.2" fill="currentColor"/><path d="M12 11.5l1.1 2.2 2.4.3-1.8 1.6.5 2.4-2.2-1.2-2.2 1.2.5-2.4-1.8-1.6 2.4-.3Z" fill="var(--app-bg-1)"/></svg>
+      <span class="badge" id="bagCount" hidden>0</span>
+    </button>
     <button type="button" class="icon-btn" id="soundBtn" aria-pressed="true" aria-label="Sound is on. Turn sound off">
       <svg class="on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9Z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
       <svg class="off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9Z" fill="currentColor"/><path d="M16.5 9.5l5 5M21.5 9.5l-5 5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
@@ -71,6 +83,19 @@
   <div class="toc-books" id="tocBooks" role="tablist" aria-label="Books"></div>
   <ol class="toc-list" id="tocList"></ol>
 </aside>
+
+<div class="scrim" id="bagScrim" hidden></div>
+<section class="bag-panel" id="bag" role="dialog" aria-modal="true" aria-labelledby="bagTitle" hidden>
+  <div class="toc-head">
+    <div><h2 id="bagTitle">Treasure Bag</h2><p class="bag-sub" id="bagSub"></p></div>
+    <button type="button" class="icon-btn" id="bagClose" aria-label="Close treasure bag">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <ul class="bag-grid" id="bagGrid"></ul>
+</section>
+
+<div class="toasts" id="toasts" aria-live="polite"></div>
 
 <noscript><p style="color:#fff;padding:16px">This book needs JavaScript turned on.</p></noscript>
 </body>

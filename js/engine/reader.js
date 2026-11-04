@@ -49,8 +49,9 @@
         <div class="layer layer-art" role="img" aria-label="${esc(page.alt || '')}">${artSVG(book, i)}</div>
         ${imgs}
         <canvas class="layer layer-fx" aria-hidden="true"></canvas>
+        ${SB.items.pickupLayer(page)}
       </div>
-      <div class="copy">${page.text || ''}</div>`;
+      <div class="copy">${page.chapter ? SB.art.ui.chapter(page.chapter.n, page.chapter.title) : ''}${page.text || ''}${page.ocarina ? SB.ocarina.render(page.ocarina) : ''}</div>`;
     return sheet;
   }
   const currentSheet = () => el.viewport.querySelector('.sheet.current');
@@ -86,6 +87,8 @@
     }
 
     SB.fx.start(sheet.querySelector('.layer-fx'), page.fx);
+    SB.backdrop.setPage(i);
+    el.next.classList.remove('nudge');
     updateChrome();
     prefetchAround(book, i);
     history.replaceState(null, '', `#${book.id}/${page.id || i}`);
@@ -108,7 +111,7 @@
 
   function openBook(id, page = 0) {
     const book = SB.getBook(id) || SB.books[0];
-    if (state.book !== book) { state.book = book; state.i = -1; el.viewport.querySelectorAll('.sheet').forEach(s => s.remove()); }
+    if (state.book !== book) { state.book = book; state.i = -1; el.viewport.querySelectorAll('.sheet').forEach(s => s.remove()); SB.items.setBook(book); }
     const i = typeof page === 'number' ? page : Math.max(0, book.pages.findIndex(p => p.id === page));
     show(i, 0) || updateChrome();
   }
@@ -122,7 +125,7 @@
       setTimeout(() => sheet.classList.remove('settle'), 260);
     };
     el.viewport.addEventListener('pointerdown', e => {
-      if (e.button > 0 || e.target.closest('button, a, input')) { start = null; return; }
+      if (e.button > 0 || e.target.closest('button, a, input, .pickup')) { start = null; return; }
       start = { x: e.clientX, y: e.clientY, t: performance.now(), id: e.pointerId };
       dragging = false;
     });
@@ -195,7 +198,8 @@
     state.tocBook = state.book;
     renderToc();
     el.toc.hidden = false; el.scrim.hidden = false;
-    requestAnimationFrame(() => { el.toc.classList.add('open'); el.scrim.classList.add('open'); });
+    void el.toc.offsetWidth; // apply the closed position first so the slide-in animates
+    el.toc.classList.add('open'); el.scrim.classList.add('open');
     el.tocBtn.setAttribute('aria-expanded', 'true');
     el.app.inert = true;
     const cur = el.tocList.querySelector('[aria-current="page"]');
@@ -259,7 +263,7 @@
     });
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') return closeToc();
-      if (!el.toc.hidden || e.target.closest('input, textarea')) return;
+      if (!el.toc.hidden || SB.items.isOpen() || e.target.closest('input, textarea, .pickup')) return;
       if (e.key === 'ArrowRight') go(1);
       else if (e.key === 'ArrowLeft') go(-1);
       else if (e.key === 'Home') show(0, -1);
@@ -274,6 +278,7 @@
       else { const s = currentSheet(); if (s) SB.fx.start(s.querySelector('.layer-fx'), state.book.pages[state.i].fx); }
     });
 
+    SB.items.init();
     initGestures();
     updateSoundBtn();
     routeFromHash();
