@@ -61,6 +61,7 @@
         "scene": { "type": "string", "description": "Key of an SVG scene drawn in the book's .js file" },
         "illustration": { "$ref": "#/definitions/illustration" },
         "frame": { "$ref": "#/definitions/frame" },
+        "focus": { "type": "string", "description": "For a painting found at img/<book>/<page>.*: which part stays in view when it's cropped (CSS object-position, e.g. \"50% 20%\" keeps the top)" },
         "sketch": { "type": "boolean", "description": "Turn the hand-inked filter off for this page's SVG scene" },
         "theme": { "$ref": "#/definitions/theme" },
         "fx": { "type": "string", "enum": ["sparkles", "bubbles", "glow"], "description": "Animated canvas effect over the picture" },

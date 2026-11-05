@@ -36,7 +36,7 @@
     {
       "id": "splash", "title": "Splash!", "chapter": { "n": 1, "title": "Splash Down!" },
       "scene": "splash", "theme": "mermaid-lagoon", "fx": "bubbles",
-      "alt": "The three princesses dive under the waves with a big splash. Their legs have turned into shiny mermaid tails.",
+      "alt": "The three princesses hold hands as they dive under the waves. Their legs have turned into shiny mermaid tails.",
       "text": [
         "The Sparkle Swords were at the beach. Princess {name}. Princess Luna. Princess Ruby.",
         "They held hands. They counted. {say:“One… two… THREE!”}",
@@ -70,18 +70,18 @@
     },
     {
       "id": "squish", "title": "SQUISH", "scene": "squish", "fx": "bubbles",
-      "alt": "Purple ink puffs drift past the shut gates, and a long purple tentacle sneaks in from the side.",
+      "alt": "Purple ink puffs drift past the shut gates, and a long purple tentacle sneaks in from the side. Ruby, Sophia and Luna look around in surprise.",
       "text": [
         "Then they heard a sound. {sfx:squish|SQUISH.}",
         "And another sound. {sfx:squish|SQUISH. SQUISH.}",
         "Purple ink puffed by. A cookie went missing. Somebody's hat went missing!",
         "{pip:“It's the Big Squishy Thing! It's been bumping around ALL week! Everybody's hiding!”}",
-        "Ruby put her hands on her hips. {say:“Not us!”}"
+        "Ruby's eyes went wide. Then she put her hands on her hips. {say:“Not us!”}"
       ]
     },
     {
       "id": "lock", "title": "Three Shells", "scene": "lock", "fx": "glow",
-      "alt": "A close-up of the gate lock. It has three empty round holes. Pip points at it.",
+      "alt": "A close-up of the gate lock. It has three empty round holes. Sophia looks closely while Pip points at it.",
       "text": [
         "Pip pointed at the lock. It had three empty holes. {sfx:boop|BOOP.}",
         "{pip:“To open the gates, you play the Gate Song! But the song lives in three Music Shells. And the Big Squishy Thing knocked them ALL over the place!”}",
@@ -116,7 +116,7 @@
     {
       "id": "cave", "title": "The Dark Cave", "chapter": { "n": 5, "title": "The Dark, Dark Cave" },
       "scene": "caveEyes", "fx": "glow",
-      "alt": "A dark cave. Two big yellow eyes glow inside. Pip shivers next to the princesses.",
+      "alt": "A dark cave. Two big yellow eyes glow inside. Pip's glasses fog up, and the princesses peek in.",
       "text": [
         "Last stop: the Dark, Dark Cave.",
         "It was dark. It was quiet. Pip's glasses fogged up. {pip:“I'm not scared! I'm just… cleaning my glasses.”}",
@@ -126,7 +126,7 @@
     },
     {
       "id": "octopus", "title": "The Big Squishy Thing", "scene": "octopusGrumpy", "fx": "bubbles",
-      "alt": "A giant purple octopus with a grumpy face and eight wiggly arms holds a gold shell.",
+      "alt": "A giant purple octopus with a grumpy face and eight wiggly arms comes out of the cave holding a gold shell.",
       "text": [
         "{sfx:squish|SQUIIISH!}",
         "Out came eight wiggly arms. One giant head. One VERY grumpy face.",
@@ -145,19 +145,19 @@
       ]
     },
     {
-      "id": "hide", "title": "Hide-and-Seek", "scene": "hideSeek", "fx": "bubbles",
-      "alt": "The octopus hides behind a very small rock. All eight of his arms stick out. The princesses giggle.",
+      "id": "hide", "title": "Hide-and-Seek", "scene": "hideSeek", "fx": "bubbles", "focus": "50% 25%",
+      "alt": "The octopus hides behind a rock, but his head and all eight arms stick out. The princesses giggle.",
       "text": [
         "{say:“Ready or not, here we come!”}",
-        "The octopus hid behind a rock. A very small rock.",
+        "The octopus hid behind a rock. A big rock. But he was a BIGGER octopus!",
         "One arm stuck out. Two arms stuck out. EIGHT arms stuck out!",
         "{say:“We see you!”} {sfx:giggle|HEE-HEE!} The octopus laughed so hard he blew ink bubbles. {sfx:hoohoo|HOO-HOO-HOO!}"
       ]
     },
     {
       "id": "wigglebottom", "title": "Wigglebottom", "scene": "octopusHappy", "fx": "sparkles",
-      "pickup": { "item": "shell-gold", "x": 520, "y": 210, "size": 84 },
-      "alt": "The octopus smiles a huge smile and holds out the gold shell. Pip does a happy loop.",
+      "pickup": { "item": "shell-gold", "x": 572, "y": 215, "size": 84 },
+      "alt": "Wigglebottom smiles a huge smile with the princesses and holds out the gold shell. Pip does a happy loop-the-loop.",
       "text": [
         "{say:“That was the BEST game ever!”} said the octopus. {say:“My name is Wigglebottom. This is for you.”}",
         "{pip:“Wigglebottom? WIGGLEBOTTOM! Best name ever!”} said Pip.",
@@ -187,7 +187,7 @@
     },
     {
       "id": "party", "title": "Hide-and-Seek Party", "scene": "party", "theme": "mermaid-lagoon", "fx": "bubbles",
-      "alt": "A big party in Mermaid City. Wigglebottom counts with all eight arms while everyone hides.",
+      "alt": "A big party in Mermaid City. Wigglebottom covers his eyes and counts while everyone hides behind shells, kelp and coral.",
       "text": [
         "So Mermaid City had its very first Hide-and-Seek Party!",
         "Wigglebottom was the seeker. He counted on all eight arms. {say:“One-two-three-four-five-six-seven-EIGHT!”}",
@@ -197,7 +197,7 @@
     },
     {
       "id": "end", "title": "The End", "scene": "goodnight", "fx": "glow",
-      "alt": "Mermaid City glows softly at night. The princesses wave goodbye, Pip yawns, and Wigglebottom waves an arm.",
+      "alt": "Mermaid City glows softly at night. The princesses wave goodbye from a balcony, Pip yawns, and Wigglebottom peeks over their shoulders.",
       "text": [
         "When the jellyfish lamps got sleepy, the Sparkle Swords waved goodbye. {sfx:glub|glub-glub…}",
         "{say:“Come back soon!”} called Pip.",

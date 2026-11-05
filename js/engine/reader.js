@@ -107,12 +107,14 @@
     return pictureLookups.get(key);
   }
   const knownPicture = (book, i) => pictureNow.get(book.id + '/' + i);
+  // A found painting as an illustration; a page's "focus" picks which part stays in view when it's cropped.
+  const painting = (page, src) => ({ illustration: { src, focus: page.focus } });
 
   // A page that was showing its drawing when its painting turned up: fade the painting in over it.
   function usePicture(sheet, src) {
     if (sheet.dataset.mode === 'picture') return;
     const media = sheet.querySelector('.media');
-    media.insertAdjacentHTML('afterbegin', illustrationHTML({ illustration: { src } }, true).replace('layer-illustration', 'layer-illustration arriving'));
+    media.insertAdjacentHTML('afterbegin', illustrationHTML(painting(state.book.pages[+sheet.dataset.page] || {}, src), true).replace('layer-illustration', 'layer-illustration arriving'));
     sheet.dataset.mode = 'picture';
     setTimeout(() => { sheet.querySelector('.layer-art')?.replaceChildren(); }, 450);
   }
@@ -190,7 +192,7 @@
     const painted = knownPicture(book, i);
     sheet.innerHTML = `
       <div class="media frame-${esc(frameOf(book, page))}" role="img" aria-label="${esc(page.alt || page.illustration?.alt || '')}">
-        ${illustrationHTML(painted ? { illustration: { src: painted } } : page, true)}
+        ${illustrationHTML(painted ? painting(page, painted) : page, true)}
         <div class="layer layer-art"></div>
         <canvas class="layer layer-snap" aria-hidden="true"></canvas>
         ${imgs}
@@ -475,7 +477,7 @@
       const b = SB.getBook(t.dataset.book), i = +t.dataset.i;
       t.innerHTML = illustrationHTML(b.pages[i], false) + artSVG(b, i);
       t.classList.add('ready');
-      findPicture(b, i).then(src => { if (src) t.innerHTML = illustrationHTML({ illustration: { src } }, false); });
+      findPicture(b, i).then(src => { if (src) t.innerHTML = illustrationHTML(painting(b.pages[i], src), false); });
     };
     if ('IntersectionObserver' in window) {
       thumbObserver = new IntersectionObserver(entries => entries.forEach(en => {

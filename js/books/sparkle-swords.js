@@ -46,7 +46,7 @@
       },
       {
         id: 'rule', title: 'The Rule',
-        alt: 'Princess Sophia standing next to a giant scroll that says: The Rule. Daddy has to say every word in this book.',
+        alt: 'Princess Sophia, hand on her hip, pointing very bossily at a giant scroll.',
         art: () => A.sky('dusk') + A.ground(false) + scroll(540, 255) +
           A.princess({ ...SOPHIA, x: 215, y: 482, s: 1.45, pose: 'hold', cls: 'bob' }) +
           A.sparkles([[380, 90, 8], [720, 420, 8], [90, 120, 7]], '#fff'),
@@ -57,7 +57,7 @@
       },
       {
         id: 'sophia', title: 'Princess Sophia',
-        alt: 'Princess Sophia waving, with her big curly brown hair bouncing.',
+        alt: 'Princess Sophia cheering with both arms up, her big curly brown hair going boing.',
         art: () => A.sky('dusk') + A.castle(120, 445, .7, false) + A.ground(false) +
           A.princess({ ...SOPHIA, x: 410, y: 490, s: 1.7, pose: 'wave', hairCls: 'boing' }) +
           A.sparkles([[250, 110], [610, 90, 12], [650, 300], [220, 290, 7], [570, 200, 6]], '#fff') +
@@ -69,7 +69,7 @@
       },
       {
         id: 'band', title: 'The Sparkle Swords', fx: 'sparkles',
-        alt: 'The three princesses on a stage under a sign that says The Sparkle Swords.',
+        alt: 'The three princesses playing on a purple stage under pink and blue spotlights, with music notes floating across the night sky.',
         art: () => A.sky('night') + A.spot(150, 220, 'spotPink') + A.spot(400, 400, 'spotCyan') + A.spot(650, 580, 'spotPink') + A.stage() +
           `<g transform="translate(400 62) rotate(-3)"><rect x="-210" y="-34" width="420" height="62" rx="31" fill="#ff4fa3" stroke="#fff" stroke-width="4"/><text text-anchor="middle" y="12" font-family="Grandstander, sans-serif" font-weight="900" font-size="34" fill="#fff">THE SPARKLE SWORDS</text></g>` +
           A.princess({ ...LUNA, x: 200, y: 448, s: 1.05, pose: 'sing', prop: 'mic', cls: 'sway' }) +
@@ -117,7 +117,7 @@
       },
       {
         id: 'chomp', title: 'CHOMP!',
-        alt: 'Grumbo with his mouth wide open, gobbling birds, an ice cream cone, and music notes.',
+        alt: 'Grumbo with his mouth wide open, slurping up birds, an ice cream cone, music notes, and the King\'s sleepy snore, while Sophia watches.',
         art: () => A.sky('dark') + A.grumbo({ x: 400, y: 545, s: 1.2, mood: 'chomp', cls: 'shake' }) + A.ground(true) +
           A.bird(160, 170, 1.3, '#5fc8ff') + A.bird(650, 140, 1.2, '#ffd65a') + A.iceCream(130, 330, 1.3) + A.zzz(610, 320, 46, '#ffd65a') +
           A.note(240, 110, 40, '#ff7ac1') + A.note(560, 230, 36, '#5ff2ff', '♫') +
@@ -141,7 +141,7 @@
       },
       {
         id: 'toot', title: 'TOOT!',
-        alt: 'Grumbo stomping and roaring while green stink clouds float toward the princesses, who are holding their noses.',
+        alt: 'Grumbo stomping with a goofy grin while green stink clouds puff out behind him. Luna and Ruby hold their noses and Sophia makes a yucky face.',
         art: () => A.sky('night') + A.ground(true) + A.grumbo({ x: 610, y: 470, s: .92, mood: 'roar', cls: 'shake' }) +
           A.stink(450, 250, 1.4) + A.stink(390, 160, 1) + A.stink(480, 110, .8) +
           A.princess({ ...LUNA, x: 90, y: 472, s: .9, pose: 'nose' }) +
@@ -220,11 +220,11 @@
           A.sparkles([[90, 80], [560, 70, 8], [740, 200, 7], [400, 140, 7]], '#fff'),
         text: `<p>Sophia picked him up. ${say('“Grumbo, were you grumpy because nobody ever sang WITH you?”')}</p>
           <p>${note('Daddy, answer in your tiniest, squeakiest Grumbo voice:')} ${dad('“Squeak.”')}</p>
-          <p>That meant yes. So Sophia gave him a teeny crown and a teeny drum, and Grumbo became the smallest Sparkle Sword ever!</p>`,
+          <p>That meant yes. So Sophia gave him a teeny drum to go with his teeny crown, and Grumbo became the smallest Sparkle Sword ever!</p>`,
       },
       {
         id: 'end', title: 'The End', fx: 'sparkles',
-        alt: 'The castle at night under the golden Glitter Shield, with tiny Grumbo singing at the bottom.',
+        alt: 'The castle at night under the golden Glitter Shield. The princesses rest on a blanket, tiny Grumbo drums on a rock, and a mermaid peeks out of a pond.',
         art: () => A.sky('night') + A.moon(660, 85) + A.castle(400, 445, 1.1, true) + A.shield(400, 450, 330, 340, 1) + A.ground(true) +
           A.zzz(250, 200, 30) + A.note(330, 150, 26, '#ffd65a') + A.note(480, 170, 24, '#fff', '♫') +
           A.grumbo({ x: 300, y: 474, s: .06, mood: 'cute', crown: true }) + A.word(300, 435, 18, 'squeak!', '#5fc8ff', -8, '#fff') +
