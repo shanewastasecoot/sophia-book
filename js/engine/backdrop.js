@@ -68,7 +68,7 @@
     w = window.innerWidth; h = window.innerHeight;
     canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
     c.setTransform(dpr, 0, 0, dpr, 0, 0);
-    if (kind && SB.prefersReducedMotion()) drawOnce();
+    if (kind && SB.calm()) drawOnce();
   }
   function drawOnce() { c.clearRect(0, 0, w, h); kinds[kind].frame(c, state, w, h, 2); }
   let heldUntil = 0;
@@ -84,7 +84,7 @@
   function run() {
     cancelAnimationFrame(raf);
     if (!kind || document.hidden) return;
-    if (SB.prefersReducedMotion()) drawOnce(); else raf = requestAnimationFrame(loop);
+    if (SB.calm()) drawOnce(); else raf = requestAnimationFrame(loop);
   }
   function aim(px = 0, py = 0) { target.x = target.page * .05 + px * .03; target.y = py * .5; }
 
@@ -109,5 +109,6 @@
     },
     setPage(i) { target.page = i; aim(); },
     hold(ms) { heldUntil = performance.now() + ms; },
+    refresh: run, // after bedtime mode changes: keep moving, or settle into one still frame
   };
 })(window.SB);

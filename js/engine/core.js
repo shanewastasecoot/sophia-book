@@ -20,6 +20,10 @@
   };
 
   SB.prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Bedtime mode (the moon button): dimmer, warmer pages, quiet soft sounds, nothing bouncing or sparkling.
+  SB.bedtime = false;
+  // Decorative motion (backdrop drift, sparkles, bobbing) stays still in bedtime mode or with reduced motion.
+  SB.calm = () => SB.bedtime || SB.prefersReducedMotion();
   SB.store = {
     get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } },
     set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} },

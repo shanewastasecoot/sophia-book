@@ -13,31 +13,31 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Andika:ital,wght@0,400;0,700;1,400&family=Grandstander:wght@600;800;900&display=swap">
 <!-- ?v= makes phones fetch fresh files after each update: change it whenever css/ or js/ changes -->
-<link rel="stylesheet" href="css/reader.css?v=2026.11.05-5">
+<link rel="stylesheet" href="css/reader.css?v=2026.11.05-7">
 
 <!-- Engine -->
-<script defer src="js/engine/core.js?v=2026.11.05-5"></script>
-<script defer src="js/engine/themes.js?v=2026.11.05-5"></script>
-<script defer src="js/engine/audio.js?v=2026.11.05-5"></script>
-<script defer src="js/engine/fx.js?v=2026.11.05-5"></script>
-<script defer src="js/engine/backdrop.js?v=2026.11.05-5"></script>
-<script defer src="js/engine/items.js?v=2026.11.05-5"></script>
-<script defer src="js/engine/ocarina.js?v=2026.11.05-5"></script>
+<script defer src="js/engine/core.js?v=2026.11.05-7"></script>
+<script defer src="js/engine/themes.js?v=2026.11.05-7"></script>
+<script defer src="js/engine/audio.js?v=2026.11.05-7"></script>
+<script defer src="js/engine/fx.js?v=2026.11.05-7"></script>
+<script defer src="js/engine/backdrop.js?v=2026.11.05-7"></script>
+<script defer src="js/engine/items.js?v=2026.11.05-7"></script>
+<script defer src="js/engine/ocarina.js?v=2026.11.05-7"></script>
 <!-- Art: shared cast, then scenery per setting -->
-<script defer src="js/art/common.js?v=2026.11.05-5"></script>
-<script defer src="js/art/ui.js?v=2026.11.05-5"></script>
-<script defer src="js/art/kingdom.js?v=2026.11.05-5"></script>
-<script defer src="js/art/ocean.js?v=2026.11.05-5"></script>
-<script defer src="js/art/sea-friends.js?v=2026.11.05-5"></script>
-<script defer src="js/art/treasures.js?v=2026.11.05-5"></script>
+<script defer src="js/art/common.js?v=2026.11.05-7"></script>
+<script defer src="js/art/ui.js?v=2026.11.05-7"></script>
+<script defer src="js/art/kingdom.js?v=2026.11.05-7"></script>
+<script defer src="js/art/ocean.js?v=2026.11.05-7"></script>
+<script defer src="js/art/sea-friends.js?v=2026.11.05-7"></script>
+<script defer src="js/art/treasures.js?v=2026.11.05-7"></script>
 <!-- Books: add a new book by adding its file(s) here -->
-<script defer src="js/books/sparkle-swords.js?v=2026.11.05-5"></script>
-<script defer src="js/books/mermaid-city.story.js?v=2026.11.05-5"></script>
-<script defer src="js/books/mermaid-city.js?v=2026.11.05-5"></script>
+<script defer src="js/books/sparkle-swords.js?v=2026.11.05-7"></script>
+<script defer src="js/books/mermaid-city.story.js?v=2026.11.05-7"></script>
+<script defer src="js/books/mermaid-city.js?v=2026.11.05-7"></script>
 <!-- Reader boots last -->
-<script defer src="js/engine/sketch.js?v=2026.11.05-5"></script>
-<script defer src="js/engine/raster.js?v=2026.11.05-5"></script>
-<script defer src="js/engine/reader.js?v=2026.11.05-5"></script>
+<script defer src="js/engine/sketch.js?v=2026.11.05-7"></script>
+<script defer src="js/engine/raster.js?v=2026.11.05-7"></script>
+<script defer src="js/engine/reader.js?v=2026.11.05-7"></script>
 </head>
 <body>
 <canvas class="backdrop" id="backdrop" aria-hidden="true"></canvas>
@@ -50,6 +50,9 @@
     <button type="button" class="icon-btn bag-btn" id="bagBtn" aria-label="Treasure bag" hidden>
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7.5Q4 11 4.5 16.5Q5 21 12 21Q19 21 19.5 16.5Q20 11 15 7.5Z" fill="currentColor"/><path d="M8.5 7.5Q12 9 15.5 7.5" fill="none" stroke="var(--app-bg-1)" stroke-width="1.6" stroke-linecap="round"/><path d="M9.5 7.2L8 3.5Q12 5 16 3.5L14.5 7.2" fill="currentColor"/><path d="M12 11.5l1.1 2.2 2.4.3-1.8 1.6.5 2.4-2.2-1.2-2.2 1.2.5-2.4-1.8-1.6 2.4-.3Z" fill="var(--app-bg-1)"/></svg>
       <span class="badge" id="bagCount" hidden>0</span>
+    </button>
+    <button type="button" class="icon-btn" id="bedtimeBtn" aria-pressed="false" aria-label="Bedtime mode is off. Turn it on">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path class="moon" d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path class="zz" d="M14 4.5h3.5L14 8.5h3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
     <button type="button" class="icon-btn" id="soundBtn" aria-pressed="true" aria-label="Sound is on. Turn sound off">
       <svg class="on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9Z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>

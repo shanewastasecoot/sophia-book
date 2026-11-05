@@ -516,6 +516,20 @@
     el.soundBtn.classList.toggle('muted', SB.audio.muted);
   }
 
+  /* ---------- Bedtime mode: the moon button. Remembered between visits. ---------- */
+  function setBedtime(on, announce) {
+    SB.bedtime = on;
+    SB.store.set('sb-bedtime', on);
+    if (on) document.documentElement.dataset.bedtime = ''; else delete document.documentElement.dataset.bedtime;
+    el.bedtimeBtn.setAttribute('aria-pressed', String(on));
+    el.bedtimeBtn.setAttribute('aria-label', on ? 'Bedtime mode is on. Turn it off' : 'Bedtime mode is off. Turn it on');
+    SB.audio.applyLevel();
+    SB.backdrop.refresh();
+    const s = currentSheet();
+    if (s && state.book) SB.fx.start(s.querySelector('.layer-fx'), state.book.pages[state.i].fx);
+    if (announce) SB.items.note(on ? 'Bedtime mode' : 'Bedtime mode off', on ? 'Shhh… sleepy reading time 🌙' : 'Wide awake! ☀️');
+  }
+
   function routeFromHash() {
     const [bookId, page] = decodeURIComponent(location.hash.slice(1)).split('/');
     const book = SB.getBook(bookId);
@@ -525,7 +539,7 @@
   }
 
   function boot() {
-    ['app', 'viewport', 'prev', 'next', 'fill', 'label', 'live', 'progress', 'title', 'tocBtn', 'soundBtn', 'toc', 'tocList', 'tocBooks', 'tocClose', 'scrim']
+    ['app', 'viewport', 'prev', 'next', 'fill', 'label', 'live', 'progress', 'title', 'tocBtn', 'soundBtn', 'bedtimeBtn', 'toc', 'tocList', 'tocBooks', 'tocClose', 'scrim']
       .forEach(id => el[id] = $(id));
     const defs = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     defs.setAttribute('class', 'shared-defs'); defs.setAttribute('aria-hidden', 'true');
@@ -538,6 +552,7 @@
     el.tocClose.addEventListener('click', closeToc);
     el.scrim.addEventListener('click', closeToc);
     el.soundBtn.addEventListener('click', () => { SB.audio.setMuted(!SB.audio.muted); updateSoundBtn(); });
+    el.bedtimeBtn.addEventListener('click', () => setBedtime(!SB.bedtime, true));
     el.tocBooks.addEventListener('click', e => {
       const b = e.target.closest('.toc-book'); if (!b) return;
       state.tocBook = SB.getBook(b.dataset.book); renderToc();
@@ -590,6 +605,7 @@
     idle(() => { SB.raster.bakeTextures(); SB.raster.fonts(); });
     initGestures();
     updateSoundBtn();
+    setBedtime(SB.store.get('sb-bedtime', false), false);
     routeFromHash();
   }
 

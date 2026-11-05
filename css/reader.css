@@ -543,3 +543,22 @@ img.layer { object-fit: cover; }
   *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; }
   .sheet.out-next, .sheet.out-prev { display: none; }
 }
+
+/* ---------- Bedtime mode (the moon button) ----------
+   Dimmer, warmer pages and a darker night around them, and nothing bouncing, spinning or sparkling.
+   Page turns still work. The !important lets these win over the world theme, which is set inline on :root. */
+:root[data-bedtime] {
+  --app-bg-1: #06051a !important; --app-bg-2: #110c2c !important;
+  --glow: transparent !important; --btn-glow: 0 0 0 transparent !important; --text-glow: none !important;
+}
+:root[data-bedtime] .sheet { filter: brightness(.8) saturate(.85) sepia(.24); box-shadow: 0 16px 40px #000a; }
+:root[data-bedtime] :is(.bar, .nav) { opacity: .78; }
+:root[data-bedtime] .backdrop.on { opacity: .45; }
+:root[data-bedtime] :is(.bob, .sway, .wiggle, .shake, .boing, .floaty, .twinkle, .beam, .blink,
+  .nav-btn.nudge, .pickup-ring, .pickup-bob, .slot.got .slot-icon, .bag-btn.bump) { animation: none !important; }
+/* the moon button: an outline by day, a glowing filled moon at bedtime */
+#bedtimeBtn .moon { transition: fill .3s; }
+:root[data-bedtime] #bedtimeBtn { background: #ffd65a2e; color: #ffe08a; }
+:root[data-bedtime] #bedtimeBtn .moon { fill: currentColor; }
+/* narrow phones: four header buttons plus the title need a little room */
+@media (max-width: 400px) { .bar { gap: 6px; } .bar .icon-btn { width: 44px; height: 44px; } }

@@ -72,7 +72,7 @@
     const def = registry[name];
     if (!canvas) return;
     const c = canvas.getContext('2d');
-    if (!def) { c.clearRect(0, 0, canvas.width, canvas.height); return; }
+    if (!def || SB.calm()) { c.clearRect(0, 0, canvas.width, canvas.height); return; } // no sparkles at bedtime
     const state = {}; def.init(state);
     let w = 0, h = 0, raf = 0, alive = true;
     const size = () => {

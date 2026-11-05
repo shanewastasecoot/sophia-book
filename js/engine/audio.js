@@ -1,6 +1,21 @@
 /* Sound effects made in the browser (no audio files). Books can add their own with SB.audio.register(). */
 (function (SB) {
-  let ac;
+  let ac, master, soften;
+  // Every sound goes through one volume knob and one tone filter, so bedtime mode can make them all quiet and soft.
+  const LEVEL = { day: { gain: 1, cutoff: 18000 }, bedtime: { gain: .35, cutoff: 2200 } };
+  function out(a) {
+    if (!master) {
+      master = a.createGain(); soften = a.createBiquadFilter(); soften.type = 'lowpass';
+      master.connect(soften).connect(a.destination);
+      applyLevel();
+    }
+    return master;
+  }
+  function applyLevel() {
+    if (!master) return;
+    const l = SB.bedtime ? LEVEL.bedtime : LEVEL.day;
+    master.gain.value = l.gain; soften.frequency.value = l.cutoff;
+  }
   function ctx() {
     if (!ac) ac = new (window.AudioContext || window.webkitAudioContext)();
     if (ac.state === 'suspended') ac.resume();
@@ -12,7 +27,7 @@
     if (vib) { const l = a.createOscillator(), lg = a.createGain(); l.frequency.value = vib; lg.gain.value = f0 * .12; l.connect(lg).connect(o.frequency); l.start(t); l.stop(t + d + .05); }
     g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(v, t + .02); g.gain.exponentialRampToValueAtTime(.0001, t + d);
     const f = a.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = type === 'sawtooth' ? 900 : 8000;
-    o.connect(f).connect(g).connect(a.destination); o.start(t); o.stop(t + d + .05);
+    o.connect(f).connect(g).connect(out(a)); o.start(t); o.stop(t + d + .05);
   }
   function noise(d, f0, f1, v = .3, t0 = 0, type = 'bandpass') {
     const a = ctx(), t = a.currentTime + t0, len = Math.floor(a.sampleRate * d), b = a.createBuffer(1, len, a.sampleRate), ch = b.getChannelData(0);
@@ -20,7 +35,7 @@
     const src = a.createBufferSource(), f = a.createBiquadFilter(), g = a.createGain();
     src.buffer = b; f.type = type; f.Q.value = 1.2; f.frequency.setValueAtTime(f0, t); f.frequency.exponentialRampToValueAtTime(f1, t + d);
     g.gain.setValueAtTime(v, t); g.gain.exponentialRampToValueAtTime(.0001, t + d);
-    src.connect(f).connect(g).connect(a.destination); src.start(t);
+    src.connect(f).connect(g).connect(out(a)); src.start(t);
   }
 
   const sounds = {
@@ -55,5 +70,6 @@
       try { const f = [1568, 1760, 2093, 2349][Math.floor(Math.random() * 4)]; tone(f, f, .2, 'sine', .12); } catch (e) {}
     },
     setMuted(m) { this.muted = m; SB.store.set('sb-muted', m); },
+    applyLevel,
   };
 })(window.SB);

@@ -124,6 +124,8 @@
     def,
     // a reminder toast, e.g. "Wait! Find the Pink Music Shell first!"
     hint(text, itemId) { toast(def(itemId), 'Wait!', text); },
+    // a little message with no treasure icon, e.g. "Bedtime mode" / "Shhh… sleepy reading time"
+    note(kicker, text) { toast(null, kicker, text); },
     // "Read it again!" empties the bag so every treasure can be found again
     reset() { if (!book?.items?.length) return; SB.store.set(key(), []); updateBadge(false); },
     isOpen: () => el.panel && !el.panel.hidden,
