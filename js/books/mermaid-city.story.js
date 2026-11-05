@@ -145,7 +145,7 @@
       ]
     },
     {
-      "id": "hide", "title": "Hide-and-Seek", "scene": "hideSeek", "fx": "bubbles", "focus": "50% 25%",
+      "id": "hide", "title": "Hide-and-Seek", "scene": "hideSeek", "fx": "bubbles",
       "alt": "The octopus hides behind a rock, but his head and all eight arms stick out. The princesses giggle.",
       "text": [
         "{say:“Ready or not, here we come!”}",
