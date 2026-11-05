@@ -1,4 +1,6 @@
-/* Sound effects made in the browser (no audio files). Books can add their own with SB.audio.register(). */
+/* Sound effects. A recorded file at sounds/<name>.mp3 (or .m4a) plays when there is one; otherwise the sound
+   is made in the browser. Books can add made-in-browser sounds with SB.audio.register(). Files are looked up
+   when a page that uses them is built (prepare), so dropping a new file in sounds/ is all it takes. */
 (function (SB) {
   let ac, master, soften;
   // Every sound goes through one volume knob and one tone filter, so bedtime mode can make them all quiet and soft.
@@ -41,6 +43,7 @@
   const sounds = {
     boing: () => { tone(180, 720, .1, 'triangle', .35); tone(720, 260, .22, 'triangle', .3, .1); },
     twinkle: () => [1319, 1568, 1976, 2637].forEach((f, i) => tone(f, f, .18, 'sine', .14, i * .07)),
+    tweet: () => [0, .16].forEach(t => { tone(2400, 3400, .07, 'sine', .16, t); tone(3400, 2600, .06, 'sine', .14, t + .07); }),
     swish: () => noise(.32, 500, 5000, .5),
     la: () => [523, 659, 784, 1047].forEach((f, i) => tone(f, f * 1.003, i === 3 ? .5 : .2, 'triangle', .25, i * .16, i === 3 ? 6 : 0)),
     hum: () => { tone(220, 222, 1.2, 'sine', .2); tone(330, 331, 1.2, 'sine', .1); tone(440, 441, 1.2, 'sine', .06); },
@@ -57,13 +60,49 @@
     honk: () => { tone(85, 115, .55, 'sawtooth', .45, 0, 9); noise(.7, 3000, 6000, .2, .6, 'highpass'); },
   };
 
+  /* ---------- Recorded sound files ---------- */
+  const EXTS = ['mp3', 'm4a'];
+  const files = {};   // name -> { state: 'loading' | 'ready' | 'none', buf, gain }
+  let decoder;        // decoding needs no tap first, unlike playing
+  function decode(data) {
+    decoder = decoder || new (window.OfflineAudioContext || window.webkitOfflineAudioContext)(1, 1, 44100);
+    return new Promise((ok, no) => decoder.decodeAudioData(data, ok, no));
+  }
+  async function prepare(name) {
+    if (!name || files[name] || location.protocol === 'file:' || !window.fetch) return;
+    files[name] = { state: 'loading' };
+    for (const ext of EXTS) {
+      try {
+        const r = await fetch(`sounds/${name}.${ext}`);
+        if (!r.ok) continue;
+        const buf = await decode(await r.arrayBuffer());
+        // even out loudness: downloaded and recorded files come in all volumes
+        let peak = 0;
+        for (let c = 0; c < buf.numberOfChannels; c++) { const d = buf.getChannelData(c); for (let i = 0; i < d.length; i += 4) peak = Math.max(peak, Math.abs(d[i])); }
+        files[name] = { state: 'ready', buf, gain: Math.min(3, .8 / (peak || 1)) };
+        return;
+      } catch (e) { /* not there, or not playable here: try the next kind */ }
+    }
+    files[name] = { state: 'none' };
+  }
+  function playFile(f) {
+    const a = ctx(), src = a.createBufferSource(), g = a.createGain();
+    src.buffer = f.buf; g.gain.value = f.gain;
+    src.connect(g).connect(out(a)); src.start();
+  }
+
   SB.audio = {
     muted: SB.store.get('sb-muted', false),
-    tone, noise,
+    tone, noise, prepare,
+    hasFile: name => files[name]?.state === 'ready',
     register(name, fn) { sounds[name] = fn; },
     play(name) {
-      if (this.muted || !sounds[name]) return;
-      try { sounds[name](); } catch (e) { /* audio blocked or unsupported: stay silent */ }
+      if (this.muted) return;
+      const f = files[name];
+      try {
+        if (f?.state === 'ready') playFile(f);
+        else if (sounds[name]) sounds[name]();
+      } catch (e) { /* audio blocked or unsupported: stay silent */ }
     },
     chime() {
       if (this.muted) return;

@@ -24,7 +24,8 @@ css/reader.css             layout, page turns, Pages menu, text styles (colors c
 js/engine/core.js          window.SB namespace, registerBook / registerTheme
 js/engine/themes.js        world themes (CSS variables, incl. frosted-glass panels): sparkle-night, mermaid-deep, mermaid-lagoon
 js/engine/backdrop.js      animated parallax backdrop behind the reader (ocean: caustic light + bubbles)
-js/engine/audio.js         sound effects made in the browser; SB.audio.register() adds more
+js/engine/audio.js         sound effects: plays sounds/<name>.mp3 when there is one, otherwise makes the sound in the browser
+sounds/                    recorded sound files (see sounds/README.md for the names)
 js/engine/fx.js            canvas effects over the art: sparkles, bubbles, glow; SB.fx.register() adds more
 js/engine/items.js         treasure bag: tap-to-collect pickups, "You found…" toasts, bag panel
 js/engine/ocarina.js       the playable Gate Song puzzle

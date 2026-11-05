@@ -205,7 +205,7 @@
           A.note(470, 240, 34, '#ff7ac1') + A.note(600, 70, 32, '#5ff2ff', '♫') +
           A.word(470, 320, 26, 'squeak!', '#5fc8ff', -8, '#fff') + A.word(640, 430, 34, 'HONK-SHOOO!', '#ffc83d', -3),
         text: `<p>Now Grumbo was as small as a jellybean. ${sfx('squeak', 'squeak!', 'tiny')}</p>
-          <p>All the songs came tumbling back out! ${sfx('twinkle', 'Tweet-tweet!')} ${sfx('ding', 'Ding-ding!')}</p>
+          <p>All the songs came tumbling back out! ${sfx('tweet', 'Tweet-tweet!')} ${sfx('ding', 'Ding-ding!')}</p>
           <p>And the King's snore. ${note('Daddy, do the King\'s snore. Louder. LOUDER!')} ${sfx('honk', 'HONK-SHOOOOO!')}</p>`,
       },
       {

@@ -204,6 +204,8 @@
       <div class="copy">${page.chapter ? SB.art.ui.chapter(page.chapter.n, page.chapter.title) : ''}${page.text || ''}${page.ocarina ? SB.ocarina.render(page.ocarina) : ''}</div>`;
     if (painted) sheet.dataset.mode = 'picture';
     else if (!showSnapshot(sheet, bmp)) goLive(sheet, book, i);   // no bitmap yet: draw the live scene right away
+    // fetch any recorded sound files this page's sound words use
+    sheet.querySelectorAll('[data-snd]').forEach(b => SB.audio.prepare(b.dataset.snd));
     return sheet;
   }
   const currentSheet = () => el.viewport.querySelector('.sheet.current');
@@ -601,6 +603,7 @@
     });
 
     SB.items.init();
+    ['pickup', 'boing', 'gate-open'].forEach(n => SB.audio.prepare(n)); // sounds the book itself plays
     // Turn the noise textures and edge masks into plain images, and fetch the font for scene snapshots.
     idle(() => { SB.raster.bakeTextures(); SB.raster.fonts(); });
     initGestures();
