@@ -92,7 +92,7 @@
     {
       "id": "kelp", "title": "Tickly Kelp", "chapter": { "n": 3, "title": "The Tickly Kelp Forest" },
       "scene": "kelp", "theme": "mermaid-lagoon", "fx": "bubbles",
-      "pickup": { "item": "shell-pink", "x": 470, "y": 200, "size": 84 },
+      "pickup": { "item": "shell-pink", "x": 122, "y": 282, "size": 84 },
       "alt": "The princesses giggle as tall wiggly kelp tickles them. A pink shell glows between the kelp.",
       "text": [
         "First stop: the Kelp Forest.",
