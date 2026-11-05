@@ -95,7 +95,7 @@
       },
       {
         id: 'burp', title: 'BUUURP!',
-        alt: 'The sky is dark. A huge blue demon with purple horns and a goofy grin rises behind the hills and burps a green cloud.',
+        alt: 'The sky is dark. A huge blue demon with purple horns and a goofy grin rises behind the hills and burps a giant green cloud, while the ground shakes under the three princesses.',
         art: () => A.sky('dark') + A.castle(200, 455, .85, true) + A.grumbo({ x: 560, y: 540, s: 1.25, mood: 'grin' }) + A.ground(true) +
           `<g class="floaty"><g stroke="#3f7a1f" stroke-width="3"><circle cx="330" cy="150" r="46" fill="#9be15d"/><circle cx="290" cy="120" r="30" fill="#b5ef6e"/><circle cx="370" cy="115" r="26" fill="#86d04a"/></g></g>` +
           A.word(330, 165, 40, 'BURP!', '#fff', -8) + A.word(120, 475, 30, 'RUMBLE', '#ffc83d', -4) + A.word(700, 480, 30, 'RUMBLE', '#ffc83d', 5),
@@ -210,7 +210,7 @@
       },
       {
         id: 'friend', title: 'A New Friend',
-        alt: 'The three princesses waving next to tiny Grumbo, who now wears a tiny crown and has a tiny drum.',
+        alt: 'At sunset, Sophia holds tiny Grumbo in her hand. He wears a teeny crown and has a teeny drum, and Luna and Ruby smile at him. Little hearts float in the sky.',
         art: () => A.sky('dusk') + A.ground(false) +
           A.princess({ ...LUNA, x: 140, y: 478, s: 1, pose: 'wave', cls: 'sway' }) +
           A.princess({ ...SOPHIA, x: 300, y: 486, s: 1.2, pose: 'wave', cls: 'sway' }) +
@@ -224,7 +224,7 @@
       },
       {
         id: 'end', title: 'The End', fx: 'sparkles',
-        alt: 'The castle at night under the golden Glitter Shield. The princesses rest on a blanket, tiny Grumbo drums on a rock, and a mermaid peeks out of a pond.',
+        alt: 'The castle at night under the golden Glitter Shield. The three princesses sit on a blanket singing sleepily, tiny Grumbo drums on a rock, and a mermaid secretly peeks out from the reeds of a pond.',
         art: () => A.sky('night') + A.moon(660, 85) + A.castle(400, 445, 1.1, true) + A.shield(400, 450, 330, 340, 1) + A.ground(true) +
           A.zzz(250, 200, 30) + A.note(330, 150, 26, '#ffd65a') + A.note(480, 170, 24, '#fff', '♫') +
           A.grumbo({ x: 300, y: 474, s: .06, mood: 'cute', crown: true }) + A.word(300, 435, 18, 'squeak!', '#5fc8ff', -8, '#fff') +
