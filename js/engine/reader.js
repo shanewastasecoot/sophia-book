@@ -94,7 +94,11 @@
       pictureLookups.set(key, (async () => {
         for (const ext of ['png', 'webp', 'jpg']) {
           const src = `img/${book.id}/${page.id}.${ext}`;
-          try { const im = new Image(); im.src = src; await im.decode(); pictureNow.set(key, src); return src; } catch (e) { /* not there */ }
+          // wait for load, not decode(): decode() can wait forever while the tab is in the background
+          try {
+            await new Promise((ok, no) => { const im = new Image(); im.onload = ok; im.onerror = no; im.src = src; });
+            pictureNow.set(key, src); return src;
+          } catch (e) { /* not there */ }
         }
         pictureNow.set(key, null);
         return null;
