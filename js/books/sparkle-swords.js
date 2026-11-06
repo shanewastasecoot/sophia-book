@@ -19,7 +19,7 @@
       <rect x="-166" y="-148" width="332" height="28" rx="14" fill="#f0d9a8"/><rect x="-166" y="112" width="332" height="28" rx="14" fill="#f0d9a8"/></g>
       <text text-anchor="middle" font-family="Grandstander, sans-serif" font-weight="900" fill="${A.OL}">
         <tspan x="0" y="-74" font-size="38" fill="#ff4fa3">THE RULE</tspan>
-        <tspan x="0" y="-26" font-size="22">Daddy has to say</tspan>
+        <tspan x="0" y="-26" font-size="22">{Reader} has to say</tspan>
         <tspan x="0" y="12" font-size="34" fill="#8a3fd1">EVERY WORD</tspan>
         <tspan x="0" y="50" font-size="20">in this book.</tspan>
         <tspan x="0" y="86" font-size="17" font-weight="600">(Even the silly ones.)</tspan>
@@ -41,8 +41,9 @@
           A.princess({ ...RUBY, x: 585, y: 470, s: .95, pose: 'drum', prop: 'sticks', cls: 'sway' }) + A.drum(585, 472, .7) +
           A.princess({ ...SOPHIA, x: 400, y: 480, s: 1.15, pose: 'up', prop: 'sword', cls: 'bob' }),
         text: `<h2 class="cover-title">Princess Sophia <span>and the</span> Noisy Shadow Demon</h2>
-          <p class="cover-sub">A book Daddy has to read EXACTLY the way it's written.</p>
-          <p class="hint">Tap the bright words to hear their sounds. Swipe or tap the arrow to turn the page.</p>`,
+          <p class="cover-sub">A book {Reader} has to read EXACTLY the way it's written.</p>
+          <p class="hint">Tap the bright words to hear their sounds. Swipe or tap the arrow to turn the page.</p>
+          {reader-choice}`,
       },
       {
         id: 'rule', title: 'The Rule',
@@ -51,9 +52,9 @@
           A.princess({ ...SOPHIA, x: 215, y: 482, s: 1.45, pose: 'hold', cls: 'bob' }) +
           A.sparkles([[380, 90, 8], [720, 420, 8], [90, 120, 7]], '#fff'),
         text: `<p>Hi, ${her}! Are you listening? Good.</p>
-          <p>This book has one rule: everything written here, Daddy has to ${huge('SAY.')}</p>
+          <p>This book has one rule: everything written here, {Reader} has to ${huge('SAY.')}</p>
           <p>Even the silly words. Even the <b>VERY</b> silly words.</p>
-          <p>No skipping, Daddy. ${note('(Sophia is watching you.)')}</p>`,
+          <p>No skipping, {Reader}. ${note('(Sophia is watching you.)')}</p>`,
       },
       {
         id: 'sophia', title: 'Princess Sophia',
@@ -65,7 +66,7 @@
         text: `<p>This is Princess Sophia. Hey, wait a minute... that's <b>YOU!</b></p>
           <p>She has curly, swirly, twirly hair. ${sfx('boing', 'BOING!')} ${sfx('boing', 'BOING!')} ${sfx('boing', 'BOING!')}</p>
           <p>She is brave. She is sparkly. And she is the BOSS of this book.</p>
-          <p>${note('Daddy, say this:')} ${dad('“Yes, Princess Sophia. You are the boss of me.”')}</p>`,
+          <p>${note('{Reader}, say this:')} ${dad('“Yes, Princess Sophia. You are the boss of me.”')}</p>`,
       },
       {
         id: 'band', title: 'The Sparkle Swords', fx: 'sparkles',
@@ -90,8 +91,8 @@
           A.note(240, 300, 34, '#ffd65a') + A.note(550, 260, 38, '#ffd65a', '♫') + A.note(330, 180, 30, '#fff') + A.note(470, 140, 34, '#ffd65a') +
           A.word(620, 190, 30, '...PICKLE BOTTOM?!', '#9be15d', 6),
         text: `<p>Every night, the Sparkle Swords sing a song that makes a golden <b>Glitter Shield</b> over the castle. ${sfx('hum', 'HUMMM...')}</p>
-          <p>${note('Daddy, sing the song in your highest, squeakiest voice:')} ${dad('“La-dee-DAAA, sparkle-sparkle... PICKLE BOTTOM!”')}</p>
-          <p>Pickle bottom?! That's not in the song! ${note('Too late, Daddy. You already sang it.')}</p>`,
+          <p>${note('{Reader}, sing the song in your highest, squeakiest voice:')} ${dad('“La-dee-DAAA, sparkle-sparkle... PICKLE BOTTOM!”')}</p>
+          <p>Pickle bottom?! That's not in the song! ${note('Too late, {Reader}. You already sang it.')}</p>`,
       },
       {
         id: 'burp', title: 'BUUURP!',
@@ -110,9 +111,9 @@
         art: () => A.sky('dark') + A.spot(400, 400, 'spotCyan') + A.grumbo({ x: 400, y: 560, s: 1.42, mood: 'grin', cls: 'bob' }) +
           A.stink(110, 420, 1.1) + A.stink(690, 410, 1.2) + A.word(150, 110, 44, 'TOE JAM?!', '#9be15d', -8) +
           A.sparkles([[700, 90, 8], [620, 200, 6], [80, 250, 6]], '#fff'),
-        text: `<p>${note('Daddy, you have to do the monster voice now. Big and grumbly. Ready?')}</p>
+        text: `<p>${note('{Reader}, you have to do the monster voice now. Big and grumbly. Ready?')}</p>
           <p>${dad('“I am GRUMBO! I am BIG! I am BLUE! And I have STINKY TOE JAM!”')}</p>
-          <p>${her}, did Daddy just say <b>toe jam</b>? He did!</p>
+          <p>${her}, did {Reader} just say <b>toe jam</b>? {He} did!</p>
           <p>${dad('“And I do NOT like singing!”')} ${sfx('roar', 'RAAAWR!')}</p>`,
       },
       {
@@ -125,7 +126,7 @@
           A.word(400, 70, 56, 'CHOMP!', '#ff4fa3', -4, '#fff'),
         text: `<p>Grumbo gobbled up ALL the songs in the kingdom.</p>
           <p>${sfx('chomp', 'CHOMP!')} The birds' tweet-tweet. ${sfx('chomp', 'CHOMP!')} The ice cream truck's ding-ding. ${sfx('chomp', 'CHOMP!')} Even the King's snore!</p>
-          <p>${note('Daddy, read the next part in a teeny-tiny whisper.')} ${whisper('it was so quiet, you could hear a butterfly burp.')}</p>`,
+          <p>${note('{Reader}, read the next part in a teeny-tiny whisper.')} ${whisper('it was so quiet, you could hear a butterfly burp.')}</p>`,
       },
       {
         id: 'showtime', title: 'Showtime', fx: 'sparkles',
@@ -136,7 +137,7 @@
           A.princess({ ...SOPHIA, x: 400, y: 486, s: 1.45, pose: 'up', prop: 'sword', cls: 'bob' }) +
           A.word(400, 52, 40, 'SHOWTIME!', '#ffc83d', -3),
         text: `<p>But Princess Sophia was NOT scared. She jumped up and said, ${say('“Sparkle Swords, it\'s SHOWTIME!”')}</p>
-          <p>${her}, you shout it too. Daddy, you shout it with her. One, two, three...</p>
+          <p>${her}, you shout it too. {Reader}, you shout it with her. One, two, three...</p>
           <p>${shout('SPARKLE SWORDS, LET\'S GO!')}</p>`,
       },
       {
@@ -151,7 +152,7 @@
           `<g stroke="#ffc83d" stroke-width="5" stroke-linecap="round"><path d="M505 478l-20 8M715 478l20 8M530 490l-14 12M690 490l14 12"/></g>`,
         text: `<p>Grumbo stomped. ${sfx('stomp', 'STOMP!')} ${sfx('stomp', 'STOMP!')} And then Grumbo did a big... stinky... ${sfx('toot', 'TOOT!')}</p>
           <p>${say('“EWWWW!”')} said the princesses.</p>
-          <p>${note('Daddy, say this:')} ${dad('“It wasn\'t me! ...Okay, maybe it was a LITTLE bit me.”')}</p>`,
+          <p>${note('{Reader}, say this:')} ${dad('“It wasn\'t me! ...Okay, maybe it was a LITTLE bit me.”')}</p>`,
       },
       {
         id: 'sword', title: 'Shwing-a-ding-ding',
@@ -163,7 +164,7 @@
           A.note(430, 160, 40, '#ffc83d') + A.note(520, 120, 36, '#ff7ac1', '♫') + A.note(470, 260, 32, '#5ff2ff') +
           A.word(400, 56, 40, 'SHWING-A-DING-DING!', '#ffc83d', -3),
         text: `<p>Sophia swung her magic sword. ${sfx('swish', 'SWISH!')}</p>
-          <p>${note('Daddy, you have to make the sword noise:')} ${dad('“SHWING-a-ding-DING!”')}</p>
+          <p>${note('{Reader}, you have to make the sword noise:')} ${dad('“SHWING-a-ding-DING!”')}</p>
           <p>Luna sang high: ${sfx('la', 'La-la-LAAA!')} Ruby drummed loud: ${sfx('boom', 'BOOM-BA-BOOM!')}</p>
           <p>Grumbo's eyes went BOINK.</p>`,
       },
@@ -178,9 +179,9 @@
           `<g stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" opacity=".75"><path d="M40 430q-12 -14 0 -28M180 430q12 -14 0 -28M200 430q-12 -14 0 -28M360 430q12 -14 0 -28M380 430q-12 -14 0 -28M520 430q12 -14 0 -28"/></g>` +
           A.word(400, 60, 46, 'WIGGLE WOBBLE!', '#ff4fa3', -4, '#fff'),
         text: `<p>Then the princesses did their secret move: the <b>Wiggle Wobble!</b></p>
-          <p>Everybody has to do it. Yes, Daddy. You too. Stand up!</p>
+          <p>Everybody has to do it. Yes, {Reader}. You too. Stand up!</p>
           <p>Wiggle your bottom and say: ${dad('“I am a wiggly, jiggly JELLY PRINCESS!”')}</p>
-          <p>${her}, was Daddy wiggly enough? Do it AGAIN, Daddy!</p>`,
+          <p>${her}, was {Reader} wiggly enough? Do it AGAIN, {Reader}!</p>`,
       },
       {
         id: 'pop', title: 'POP!',
@@ -206,7 +207,7 @@
           A.word(470, 320, 26, 'squeak!', '#5fc8ff', -8, '#fff') + A.word(640, 430, 34, 'HONK-SHOOO!', '#ffc83d', -3),
         text: `<p>Now Grumbo was as small as a jellybean. ${sfx('squeak', 'squeak!', 'tiny')}</p>
           <p>All the songs came tumbling back out! ${sfx('tweet', 'Tweet-tweet!')} ${sfx('ding', 'Ding-ding!')}</p>
-          <p>And the King's snore. ${note('Daddy, do the King\'s snore. Louder. LOUDER!')} ${sfx('honk', 'HONK-SHOOOOO!')}</p>`,
+          <p>And the King's snore. ${note('{Reader}, do the King\'s snore. Louder. LOUDER!')} ${sfx('honk', 'HONK-SHOOOOO!')}</p>`,
       },
       {
         id: 'friend', title: 'A New Friend',
@@ -219,7 +220,7 @@
           A.heart(440, 320, 1, '#ff4fa3') + A.heart(520, 290, .7, '#ff7ac1') +
           A.sparkles([[90, 80], [560, 70, 8], [740, 200, 7], [400, 140, 7]], '#fff'),
         text: `<p>Sophia picked him up. ${say('“Grumbo, were you grumpy because nobody ever sang WITH you?”')}</p>
-          <p>${note('Daddy, answer in your tiniest, squeakiest Grumbo voice:')} ${dad('“Squeak.”')}</p>
+          <p>${note('{Reader}, answer in your tiniest, squeakiest Grumbo voice:')} ${dad('“Squeak.”')}</p>
           <p>That meant yes. So Sophia gave him a teeny drum to go with his teeny crown, and Grumbo became the smallest Sparkle Sword ever!</p>`,
       },
       {
@@ -230,7 +231,7 @@
           A.grumbo({ x: 300, y: 474, s: .06, mood: 'cute', crown: true }) + A.word(300, 435, 18, 'squeak!', '#5fc8ff', -8, '#fff') +
           A.word(400, 60, 46, 'THE END', '#ffc83d', -2),
         text: `<p>Now every night, the Sparkle Swords sing, the Glitter Shield glows gold, and a teeny-tiny voice sings along. ${sfx('squeak', 'squeak!', 'tiny')}</p>
-          <p>${her}, did Daddy read EVERY word? Then he gets to say one last thing:</p>
+          <p>${her}, did {Reader} read EVERY word? Then {he} gets to say one last thing:</p>
           <p>${dad('“Goodnight, Princess Sophia. Goodnight, my boss.”')}</p>
           <p><b>The End.</b></p>
           <p class="actions">${action('restart', 'Read it again!')} ${action('open-book', 'Next adventure: Mermaid City', 'data-book="mermaid-city"')}</p>`,

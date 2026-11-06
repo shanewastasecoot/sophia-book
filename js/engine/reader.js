@@ -19,7 +19,7 @@
     const key = book.id + '/' + i;
     if (!cache.has(key)) {
       const page = book.pages[i];
-      let body = page.art ? page.art() : '';
+      let body = page.art ? SB.words(page.art()) : '';
       if (body && sketchy(book, page)) body = SB.sketch.apply(body);
       cache.set(key, body);
     }
@@ -44,15 +44,15 @@
   async function ensureSnapshot(book, i) {
     const size = snapSize(), body = artBody(book, i);
     if (!size || !body || !SB.raster) return null;
-    const key = `${book.id}/${i}@${size.w}x${size.h}`;
+    const key = `${book.id}/${i}/${SB.reader}@${size.w}x${size.h}`;
     if (bitmaps.has(key)) return bitmaps.get(key);
-    const bmp = await SB.raster.snapshot(`${book.id}/${i}`, body, size.w, size.h);
+    const bmp = await SB.raster.snapshot(`${book.id}/${i}/${SB.reader}`, body, size.w, size.h);
     if (bmp) { bitmaps.set(key, bmp); while (bitmaps.size > 8) bitmaps.delete(bitmaps.keys().next().value); }
     return bmp;
   }
   function readySnapshot(book, i) {
     const size = snapSize();
-    return size && bitmaps.get(`${book.id}/${i}@${size.w}x${size.h}`);
+    return size && bitmaps.get(`${book.id}/${i}/${SB.reader}@${size.w}x${size.h}`);
   }
   function showSnapshot(sheet, bmp) {
     if (sheet.dataset.mode === 'picture') return true;   // a painting is already a plain image
@@ -191,7 +191,7 @@
     const imgs = (page.images || []).map(im => `<img class="layer" src="${esc(im.src)}" alt="${esc(im.alt || '')}" loading="lazy" decoding="async">`).join('');
     const painted = knownPicture(book, i);
     sheet.innerHTML = `
-      <div class="media frame-${esc(frameOf(book, page))}" role="img" aria-label="${esc(page.alt || page.illustration?.alt || '')}">
+      <div class="media frame-${esc(frameOf(book, page))}" role="img" aria-label="${esc(SB.words(page.alt || page.illustration?.alt || ''))}">
         ${illustrationHTML(painted ? painting(page, painted) : page, true)}
         <div class="layer layer-art"></div>
         <canvas class="layer layer-snap" aria-hidden="true"></canvas>
@@ -201,7 +201,7 @@
       </div>
       <button class="zoom-btn" type="button" aria-label="Make the picture bigger"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       <span class="ink-frame" aria-hidden="true"></span>
-      <div class="copy">${page.chapter ? SB.art.ui.chapter(page.chapter.n, page.chapter.title) : ''}${page.text || ''}${page.ocarina ? SB.ocarina.render(page.ocarina) : ''}</div>`;
+      <div class="copy">${page.chapter ? SB.art.ui.chapter(page.chapter.n, page.chapter.title) : ''}${SB.words(page.text || '')}${page.ocarina ? SB.ocarina.render(page.ocarina) : ''}</div>`;
     if (painted) sheet.dataset.mode = 'picture';
     else if (!showSnapshot(sheet, bmp)) goLive(sheet, book, i);   // no bitmap yet: draw the live scene right away
     // fetch any recorded sound files this page's sound words use
@@ -518,6 +518,21 @@
     el.soundBtn.classList.toggle('muted', SB.audio.muted);
   }
 
+  /* ---------- Who's reading: the Daddy / Mommy switch on book 1's cover. Remembered between visits. ---------- */
+  function setReader(id, announce) {
+    if (!SB.READERS[id] || id === SB.reader) return;
+    SB.reader = id;
+    SB.store.set('sb-reader', id);
+    // every page's words (and any drawn scene with words in it) change, so redraw them
+    cache.clear();
+    for (const s of ready.values()) s.remove();
+    ready.clear();
+    el.viewport.querySelectorAll('.sheet').forEach(s => s.remove());
+    const i = state.i; state.i = -1;
+    show(i, 0);
+    if (announce) SB.items.note("Who's reading", `${SB.READERS[id].Reader} is reading tonight!`);
+  }
+
   /* ---------- Bedtime mode: the moon button. Remembered between visits. ---------- */
   function setBedtime(on, announce) {
     SB.bedtime = on;
@@ -570,6 +585,7 @@
       if (s) { SB.audio.play(s.dataset.snd); s.classList.remove('go'); void s.offsetWidth; s.classList.add('go'); return; }
       const a = e.target.closest('[data-action]');
       if (a?.dataset.action === 'restart') restart();
+      if (a?.dataset.action === 'reader') setReader(a.dataset.reader, true);
       if (a?.dataset.action === 'open-book') openBook(a.dataset.book, 0);
     });
     document.addEventListener('keydown', e => {
@@ -609,6 +625,7 @@
     initGestures();
     updateSoundBtn();
     setBedtime(SB.store.get('sb-bedtime', false), false);
+    SB.reader = SB.READERS[SB.store.get('sb-reader')] ? SB.store.get('sb-reader') : 'daddy';
     routeFromHash();
   }
 

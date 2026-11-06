@@ -373,6 +373,16 @@ img.layer { object-fit: cover; }
 }
 .action-btn + .action-btn { background: var(--sfx-1); box-shadow: 0 4px 0 var(--sfx-1-shadow), 0 0 16px var(--glow); }
 .action-btn:active { transform: translateY(2px) scale(.97); }
+/* "Who's reading?" Daddy / Mommy switch on book 1's cover: the chosen grown-up's pill is filled in */
+.reader-choice { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: .6em; }
+.reader-q { font: 800 .95rem var(--display); color: var(--muted); margin-right: 2px; }
+.reader-btn {
+  min-height: var(--tap); padding: .35em 1.1em; border-radius: 999px; cursor: pointer;
+  font: 800 1rem var(--display); color: var(--sfx-2); background: transparent; border: 2.5px solid var(--sfx-2);
+  transition: transform .2s var(--spring), background-color .2s, color .2s;
+}
+.reader-btn[aria-pressed="true"] { color: #fff; background: var(--sfx-2); box-shadow: 0 3px 0 var(--sfx-2-shadow); }
+.reader-btn:active { transform: translateY(2px) scale(.97); }
 
 /* ---------- Treasure pickups (inside the picture) ---------- */
 .pickup { pointer-events: all; cursor: pointer; outline: none; }
