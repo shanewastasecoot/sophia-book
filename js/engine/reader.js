@@ -7,7 +7,7 @@
   // 'when the phone is idle', but never later than 300 ms: a busy phone could otherwise put off preparing
   // the next page until after the reader had already turned to it
   const idle = window.requestIdleCallback ? fn => requestIdleCallback(fn, { timeout: 300 }) : fn => setTimeout(fn, 150);
-  const TURN_MS = 520; // keep in step with --turn in css/reader.css
+  const TURN_MS = 440; // keep in step with --turn in css/reader.css
 
   const el = {};
   const state = { book: null, i: -1, tocBook: null };
@@ -522,7 +522,11 @@
       const b = SB.getBook(t.dataset.book), i = +t.dataset.i;
       if (t.closest('.locked')) return; // locked pages show a lock, not a picture
       findPicture(b, i).then(src => {
-        t.innerHTML = src ? illustrationHTML(painting(b.pages[i], src), true) : illustrationHTML(b.pages[i], false) + artSVG(b, i);
+        // the small thumb/ copy: decoding the full 1376 px painting for every thumbnail (about 4 MB each)
+        // overloaded the phone's image memory and left blank blocks in the menu
+        const small = src && src.replace(/([^/]+)\.(png|webp|jpe?g)$/, 'thumb/$1.webp');
+        t.innerHTML = src ? illustrationHTML(painting(b.pages[i], small), true).replace('<img ', `<img onerror="this.onerror=null;this.src='${src}'" `)
+          : illustrationHTML(b.pages[i], false) + artSVG(b, i);
         t.classList.add('ready');
       });
     };

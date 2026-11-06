@@ -27,7 +27,7 @@
   --fs-bar: clamp(1rem, .9rem + .5vw, 1.2rem);
   --fs-cover: clamp(1.6rem, 1.1rem + 2.6vw, 2.7rem);
   --radius: clamp(14px, 1rem + 1vw, 24px);
-  --turn: 520ms;
+  --turn: 440ms;
   --spring: cubic-bezier(.34, 1.56, .64, 1);
   --ease-out: cubic-bezier(.2, .8, .2, 1);
 
@@ -130,7 +130,7 @@ button { font: inherit; touch-action: manipulation; }
   position: relative; min-height: 0;
   display: grid; place-items: center;
   padding: 4px var(--gutter-r) 6px var(--gutter-l);
-  perspective: 1800px;
+  /* no perspective: it would make every page move count as 3D, which phones redraw before moving */
   touch-action: pan-y;           /* vertical scrolling stays native; horizontal swipes turn pages */
   overflow: hidden;
 }
@@ -145,7 +145,6 @@ button { font: inherit; touch-action: manipulation; }
   border: 1px solid var(--panel-border);
   border-radius: var(--radius); overflow: hidden;
   box-shadow: 0 16px 40px #0007, 0 0 60px var(--glow);
-  backface-visibility: hidden;
   will-change: transform;
 }
 /* The page and its words are scroll boxes, and a browser only reads touch-action up to the nearest scroll box,
@@ -271,11 +270,14 @@ img.layer { object-fit: cover; }
 /* Page turn: the old page swings away on its spine and fades, uncovering the new page, which is already
    there underneath, fully drawn. Nothing on the new page changes when the turn starts (it used to fade
    to half see-through and its words vanished and floated back in, which looked like a blink). */
-.sheet.out-next, .sheet.out-prev { z-index: 3; pointer-events: none; animation: var(--turn) cubic-bezier(.45, 0, .7, .4) forwards; }
-.sheet.out-next { transform-origin: 0% 50%; animation-name: turn-next; }
-.sheet.out-prev { transform-origin: 100% 50%; animation-name: turn-prev; }
-@keyframes turn-next { to { transform: rotateY(-75deg) translateX(-8%); opacity: 0; } }
-@keyframes turn-prev { to { transform: rotateY(75deg) translateX(8%); opacity: 0; } }
+.sheet.out-next, .sheet.out-prev { z-index: 3; pointer-events: none; animation: var(--turn) cubic-bezier(.35, .1, .5, 1) forwards; transform-origin: 50% 100%; }
+.sheet.out-next { animation-name: turn-next; }
+.sheet.out-prev { animation-name: turn-prev; }
+/* A flat slide with a little tilt, carrying on from wherever a swipe let go. (The page used to swing away in
+   3D and fade: on phones that made Chrome redraw the whole page before it could move it, so the page froze
+   for a moment and then jumped.) A flat move only shifts the page as it's already drawn. */
+@keyframes turn-next { to { transform: translateX(-118%) rotate(-7deg); } }
+@keyframes turn-prev { to { transform: translateX(118%) rotate(7deg); } }
 
 /* ---------- Bottom nav ---------- */
 .nav {
