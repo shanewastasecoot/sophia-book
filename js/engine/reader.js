@@ -8,6 +8,8 @@
   // the next page until after the reader had already turned to it
   const idle = window.requestIdleCallback ? fn => requestIdleCallback(fn, { timeout: 300 }) : fn => setTimeout(fn, 150);
   const TURN_MS = 440; // keep in step with --turn in css/reader.css
+  // the ?v= on this script's own address: shown at the bottom of the Pages menu
+  const VERSION = ((document.currentScript && document.currentScript.src) || '').match(/[?&]v=([^&]+)/)?.[1] || 'local';
 
   const el = {};
   const state = { book: null, i: -1, tocBook: null };
@@ -620,6 +622,7 @@
   function boot() {
     ['app', 'viewport', 'prev', 'next', 'fill', 'label', 'live', 'progress', 'title', 'tocBtn', 'soundBtn', 'bedtimeBtn', 'toc', 'tocList', 'tocBooks', 'tocClose', 'scrim']
       .forEach(id => el[id] = $(id));
+    const v = $('tocVersion'); if (v) v.textContent = `Version ${VERSION}`;
     const defs = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     defs.setAttribute('class', 'shared-defs'); defs.setAttribute('aria-hidden', 'true');
     defs.innerHTML = `<defs>${SB.art.defs}</defs>`;
