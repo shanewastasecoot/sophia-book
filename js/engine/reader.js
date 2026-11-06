@@ -147,17 +147,25 @@
   // snapshot it, fetch their pictures, and lay the next/previous pages (as bitmaps, animations paused)
   // under the current one. A tap then only has to reveal a finished page.
   const ready = new Map();
+  // A painted page needs none of the drawn-scene work (building the SVG, snapshotting it), which is heavy
+  // enough to make the next swipe stutter, so it's only done for pages without a painting.
   function prefetchAround(book, i) {
-    idle(() => ensureSnapshot(book, i));   // the current page too, so it can turn away as a bitmap
+    findPicture(book, i).then(pic => { if (!pic) idle(() => ensureSnapshot(book, i)); }); // the current page turns away as a bitmap
     for (const j of [i + 1, i - 1, i + 2]) {
       if (j < 0 || j >= book.pages.length) continue;
       idle(async () => {
-        artBody(book, j); preloadImages(book.pages[j]);
+        preloadImages(book.pages[j]);
         const key = book.id + '/' + j;
+        const pic = await findPicture(book, j);
+        if (!pic) artBody(book, j);
         if (Math.abs(j - state.i) !== 1 || state.book !== book || ready.has(key)) return;
-        const bmp = (await findPicture(book, j)) ? null : await ensureSnapshot(book, j);
+        const bmp = pic ? null : await ensureSnapshot(book, j);
         if (Math.abs(j - state.i) !== 1 || state.book !== book || ready.has(key)) return;
         const s = buildSheet(book, j, bmp);
+        // decode the painting before the page goes underneath, so a swipe never reveals it half-drawn
+        const img = s.querySelector('.layer-illustration img');
+        if (img?.decode) await Promise.race([img.decode().catch(() => {}), new Promise(r => setTimeout(r, 400))]);
+        if (Math.abs(j - state.i) !== 1 || state.book !== book || ready.has(key)) return;
         s.classList.add('waiting'); s.inert = true; s.setAttribute('aria-hidden', 'true');
         s.dataset.side = j > state.i ? 'next' : 'prev';
         el.viewport.prepend(s);
@@ -352,6 +360,18 @@
     show(0, -1);
   }
 
+  // A quick swipe right after a turn can arrive before the page next to this one is ready underneath,
+  // which showed the background and then popped the page in. Build it on the spot instead.
+  function peekReady(d) {
+    const book = state.book, j = state.i + d, key = book.id + '/' + j;
+    if (j < 0 || j >= book.pages.length || ready.has(key)) return;
+    const s = buildSheet(book, j);
+    s.classList.add('waiting'); s.inert = true; s.setAttribute('aria-hidden', 'true');
+    s.dataset.side = d > 0 ? 'next' : 'prev';
+    el.viewport.prepend(s);
+    ready.set(key, s);
+  }
+
   /* ---------- Swipe: the page follows your finger, then turns or springs back ---------- */
   function initGestures() {
     let start = null, dragging = false;
@@ -373,7 +393,9 @@
         try { el.viewport.setPointerCapture(e.pointerId); } catch (err) {}
       }
       if (dragging) {
-        el.viewport.dataset.peek = dx < 0 ? 'next' : 'prev';
+        const side = dx < 0 ? 'next' : 'prev';
+        if (el.viewport.dataset.peek !== side) peekReady(side === 'next' ? 1 : -1);
+        el.viewport.dataset.peek = side;
         const atEdge = (dx > 0 && state.i === 0) || (dx < 0 && state.i === state.book.pages.length - 1);
         const s = currentSheet();
         if (s) s.style.transform = `translateX(${dx * (atEdge ? .2 : .65)}px) rotate(${dx * .008}deg)`;
@@ -475,11 +497,13 @@
     }).join('');
     // Thumbnails are drawn only when they scroll into view.
     thumbObserver?.disconnect();
+    // Painting first: drawing the old scene and then swapping in the painting made the menu flicker.
     const fill = t => {
       const b = SB.getBook(t.dataset.book), i = +t.dataset.i;
-      t.innerHTML = illustrationHTML(b.pages[i], false) + artSVG(b, i);
-      t.classList.add('ready');
-      findPicture(b, i).then(src => { if (src) t.innerHTML = illustrationHTML(painting(b.pages[i], src), false); });
+      findPicture(b, i).then(src => {
+        t.innerHTML = src ? illustrationHTML(painting(b.pages[i], src), true) : illustrationHTML(b.pages[i], false) + artSVG(b, i);
+        t.classList.add('ready');
+      });
     };
     if ('IntersectionObserver' in window) {
       thumbObserver = new IntersectionObserver(entries => entries.forEach(en => {

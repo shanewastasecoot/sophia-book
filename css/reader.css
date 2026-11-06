@@ -561,7 +561,13 @@ img.layer { object-fit: cover; }
   --app-bg-1: #06051a !important; --app-bg-2: #110c2c !important;
   --glow: transparent !important; --btn-glow: 0 0 0 transparent !important; --text-glow: none !important;
 }
-:root[data-bedtime] .sheet { filter: brightness(.8) saturate(.85) sepia(.24); box-shadow: 0 16px 40px #000a; }
+:root[data-bedtime] .sheet { box-shadow: 0 16px 40px #000a; }
+/* Dimmer, warmer pages: one still, see-through layer over the page area. (A filter on each page looked the
+   same, but phones had to redo it on every frame of a swipe, which made turns flicker.) */
+:root[data-bedtime] .viewport::after {
+  content: ""; position: absolute; inset: 0; z-index: 6; pointer-events: none;
+  background: #2a1606; opacity: .24;
+}
 :root[data-bedtime] :is(.bar, .nav) { opacity: .78; }
 :root[data-bedtime] .backdrop.on { opacity: .45; }
 :root[data-bedtime] :is(.bob, .sway, .wiggle, .shake, .boing, .floaty, .twinkle, .beam, .blink,
