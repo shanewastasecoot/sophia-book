@@ -26,7 +26,8 @@
   SB.calm = () => SB.bedtime || SB.prefersReducedMotion();
   /* ---------- Who's reading aloud ----------
      Page text can say {Reader} ("Daddy" or "Mommy"), {he}/{He} and {his}/{His} for that grown-up,
-     and {reader-choice} for the Daddy / Mommy switch. They're filled in each time a page is drawn. */
+     and {reader-choice} for the Daddy / Mommy switch. {bed|bedtime words|daytime words} picks words by
+     bedtime mode (neither part may contain | or }). They're filled in each time a page is drawn. */
   SB.READERS = {
     daddy: { Reader: 'Daddy', he: 'he', He: 'He', his: 'his', His: 'His' },
     mommy: { Reader: 'Mommy', he: 'she', He: 'She', his: 'her', His: 'Her' },
@@ -38,7 +39,8 @@
     return str
       .replace(/\{reader-choice\}/g, () => `<div class="reader-choice" role="group" aria-label="Who's reading?"><span class="reader-q">Who's reading?</span>` +
         Object.entries(SB.READERS).map(([id, w]) => `<button type="button" class="reader-btn" data-action="reader" data-reader="${id}" aria-pressed="${id === SB.reader}">${w.Reader}</button>`).join('') + `</div>`)
-      .replace(/\{(Reader|he|He|his|His)\}/g, (m, k) => r[k]);
+      .replace(/\{(Reader|he|He|his|His)\}/g, (m, k) => r[k])
+      .replace(/\{bed\|([^|}]*)\|([^}]*)\}/g, (m, night, day) => SB.bedtime ? night : day);
   };
   SB.store = {
     get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } },

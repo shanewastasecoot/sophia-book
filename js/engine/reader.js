@@ -518,18 +518,23 @@
     el.soundBtn.classList.toggle('muted', SB.audio.muted);
   }
 
-  /* ---------- Who's reading: the Daddy / Mommy switch on book 1's cover. Remembered between visits. ---------- */
-  function setReader(id, announce) {
-    if (!SB.READERS[id] || id === SB.reader) return;
-    SB.reader = id;
-    SB.store.set('sb-reader', id);
-    // every page's words (and any drawn scene with words in it) change, so redraw them
-    cache.clear();
+  // Words changed (who's reading, or bedtime): rebuild the page on screen and the ones waiting beside it.
+  function redrawBook(artToo) {
+    if (!state.book) return;
+    if (artToo) cache.clear(); // a drawn scene can have words in it too
     for (const s of ready.values()) s.remove();
     ready.clear();
     el.viewport.querySelectorAll('.sheet').forEach(s => s.remove());
     const i = state.i; state.i = -1;
     show(i, 0);
+  }
+
+  /* ---------- Who's reading: the Daddy / Mommy switch on book 1's cover. Remembered between visits. ---------- */
+  function setReader(id, announce) {
+    if (!SB.READERS[id] || id === SB.reader) return;
+    SB.reader = id;
+    SB.store.set('sb-reader', id);
+    redrawBook(true);
     if (announce) SB.items.note("Who's reading", `${SB.READERS[id].Reader} is reading tonight!`);
   }
 
@@ -544,6 +549,8 @@
     SB.backdrop.refresh();
     const s = currentSheet();
     if (s && state.book) SB.fx.start(s.querySelector('.layer-fx'), state.book.pages[state.i].fx);
+    // some pages read differently at bedtime (whisper instead of shout): redraw if this book has any
+    if (announce && state.book?.pages.some(p => p.text?.includes('{bed|'))) redrawBook(false);
     if (announce) SB.items.note(on ? 'Bedtime mode' : 'Bedtime mode off', on ? 'Shhh… sleepy reading time 🌙' : 'Wide awake! ☀️');
   }
 

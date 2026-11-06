@@ -137,8 +137,8 @@
           A.princess({ ...SOPHIA, x: 400, y: 486, s: 1.45, pose: 'up', prop: 'sword', cls: 'bob' }) +
           A.word(400, 52, 40, 'SHOWTIME!', '#ffc83d', -3),
         text: `<p>But Princess Sophia was NOT scared. She jumped up and said, ${say('“Sparkle Swords, it\'s SHOWTIME!”')}</p>
-          <p>${her}, you shout it too. {Reader}, you shout it with her. One, two, three...</p>
-          <p>${shout('SPARKLE SWORDS, LET\'S GO!')}</p>`,
+          <p>{bed|${her}, you whisper it too. {Reader}, you whisper it with her. One, two, three...|${her}, you shout it too. {Reader}, you shout it with her. One, two, three...}</p>
+          <p>{bed|${whisper('sparkle swords, let\'s go!')}|${shout('SPARKLE SWORDS, LET\'S GO!')}}</p>`,
       },
       {
         id: 'toot', title: 'TOOT!',
@@ -179,9 +179,9 @@
           `<g stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" opacity=".75"><path d="M40 430q-12 -14 0 -28M180 430q12 -14 0 -28M200 430q-12 -14 0 -28M360 430q12 -14 0 -28M380 430q-12 -14 0 -28M520 430q12 -14 0 -28"/></g>` +
           A.word(400, 60, 46, 'WIGGLE WOBBLE!', '#ff4fa3', -4, '#fff'),
         text: `<p>Then the princesses did their secret move: the <b>Wiggle Wobble!</b></p>
-          <p>Everybody has to do it. Yes, {Reader}. You too. Stand up!</p>
-          <p>Wiggle your bottom and say: ${dad('“I am a wiggly, jiggly JELLY PRINCESS!”')}</p>
-          <p>${her}, was {Reader} wiggly enough? Do it AGAIN, {Reader}!</p>`,
+          <p>Everybody has to do it. Yes, {Reader}. You too. {bed|But it's bedtime, so stay snuggled in!|Stand up!}</p>
+          <p>{bed|Wiggle your toes and say:|Wiggle your bottom and say:} ${dad('“I am a wiggly, jiggly JELLY PRINCESS!”')}</p>
+          <p>${her}, {bed|were {Reader}'s toes|was {Reader}} wiggly enough? Do it AGAIN, {Reader}!</p>`,
       },
       {
         id: 'pop', title: 'POP!',
@@ -193,8 +193,8 @@
           `<g transform="translate(700 380)">${A.star4(0, 0, 46, '#ffc83d', 'twinkle')}</g>` + A.word(700, 300, 48, 'POP!', '#ff4fa3', 8, '#fff') +
           A.sparkles([[600, 380, 8], [760, 440, 7], [650, 330, 6]], '#fff'),
         text: `<p>The music was SO sparkly that Grumbo started to shrink!</p>
-          <p>Mountain-big... house-big... puppy-big... ${sfx('pop', 'POP!')}</p>
-          <p>${huge('teeny-tiny!')}</p>`,
+          <p>He went from as big as a mountain... to as big as a house... to as little as a puppy... and then... ${sfx('pop', 'POP!')}</p>
+          <p>Now he was ${huge('teeny-tiny!')}</p>`,
       },
       {
         id: 'squeak', title: 'Squeak',
