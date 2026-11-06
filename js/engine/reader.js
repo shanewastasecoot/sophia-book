@@ -500,6 +500,7 @@
     // Painting first: drawing the old scene and then swapping in the painting made the menu flicker.
     const fill = t => {
       const b = SB.getBook(t.dataset.book), i = +t.dataset.i;
+      if (t.closest('.locked')) return; // locked pages show a lock, not a picture
       findPicture(b, i).then(src => {
         t.innerHTML = src ? illustrationHTML(painting(b.pages[i], src), true) : illustrationHTML(b.pages[i], false) + artSVG(b, i);
         t.classList.add('ready');
@@ -509,7 +510,9 @@
       thumbObserver = new IntersectionObserver(entries => entries.forEach(en => {
         if (en.isIntersecting) { fill(en.target); thumbObserver.unobserve(en.target); }
       }), { root: el.tocList, rootMargin: '120px' });
-      el.tocList.querySelectorAll('.thumb').forEach(t => thumbObserver.observe(t));
+      // wait until the menu has slid up, so decoding pictures doesn't stutter the slide
+      const start = () => el.tocList.querySelectorAll('.thumb').forEach(t => thumbObserver.observe(t));
+      if (el.toc.classList.contains('open') && !SB.prefersReducedMotion()) start(); else setTimeout(start, 340);
     } else {
       el.tocList.querySelectorAll('.thumb').forEach(fill);
     }
@@ -522,6 +525,8 @@
     el.toc.classList.add('open'); el.scrim.classList.add('open');
     el.tocBtn.setAttribute('aria-expanded', 'true');
     el.app.inert = true;
+    // nothing behind the menu needs to move while it's open
+    SB.fx.stop(); SB.backdrop.hold(1e9);
     const cur = el.tocList.querySelector('[aria-current="page"]');
     cur?.scrollIntoView({ block: 'center' });
     (cur || el.tocClose).focus({ preventScroll: true });
@@ -531,6 +536,8 @@
     el.toc.classList.remove('open'); el.scrim.classList.remove('open');
     el.tocBtn.setAttribute('aria-expanded', 'false');
     el.app.inert = false;
+    SB.backdrop.hold(0);
+    const s = currentSheet(); if (s) SB.fx.start(s.querySelector('.layer-fx'), state.book.pages[state.i].fx);
     setTimeout(() => { el.toc.hidden = true; el.scrim.hidden = true; }, SB.prefersReducedMotion() ? 0 : 280);
     el.tocBtn.focus({ preventScroll: true });
   }

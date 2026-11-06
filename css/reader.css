@@ -192,14 +192,16 @@ img.layer { object-fit: cover; }
   background-blend-mode: multiply, multiply, multiply, normal;
   contain: layout paint;
 }
-/* Grain over the picture on its own GPU layer: drawn once, never repainted while the scene animates. */
+/* Grain over the picture. */
 .media::after {
   content: ""; position: absolute; inset: 0; z-index: 5; pointer-events: none;
   background: var(--tex-grain) 0 0 / 220px 220px; opacity: calc(var(--grain) * .6);
-  will-change: transform;
 }
-/* The picture gets its own layer too, so its painted-edge mask is applied by the GPU. */
-.media { will-change: transform; }
+/* A painting never moves, so the picture, its grain and its painted edge are drawn into the page's own layer
+   once, and a turn moves just that one flat layer. (Separate layers inside a page that swings in 3D and fades
+   had to be recombined on every frame, which made turns stutter and flicker on phones.)
+   Only a drawn scene that animates gets its own layers, so its movement doesn't repaint the whole page. */
+.sheet[data-mode="live"] .media, .sheet[data-mode="live"] .media::after { will-change: transform; }
 .sheet > .media, .sheet > .copy { position: relative; z-index: 1; }
 @media (pointer: coarse) { .sheet, .toast { background-color: var(--paper); } } /* solid on touch: no blur, no see-through */
 /* Hand-inked border just inside the page edge (the filter wobbles the straight lines). */
@@ -209,6 +211,9 @@ img.layer { object-fit: cover; }
   border-radius: max(6px, calc(var(--radius) - 6px));
   filter: url(#sketch-filter);
 }
+/* Phones skip the wobble filter on the page border: it's drawn slowly, and again for every page prepared
+   underneath right after a turn. */
+@media (pointer: coarse) { .ink-frame { filter: none; } }
 /* Pencil rings around the round buttons, chapter ornaments drawn with the same wobbly pen. */
 .nav-btn, .icon-btn { position: relative; }
 .nav-btn::after, .icon-btn::after {
@@ -259,6 +264,7 @@ img.layer { object-fit: cover; }
 @media (orientation: landscape) { .zoom-hint { display: none; } }
 
 .thumb { -webkit-mask: var(--mask-vignette) center / 100% 100% no-repeat; mask: var(--mask-vignette) center / 100% 100% no-repeat; position: relative; }
+@media (pointer: coarse) { .thumb { -webkit-mask: none; mask: none; } } /* phones: plain rounded corners scroll smoother */
 .thumb > * { position: absolute; inset: 0; }
 .thumb img { width: 100%; height: 100%; object-fit: cover; }
 
@@ -453,6 +459,7 @@ img.layer { object-fit: cover; }
   padding-bottom: env(safe-area-inset-bottom, 0px);
   padding-left: env(safe-area-inset-left, 0px); padding-right: env(safe-area-inset-right, 0px);
   transform: translateY(100%); transition: transform .32s var(--ease-out);
+  will-change: transform; /* ready to slide from the first frame */
 }
 .toc.open, .bag-panel.open { transform: none; }
 .toc-grip { width: 44px; height: 5px; border-radius: 9px; background: var(--chip); margin: 8px auto 0; }
@@ -480,16 +487,16 @@ img.layer { object-fit: cover; }
 }
 /* pages past an unfinished treasure or tune: no peeking */
 .toc-item.locked { cursor: default; opacity: .6; }
-.toc-item.locked .thumb > * { filter: blur(9px) grayscale(.7); }
+.toc-item.locked .thumb { display: grid; place-items: center; background: var(--chip); }
+.toc-item.locked .thumb::after { content: "🔒"; font-size: 1.6rem; opacity: .7; }
 .toc-item.locked .toc-label { font-size: .85em; }
 .toc-item[aria-current="page"] { box-shadow: inset 0 0 0 3px var(--accent), 0 0 18px var(--glow); }
 .toc-label b { color: var(--accent); font-family: var(--display); }
 .thumb {
   display: block; width: 100%; aspect-ratio: 8 / 5; border-radius: 10px; overflow: hidden;
-  background: linear-gradient(100deg, var(--chip) 30%, #ffffff22 50%, var(--chip) 70%) 0 0 / 300% 100%;
-  animation: shimmer 1.2s linear infinite; transition: box-shadow .2s;
+  background: var(--chip); transition: box-shadow .2s;
 }
-.thumb.ready { animation: none; background: none; }
+.thumb.ready { background: none; }
 .thumb svg { display: block; width: 100%; height: 100%; }
 .thumb * { animation: none !important; }
 @keyframes shimmer { to { background-position: -150% 0; } }
