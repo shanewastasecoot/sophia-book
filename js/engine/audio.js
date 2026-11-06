@@ -68,22 +68,30 @@
     decoder = decoder || new (window.OfflineAudioContext || window.webkitOfflineAudioContext)(1, 1, 44100);
     return new Promise((ok, no) => decoder.decodeAudioData(data, ok, no));
   }
-  async function prepare(name) {
-    if (!name || files[name] || location.protocol === 'file:' || !window.fetch) return;
-    files[name] = { state: 'loading' };
-    for (const ext of EXTS) {
-      try {
-        const r = await fetch(`sounds/${name}.${ext}`);
-        if (!r.ok) continue;
-        const buf = await decode(await r.arrayBuffer());
-        // even out loudness: downloaded and recorded files come in all volumes
-        let peak = 0;
-        for (let c = 0; c < buf.numberOfChannels; c++) { const d = buf.getChannelData(c); for (let i = 0; i < d.length; i += 4) peak = Math.max(peak, Math.abs(d[i])); }
-        files[name] = { state: 'ready', buf, gain: Math.min(3, .8 / (peak || 1)) };
-        return;
-      } catch (e) { /* not there, or not playable here: try the next kind */ }
-    }
-    files[name] = { state: 'none' };
+  // Look up a sound's file once; returns a promise that settles when it's known. A file that wasn't there is
+  // looked for again after a minute (it may have just been uploaded), and the browser always checks with the
+  // server instead of reusing an old "not found".
+  function prepare(name) {
+    if (!name || location.protocol === 'file:' || !window.fetch) return Promise.resolve();
+    const known = files[name];
+    if (known && (known.state !== 'none' || Date.now() - known.at < 60000)) return known.ready;
+    const entry = files[name] = { state: 'loading' };
+    entry.ready = (async () => {
+      for (const ext of EXTS) {
+        try {
+          const r = await fetch(`sounds/${name}.${ext}`, { cache: 'no-cache' });
+          if (!r.ok) continue;
+          const buf = await decode(await r.arrayBuffer());
+          // even out loudness: downloaded and recorded files come in all volumes
+          let peak = 0;
+          for (let c = 0; c < buf.numberOfChannels; c++) { const d = buf.getChannelData(c); for (let i = 0; i < d.length; i += 4) peak = Math.max(peak, Math.abs(d[i])); }
+          Object.assign(entry, { state: 'ready', buf, gain: Math.min(3, .8 / (peak || 1)) });
+          return;
+        } catch (e) { /* not there, or not playable here: try the next kind */ }
+      }
+      Object.assign(entry, { state: 'none', at: Date.now() });
+    })();
+    return entry.ready;
   }
   function playFile(f) {
     const a = ctx(), src = a.createBufferSource(), g = a.createGain();
@@ -99,10 +107,19 @@
     play(name) {
       if (this.muted) return;
       const f = files[name];
-      try {
-        if (f?.state === 'ready') playFile(f);
-        else if (sounds[name]) sounds[name]();
-      } catch (e) { /* audio blocked or unsupported: stay silent */ }
+      const built = () => { try { sounds[name]?.(); } catch (e) { /* audio blocked or unsupported: stay silent */ } };
+      const file = () => { try { playFile(f); } catch (e) { built(); } };
+      try { ctx(); } catch (e) { return; } // wake the speaker during the tap itself
+      if (f?.state === 'ready') return file();
+      if (f?.state === 'loading') {
+        // the recording is still on its way: wait a moment for it rather than play the old built-in sound
+        let settled = false;
+        const giveUp = setTimeout(() => { settled = true; built(); }, 500);
+        f.ready.then(() => { if (settled) return; settled = true; clearTimeout(giveUp); f.state === 'ready' ? file() : built(); });
+        return;
+      }
+      built();
+      if (!f) prepare(name); // a sound no page asked for yet: have it ready next time
     },
     chime() {
       if (this.muted) return;
