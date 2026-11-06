@@ -1,0 +1,28 @@
+# One-click fix for a stuck GitHub Pages deploy.
+# When a deploy hangs, GitHub refuses every new one with "Please cancel <commit> first", and that stuck
+# deploy can't be cancelled from the website. Run this from the Actions tab (Run workflow), paste the
+# commit from the error message, then re-run the latest "pages build and deployment".
+name: Cancel stuck Pages deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      commit:
+        description: The commit in the error ("Please cancel <this> first")
+        required: true
+        default: ecc35410dc34e922627a764e403bf977e049e790
+
+permissions:
+  pages: write
+
+jobs:
+  cancel:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel the stuck deploy
+        env:
+          GH_TOKEN: ${{ github.token }}
+          COMMIT: ${{ inputs.commit }}
+        run: |
+          gh api -X POST "repos/${GITHUB_REPOSITORY}/pages/deployments/${COMMIT}/cancel"
+          echo "Cancelled the stuck deploy for ${COMMIT}. Now re-run the latest 'pages build and deployment'."
