@@ -268,28 +268,14 @@ img.layer { object-fit: cover; }
 .thumb > * { position: absolute; inset: 0; }
 .thumb img { width: 100%; height: 100%; object-fit: cover; }
 
-/* Page turn: the old page swings away on its spine (with a glint of light across it)
-   while the new one settles in underneath and its words float up one by one. */
+/* Page turn: the old page swings away on its spine and fades, uncovering the new page, which is already
+   there underneath, fully drawn. Nothing on the new page changes when the turn starts (it used to fade
+   to half see-through and its words vanished and floated back in, which looked like a blink). */
 .sheet.out-next, .sheet.out-prev { z-index: 3; pointer-events: none; animation: var(--turn) cubic-bezier(.45, 0, .7, .4) forwards; }
 .sheet.out-next { transform-origin: 0% 50%; animation-name: turn-next; }
 .sheet.out-prev { transform-origin: 100% 50%; animation-name: turn-prev; }
-.sheet.out-next::after, .sheet.out-prev::after {
-  content: ""; position: absolute; inset: 0; z-index: 4; pointer-events: none;
-  background: linear-gradient(100deg, transparent 35%, #ffffff66 50%, transparent 65%);
-  animation: sheen var(--turn) ease-in forwards;   /* moves with transform, so the GPU slides it */
-}
-.sheet.out-prev::after { animation-direction: reverse; }
-.sheet.in { animation: settle-in var(--turn) var(--ease-out) both; }
-.sheet.in .copy > * { animation: rise .5s var(--ease-out) both; }
-.sheet.in .copy > :nth-child(2) { animation-delay: .06s; }
-.sheet.in .copy > :nth-child(3) { animation-delay: .12s; }
-.sheet.in .copy > :nth-child(4) { animation-delay: .18s; }
-.sheet.in .copy > :nth-child(n+5) { animation-delay: .24s; }
 @keyframes turn-next { to { transform: rotateY(-75deg) translateX(-8%); opacity: 0; } }
 @keyframes turn-prev { to { transform: rotateY(75deg) translateX(8%); opacity: 0; } }
-@keyframes settle-in { from { transform: scale(.95); opacity: .5; } }
-@keyframes sheen { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
-@keyframes rise { from { transform: translateY(10px); opacity: 0; } }
 
 /* ---------- Bottom nav ---------- */
 .nav {

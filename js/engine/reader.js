@@ -4,7 +4,9 @@
 (function (SB) {
   const $ = id => document.getElementById(id);
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
-  const idle = window.requestIdleCallback || (fn => setTimeout(fn, 150));
+  // 'when the phone is idle', but never later than 300 ms: a busy phone could otherwise put off preparing
+  // the next page until after the reader had already turned to it
+  const idle = window.requestIdleCallback ? fn => requestIdleCallback(fn, { timeout: 300 }) : fn => setTimeout(fn, 150);
   const TURN_MS = 520; // keep in step with --turn in css/reader.css
 
   const el = {};
@@ -324,7 +326,24 @@
     history.replaceState(null, '', `#${book.id}/${page.id || i}`);
     return true;
   }
-  const go = d => show(state.i + d, d);
+  // Turn by d pages. If the page we're turning to isn't waiting underneath yet (a quick turn right after
+  // the last one), build it now and give its painting a moment to be ready, so the turn uncovers a finished
+  // page instead of one whose picture pops in a beat later.
+  function go(d) {
+    const book = state.book, j = state.i + d;
+    if (go.waiting) return true;
+    if (!d || j < 0 || j >= book.pages.length || ready.has(book.id + '/' + j) || j > furthest(book)) return show(j, d);
+    peekReady(d);
+    const img = ready.get(book.id + '/' + j)?.querySelector('.layer-illustration img');
+    if (!img?.decode) return show(j, d);
+    go.waiting = true;
+    const from = state.i;
+    Promise.race([img.decode().catch(() => {}), new Promise(r => setTimeout(r, 300))]).then(() => {
+      go.waiting = false;
+      if (state.book === book && state.i === from) show(j, d);
+    });
+    return true;
+  }
 
   function updateChrome() {
     const { book, i } = state, n = book.pages.length, page = book.pages[i];
@@ -394,8 +413,9 @@
       }
       if (dragging) {
         const side = dx < 0 ? 'next' : 'prev';
-        if (el.viewport.dataset.peek !== side) peekReady(side === 'next' ? 1 : -1);
-        el.viewport.dataset.peek = side;
+        // only touch the page area's label when the direction changes: re-setting it on every finger
+        // movement (~120 times a second) made the phone recheck the page's styling each time
+        if (el.viewport.dataset.peek !== side) { peekReady(side === 'next' ? 1 : -1); el.viewport.dataset.peek = side; }
         const atEdge = (dx > 0 && state.i === 0) || (dx < 0 && state.i === state.book.pages.length - 1);
         const s = currentSheet();
         if (s) s.style.transform = `translateX(${dx * (atEdge ? .2 : .65)}px) rotate(${dx * .008}deg)`;
