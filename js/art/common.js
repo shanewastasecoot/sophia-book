@@ -28,6 +28,8 @@
     SOPHIA: { hair: 'curly', hairC: '#4e2b1a', hairHi: '#7d4e30', skin: '#c49f78', eye: '#6b3f22', dress: '#9b4fe0', dress2: '#ff7ac1', shoe: '#ff4fa3', tail: '#9b4fe0', fin: '#ff7ac1' },
     LUNA:   { hair: 'straight', hairC: '#1e1a3a', hairHi: '#3a3470', skin: '#a8714f', eye: '#3b2418', dress: '#3f6fd8', dress2: '#bcd4ff', shoe: '#2c4fa8', clip: true, tail: '#3f8fd8', fin: '#bcd4ff' },
     RUBY:   { hair: 'buns', hairC: '#c4421f', hairHi: '#e46a3a', skin: '#f3d3ba', eye: '#3f7a3a', dress: '#e0314f', dress2: '#ffb340', shoe: '#a81d39', tail: '#e0314f', fin: '#ffb340' },
+    // book 3: Princess Magnolia of Thornwall, golden braid, green cloak, a bow
+    MAGNOLIA: { hair: 'straight', hairC: '#d9a53a', hairHi: '#f2c96a', skin: '#e8c4a0', eye: '#4a6b2a', dress: '#3f8f52', dress2: '#cfe8b0', shoe: '#2f6b3f', braid: true },
   };
 
   /* ---------- Small helpers ---------- */
@@ -85,6 +87,10 @@
     if (p.hair === 'curly') {
       g += `<g class="${p.hairCls}">` + CURLS.map(([x, y]) => `<circle cx="${x}" cy="${y}" r="21" fill="${h}" ${st}/>`).join('')
         + CURLS.map(([x, y]) => `<path d="M${x - 8} ${y + 4}q8 -12 16 0" stroke="${hh}" stroke-width="3.5" fill="none" stroke-linecap="round"/>`).join('') + `</g>`;
+    } else if (p.hair === 'straight' && p.braid) {
+      g += `<path d="M-58 -140Q-62 -206 0 -206Q62 -206 58 -140L52 -110Q0 -100 -52 -110Z" fill="${h}" ${st}/>`
+        + [0, 1, 2, 3].map(k => `<ellipse cx="${56 + k * 4}" cy="${-96 + k * 22}" rx="13" ry="14" fill="${h}" ${st}/>`).join('')
+        + `<circle cx="68" cy="-18" r="6" fill="#3f8f52" ${st} stroke-width="2"/>`;
     } else if (p.hair === 'straight') {
       g += `<path d="M-60 -140Q-63 -206 0 -206Q63 -206 60 -140L66 -78Q0 -66 -66 -78Z" fill="${h}" ${st}/>`;
     } else {
@@ -134,6 +140,7 @@
     if (P.front) g += [P.L, P.R].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="8" fill="${sk}" stroke="${OL}" stroke-width="2.5"/>`).join('');
     if (p.prop === 'sword') g += sword(P.R[0], P.R[1], p.pose === 'up' ? 18 : 40);
     if (p.prop === 'mic') g += `<g transform="translate(${P.R[0]} ${P.R[1]}) rotate(-35)"><rect x="-3.5" y="-6" width="7" height="22" rx="3.5" fill="#3a2a55" stroke="${OL}" stroke-width="2"/><circle cx="0" cy="-12" r="9" fill="#dfe6ff" stroke="${OL}" stroke-width="2.5"/></g>`;
+    if (p.prop === 'bow') g += `<g transform="translate(${P.R[0]} ${P.R[1]})"><path d="M-6 -52Q30 0 -6 52" fill="none" stroke="#8a5a2b" stroke-width="7" stroke-linecap="round"/><path d="M-6 -52Q30 0 -6 52" fill="none" stroke="${OL}" stroke-width="2"/><path d="M-6 -52L-6 52" stroke="#f3ead2" stroke-width="2"/></g>`;
     if (p.prop === 'sticks') g += `<g stroke="#f5d9a8" stroke-width="4.5" stroke-linecap="round"><path d="M${P.L[0]} ${P.L[1]}l14 16"/><path d="M${P.R[0]} ${P.R[1]}l-14 16"/></g><circle cx="${P.L[0] + 14}" cy="${P.L[1] + 16}" r="4.5" fill="#ffd34d" stroke="${OL}" stroke-width="1.5"/><circle cx="${P.R[0] - 14}" cy="${P.R[1] + 16}" r="4.5" fill="#ffd34d" stroke="${OL}" stroke-width="1.5"/>`;
     return `<g transform="translate(${p.x} ${p.y}) scale(${p.s})"><g class="${p.cls}">${g}</g></g>`;
   }

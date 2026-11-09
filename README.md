@@ -2,6 +2,8 @@
 
 **Princess Sophia and the Noisy Shadow Demon**: a silly, sparkly picture book that Daddy has to read exactly the way it's written.
 
+**The Sparkle Swords and Scorch's Little Flame**: book three, a chapter book for a slightly older listener. The Sparkle Swords and Princess Magnolia of Thornwall battle Scorch the dragon, discover she's only trying to get her egg back, and end up as friends, with Tiny Grumbo making a dragon laugh (twice). Words in `js/books/scorch.story.js`, drawings and sounds in `js/books/scorch.js`, the dragon art in `js/art/dragons.js`.
+
 **Sophia and the Mermaid City**: book two, a splashy underwater quest. Collect the Ocarina and three Music Shells, then play the Gate Song to open Mermaid City. Each treasure page and the Gate Song are checkpoints: the story won't turn past them (or jump ahead in the Pages menu) until they're done, and "Read it again!" starts the hunt over. Books with treasures get this automatically; set `"gated": false` on a book to turn it off.
 
 It runs as a plain website with no build step. Turn on GitHub Pages (Settings → Pages → deploy from `main`, root folder), or open `index.html` straight from disk.

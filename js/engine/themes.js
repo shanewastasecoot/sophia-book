@@ -30,6 +30,27 @@
     vars: SPARKLE,
   });
 
+  // Book 3: dragon fire and dusk over Thornwall. Warm ember sky around the same cream paper.
+  SB.registerTheme('ember-dusk', {
+    label: 'Ember dusk',
+    metaColor: '#2a0f14',
+    vars: {
+      ...SPARKLE,
+      '--app-bg-1': '#2a0f14', '--app-bg-2': '#6b2416', '--star': '#ffb34744',
+      '--paper': '#fbf1e2', '--ink': '#3a2420', '--muted': '#7d5f56',
+      '--ink-line': '#4a1f14b0',
+      '--accent': '#e2541e', '--accent-shadow': '#9c3410',
+      '--accent-2': '#b4380f', '--accent-2-shadow': '#7a240a',
+      '--accent-3': '#c98a10', '--accent-3-shadow': '#8a5c08',
+      '--btn': '#ffb02e', '--btn-ink': '#3a1608', '--btn-shadow': '#b8650a',
+      '--glow': '#ff6a2b33',
+      '--panel': '#fbf1e2', '--panel-strong': '#fbf1e2',
+      '--sfx-1': '#e2541e', '--sfx-1-shadow': '#9c3410',
+      '--sfx-2': '#b4380f', '--sfx-2-shadow': '#7a240a',
+      '--sfx-3': '#c98a10', '--sfx-3-shadow': '#8a5c08',
+    },
+  });
+
   // Mermaid City: deep navy water, glowing cyan and magenta, frosted-glass panels.
   const DEEP = {
     ...SPARKLE,

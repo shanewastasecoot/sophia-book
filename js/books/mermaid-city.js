@@ -128,7 +128,7 @@
     pages: story.pages.map((p, i) => {
       let text = SB.text.markup(p.text);
       if (p.id === 'cover') text = `<h2 class="cover-title">Sophia <span>and the</span> Mermaid City</h2>` + text;
-      if (i === story.pages.length - 1) text += `<p class="actions">${SB.text.action('restart', 'Read it again!')} ${SB.text.action('open-book', 'Back to book one', 'data-book="sparkle-swords"')}</p>`;
+      if (i === story.pages.length - 1) text += `<p class="actions">${SB.text.action('restart', 'Read it again!')} ${SB.text.action('open-book', 'Next adventure: Scorch', 'data-book="scorch"')}</p>`;
       return { ...p, art: SCENES[p.scene], text };
     }),
   });
