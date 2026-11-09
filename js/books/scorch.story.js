@@ -131,7 +131,7 @@
       "alt": "Fire roars over the wall as everyone ducks. Tiny Grumbo tumbles out of Sophia's pocket and lands in a guard's helmet.",
       "text": [
         "Scorch wheeled around in the sky and breathed again. A river of fire roared over the wall, so hot that the air shimmered and the stones glowed orange. {sfx:fire|FWOOOSH!} Everyone dove flat behind the battlements.",
-        "Sophia hit the ground hard. Her pocket bounced. And out popped Tiny Grumbo, jellybean-small, paper crown first.",
+        "Sophia hit the ground hard. Her pocket bounced. And out popped Tiny Grumbo, jellybean-small, tiny gold crown first.",
         "He flew through the air, turned one perfect somersault, and landed, {sfx:clang|PLINK!}, right inside a guard's dented helmet that was lying upside down on the stones.",
         "For a moment, it was perfectly quiet. The fire faded. The smoke drifted. Grumbo peeked over the rim of the helmet. He looked up at the enormous dragon. The enormous dragon looked down at Grumbo.",
         "Then Grumbo did the only thing he could think of. He took the deepest breath his tiny body could hold, and he let out one huge, enormous, trumpeting {sfx:toot|TOOT!}"
@@ -292,13 +292,13 @@
     {
       "id": "squeak", "title": "A Tiny Squeak",
       "scene": "squeak",
-      "alt": "Behind the cracking shield, Sophia darts toward a pile of cushions under the old bandstand, where a crooked paper crown pokes out.",
+      "alt": "Behind the cracking shield, Sophia darts toward a pile of cushions under the old bandstand, where a tiny, crooked gold crown pokes out.",
       "text": [
         "But it couldn't hold forever. Cracks ran across the shield everywhere now, and pieces of light were flaking off and drifting away like golden snow. Sophia's arms ached. Her scraped knee throbbed.",
         "Then, in a tiny gap between two roars, she heard it. A small, familiar sound, coming from underneath the old bandstand. {sfx:squeak|squeak!}",
         "Sophia's heart leapt like a frog. “Hold her!” she called to her friends. “Just a little longer!” Ruby and Luna and Magnolia dug in their heels and kept Scorch busy behind the last of the shining shield.",
         "Sophia sprinted across the square, through the drifting smoke, past the scorched flower beds. She ducked under the bandstand, slid on her knees, and skidded to a stop in front of a big pile of old cushions.",
-        "Poking out of the very top was a crooked paper crown."
+        "Poking out of the very top was a tiny, crooked gold crown."
       ]
     },
     {
@@ -316,12 +316,12 @@
     {
       "id": "hiccup", "title": "One Little Hiccup",
       "scene": "hiccup",
-      "alt": "Flicker presses under Scorch's wing and hiccups a tiny puff of flame that singes the tip of Tiny Grumbo's paper crown, and Scorch laughs.",
+      "alt": "Flicker presses under Scorch's wing and hiccups a tiny puff of flame that leaves a sooty black smudge on the tip of Tiny Grumbo's gold crown, and Scorch laughs.",
       "text": [
         "Scorch saw her baby, and the fire inside her went quiet all at once, like a candle blown out. She lowered her great head all the way to the ground, and Flicker pressed in tight beneath her mother's wing.",
         "Everyone held their breath. Ruby. Luna. Magnolia. The townspeople peeking out of the stone hall. Even the birds on the rooftops.",
-        "Then Flicker opened her little mouth and {sfx:hiccup|HIC!} hiccupped. A tiny puff of flame popped out, sailed through the air in a perfect little arc, and landed right on the very tip of Tiny Grumbo's paper crown. It singed it. Just a little.",
-        "“Eep!” squeaked Grumbo, patting out the smoke with both hands. {sfx:squeak|EEP!}",
+        "Then Flicker opened her little mouth and {sfx:hiccup|HIC!} hiccupped. A tiny puff of flame popped out, sailed through the air in a perfect little arc, and landed right on the very tip of Tiny Grumbo's gold crown. It left a sooty black smudge. Just a little one.",
+        "“Eep!” squeaked Grumbo, fanning away the smoke with both hands. {sfx:squeak|EEP!}",
         "Scorch's eyes crinkled. Her shoulders shook. And then she laughed, the same big, rumbling, thundery laugh as at Thornwall, until smoke rings floated up over Sparkleton like a string of balloons. {sfx:dragon-laugh|HAW-HAW-HAW!} Then Ruby laughed. Then Luna, and Magnolia, and Sophia, and the townspeople, until the whole square was laughing. The last of Scorch's flames went out. And this time, the fighting stopped for good."
       ]
     },
@@ -339,10 +339,10 @@
     {
       "id": "end", "title": "The End",
       "scene": "finale", "fx": "sparkles",
-      "alt": "At a concert under the stars, Scorch lights the stage with a careful puff of flame while Flicker dances, Tiny Grumbo bows in his singed crown, and the four Sparkle Swords strike their final pose.",
+      "alt": "At a concert under the stars, Scorch lights the stage with a careful puff of flame while Flicker dances, Tiny Grumbo bows in his smudged crown, and the four Sparkle Swords strike their final pose.",
       "text": [
         "Sophia's knee got a bandage with stars on it. Ruby's cape got a bright new patch shaped like a flame. And Luna's shield, after a long, long sleep, came back brighter than ever.",
-        "At the very next concert, the whole kingdom came to watch, and Thornwall too. Magnolia played a silver flute. Scorch lit the stage with one careful puff of flame. {sfx:fire|FWOOSH!} Flicker danced on the drums and hiccupped sparks in time with the music. And Tiny Grumbo took a bow in his singed paper crown, which he refused to ever, ever replace.",
+        "At the very next concert, the whole kingdom came to watch, and Thornwall too. Magnolia played a silver flute. Scorch lit the stage with one careful puff of flame. {sfx:fire|FWOOSH!} Flicker danced on the drums and hiccupped sparks in time with the music. And Tiny Grumbo took a bow in his sooty gold crown, which he refused to ever, ever polish.",
         "The Sparkle Swords struck their final pose, four swords raised high, while a dragon's golden light filled the night sky. {sfx:twinkle|SPARKLE!}",
         "And somewhere far to the north, in an empty nest in the rocky hills, the wind blew softly through the woven trees... as if it were waiting for the next adventure.",
         "{b:The End.}"
