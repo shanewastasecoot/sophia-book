@@ -117,7 +117,7 @@
     {
       "id": "tower", "title": "CRASH!",
       "scene": "tower",
-      "alt": "The dragon's tail smashes an empty watchtower. Stones rain down as Luna's glowing shield covers the wall and Ruby leads the guards to safety.",
+      "alt": "The fierce dragon Scorch smashes an old watchtower with her tail, and stones burst out of it. On the wall, Luna sings a golden dome of light that the falling stones bounce off in sparks, Sophia stands ready with her sword, and Ruby leads Magnolia and the guards down the stairs.",
       "text": [
         "Scorch swooped low over the wall, so close they could feel the heat of her belly. Her long tail swung like a battering ram and smashed straight into the old watchtower. {sfx:crash|CRASH!}",
         "Stones the size of pumpkins rained down. Luna planted her feet and sang. Her voice rang out bright and steady, and a dome of shining light spread over the whole wall like a golden umbrella. The stones bounced off it, one after another. {sfx:boom|BOOM! BOOM!}",
