@@ -82,10 +82,10 @@
     {
       "id": "nest", "title": "The Empty Nest",
       "scene": "nest",
-      "alt": "On a rocky hilltop, the princesses find a gigantic nest made of whole tree trunks. It is empty, still warm, with one shining golden scale in the middle.",
+      "alt": "At sunset on a rocky hilltop, the princesses find a giant nest of woven branches, scorched black inside. It is empty except for one glowing red-and-gold scale, and Sophia reaches for it while Luna and Ruby peer in.",
       "text": [
         "As the sun began to set, the road climbed up into the rocky hills. Near the top, Sophia's horse stopped so suddenly that she nearly slid off.",
-        "In front of them was a nest. But not a bird's nest. This nest was made of whole tree trunks, bent and woven together in a ring as big as a swimming pool. The ground inside was scorched black. And it was still {b:warm}. Warm like a stone that has sat all day in the sun.",
+        "In front of them was a nest. But not a bird's nest. This nest was made of whole tree branches, bent and woven together in a ring so big that all three of them could have lain down inside it, head to toe, and still not touched the sides. The ground inside was scorched black. And it was still {b:warm}. Warm like a stone that has sat all day in the sun.",
         "It was empty, except for one thing. In the very middle, something glittered. Sophia climbed down and picked it up. It was a scale, as big as her hand, red at the edges and gold in the middle, like a glowing coal. It was warm too. When she held it, she could almost feel a heartbeat.",
         "“A dragon's nest,” Luna whispered. “But where's the dragon?” Ruby said what they were all thinking: “And why would a dragon leave its nest?” Nobody knew. Sophia tucked the golden scale into her pocket next to Grumbo, and she didn't forget about it. Not for one second."
       ]
