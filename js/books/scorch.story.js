@@ -48,12 +48,12 @@
     {
       "id": "setout", "title": "The King's Blessing",
       "scene": "setout",
-      "alt": "In the castle stables, the three princesses pack their saddlebags while the kind old King hands Sophia a lantern. Tiny Grumbo salutes from her pocket.",
+      "alt": "In the sunny castle stables, the kind old King in his purple robe hands Sophia a little brass lantern. Luna holds a snack bag, Ruby stuffs a blanket roll into her red pack, and Tiny Grumbo peeks out of Sophia's pocket.",
       "text": [
         "The Sparkle Swords ran straight to the King. He was sitting in his great golden chair, and he read the note three times, stroking his long white beard.",
         "“Thornwall is three days' ride for most travelers,” he said slowly. “But a dragon will not wait three days. You must ride hard, and you must ride together.” He looked at each of them in turn. “Promise me something. A sword is for protecting, not for winning. Find out what that dragon truly wants.” The girls nodded. They didn't understand yet. But they would.",
         "Then they ran to the armory and traded their wooden practice blades for the real ones: swords of starlight steel that gleamed like the night sky. Sophia's hummed the moment she lifted it, the way it always did. It knew there was real trouble too.",
-        "They packed fast. Luna packed her songbook and a warm blanket. Ruby packed her drumsticks, three apples, and four cookies (two of them for later). Sophia packed a rope, a lantern from the King, and one very small, very excited passenger. Tiny Grumbo saluted from her pocket.",
+        "They packed fast in the castle stables, where the horses stamped and snorted in the straw. Luna packed her songbook and a little bag of snacks. Ruby stuffed a rolled-up blanket into her pack, along with her drumsticks, three apples, and four cookies (two of them for later). Sophia packed a rope and one very small, very excited passenger. Then the King himself came down to the stables, his purple robe sweeping through the straw, and pressed a little brass lantern into Sophia's hands. “For the dark places,” he said. Tiny Grumbo saluted from her pocket.",
         "Then they swung up onto their swift horses and thundered out through the castle gate, their capes snapping in the wind like banners, as the whole town waved them goodbye. {sfx:hooves|CLOP-CLOP-CLOP!}"
       ]
     },
