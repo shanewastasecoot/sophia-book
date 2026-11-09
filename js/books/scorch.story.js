@@ -71,7 +71,7 @@
     {
       "id": "bridge", "title": "The Burned Bridge",
       "scene": "bridge",
-      "alt": "At a rushing river, the old wooden bridge has burned away, leaving black stumps. Sophia balances across slippery stepping stones while Ruby wobbles behind her.",
+      "alt": "Crossing a rushing river on big boulders beside the smoking posts of a burned bridge. Ruby slips, one boot splashing into the water and the horses' reins in her hand, and Sophia grabs her and pulls her up. Luna hums on the stones ahead.",
       "text": [
         "On the far side of the Wood, they came to the Silverrush River. It was wide, and fast, and loud. {sfx:splash|SPLOOSH!} And the old wooden bridge that was supposed to cross it was gone.",
         "All that was left were a few black, smoking stumps. Something had burned it, right down to the water. Something enormous.",
