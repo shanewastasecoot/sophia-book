@@ -23,7 +23,7 @@
     {
       "id": "practice", "title": "Sword Practice", "chapter": { "n": 1, "title": "Smoke on the Hill" },
       "scene": "practice", "fx": "sparkles",
-      "alt": "In a sunny castle courtyard, Sophia, Ruby and Luna practice a sword dance. Luna's song makes a shining shield, and Tiny Grumbo claps from Sophia's pocket.",
+      "alt": "In a sunny castle courtyard, Sophia, Ruby and Luna practice a sword dance. Luna's song makes a shining shield, and Tiny Grumbo peeks out of Sophia's pocket.",
       "text": [
         "The morning sun poured over Sparkleton like honey, turning every rooftop and tower bright enough to make you squint. Flags snapped in the breeze. Bakers called out from their windows. And in the castle courtyard, three friends danced in a circle of light, their wooden practice swords flashing. {sfx:clang|CLACK!} Spin. {sfx:twinkle|SPARKLE!}",
         "They were the Sparkle Swords, the bravest band in the whole Kingdom of Sparkleton. Princess Luna could sing a note so pure it turned into a shield of light. Princess Ruby could drum a beat so loud it made the mountains hum. And Princess Sophia had a magic sword that sang whenever she swung it.",
