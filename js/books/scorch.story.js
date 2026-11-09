@@ -93,7 +93,7 @@
     {
       "id": "ride", "title": "Thornwall in Flames",
       "scene": "ride",
-      "alt": "The three princesses gallop over the hills toward a gray stone castle. A huge red-and-gold dragon blasts fire at its outer wall.",
+      "alt": "Seen from behind, the three princesses stop their horses on a hilltop at sunset. Below them, Thornwall Castle burns as the huge red-and-gold dragon Scorch blasts it with fire, and townspeople hurry into a stone shelter. Luna points at the wall.",
       "text": [
         "They rode on through the night and all the next day, stopping only to rest the horses. The closer they got, the warmer the wind became. The sweet morning air turned hot and dry and smelled of toasted stone, like a campfire that had gotten much, much too big.",
         "At last they crested the final hill. Ruby pulled her horse to a stop and whispered, “Whoa.”",
