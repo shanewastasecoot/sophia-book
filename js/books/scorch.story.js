@@ -35,7 +35,7 @@
     {
       "id": "smoke", "title": "The Scorched Note",
       "scene": "smoke",
-      "alt": "A dark plume of smoke rises over the far hills while a soot-smudged messenger bird swoops down to Sophia with a burned note.",
+      "alt": "A plume of smoke rises over the far hills. A soot-smudged messenger bird has landed on the fountain, and a burned note falls into Sophia's hands while Luna and Ruby look on, worried. Tiny Grumbo peeks out of her pocket.",
       "text": [
         "{sfx:bell|DONG! DONG! DONG!}",
         "The laughter in the courtyard vanished. It wasn't the bright, cheerful chime that called them to breakfast. It was the deep iron warning bell, the one that hadn't rung in a hundred years.",
