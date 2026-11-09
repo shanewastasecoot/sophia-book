@@ -25,10 +25,11 @@
       "scene": "practice", "fx": "sparkles",
       "alt": "In a sunny castle courtyard, Sophia, Ruby and Luna practice a sword dance. Luna's song makes a shining shield, and Tiny Grumbo claps from Sophia's pocket.",
       "text": [
-        "The morning sun poured over Sparkleton like honey, turning every rooftop and tower bright enough to make you squint. Flags snapped in the breeze. Bakers called out from their windows. And in the castle courtyard, three friends danced in a circle of light, their swords flashing. {sfx:clang|CLANG!} Spin. {sfx:twinkle|SPARKLE!}",
+        "The morning sun poured over Sparkleton like honey, turning every rooftop and tower bright enough to make you squint. Flags snapped in the breeze. Bakers called out from their windows. And in the castle courtyard, three friends danced in a circle of light, their wooden practice swords flashing. {sfx:clang|CLACK!} Spin. {sfx:twinkle|SPARKLE!}",
         "They were the Sparkle Swords, the bravest band in the whole Kingdom of Sparkleton. Princess Luna could sing a note so pure it turned into a shield of light. Princess Ruby could drum a beat so loud it made the mountains hum. And Princess Sophia had a magic sword that sang whenever she swung it.",
-        "“Guard up, Ruby!” called Luna. She sang one high, clear note, and the air in front of her shimmered gold. Ruby's sword bounced right off it, and Ruby stumbled backward, laughing, her red cape tangled around her boots. “I had it! I totally had it!” She shook the cape loose. “Okay. One more time.”",
-        "Sophia led the final pose, sword high, curls bouncing. In her pocket, something wriggled. She gave Tiny Grumbo a gentle pat. He had once been a shadow demon as big as a mountain. Now he was the size of a jellybean, and the smallest Sparkle Sword of all. “Not yet, little guy,” she whispered. “Save it for the real trouble.”"
+        "“Guard up, Ruby!” called Luna, her voice bright and steady. She twirled, her blue cape spinning around her like a moonbeam, and sang one high, clear note. The air in front of her shimmered gold. Ruby's sword bounced right off it, and Ruby stumbled backward, laughing, her red cape tangled around her boots. “I had it! I totally had it!” She shook the cape loose and raised her sword again. “Okay, okay. One more time.”",
+        "Sophia stood to the side, arms crossed, watching with a small smile. In her pocket, something wriggled. She reached in and gave Tiny Grumbo a gentle pat. He had once been a shadow demon as big as a mountain. Now he was the size of a jellybean, and the smallest Sparkle Sword of all. “Not yet, little guy,” she whispered. “Save it for the real trouble.”",
+        "From the tallest tower, a bell began to ring."
       ]
     },
     {
@@ -36,11 +37,12 @@
       "scene": "smoke",
       "alt": "A dark plume of smoke rises over the far hills while a soot-smudged messenger bird swoops down to Sophia with a burned note.",
       "text": [
-        "From the tallest tower, a bell began to ring. {sfx:bell|DONG! DONG!}",
-        "The three friends turned. Far beyond the green hills, a thick gray plume was climbing into the blue sky, twisting like a snake. Smoke. A lot of it. It was coming from the north, where the roads grew rocky and the forests grew deep, from the old stone kingdom of Thornwall.",
-        "Something small and dark tumbled out of the sky toward them. It was a messenger bird, its feathers smudged with soot, a scrap of paper clutched in its feet. It dropped the paper into Sophia's hands and flopped onto the edge of the fountain, panting, too tired to fly another inch. Luna scooped up some water in her hands and let it drink.",
-        "The note was burned around the edges. In shaky letters, it said just three words: {b:HELP. DRAGON. —Princess Magnolia of Thornwall.}",
-        "Ruby read it twice. Then she looked up at the smoke, and for once, she didn't say anything funny at all."
+        "{sfx:bell|DONG! DONG! DONG!}",
+        "The laughter in the courtyard vanished. It wasn't the bright, cheerful chime that called them to breakfast. It was the deep iron warning bell, the one that hadn't rung in a hundred years.",
+        "Luna lowered her wooden sword and pointed past the courtyard walls. “Look.” Far beyond the green hills, a thick plume of black smoke was twisting up into the honey-gold sky like a snake. It was coming from the north, where the roads grew rocky and the forests grew deep, from the old stone kingdom of Thornwall.",
+        "A moment later, a royal messenger bird tumbled out of the clouds, its feathers smudged with soot. It landed heavily on the edge of the fountain, panting, too tired to fly another inch. Luna scooped up water in her hands and let it drink. Sophia untied the tiny scroll from its leg. The edges of the paper were black and crumbly with ash, and it smelled like a campfire. In shaky, hurried ink were just two words: {b:HELP. DRAGON.} And underneath: {b:Princess Magnolia of Thornwall.}",
+        "Ruby read it twice. Then she looked up at the smoke, and for once, she didn't say anything funny at all.",
+        "Sophia rolled up the scroll. “Wooden swords down,” she said, her voice steady and clear. “It's time for the real ones.”"
       ]
     },
     {
@@ -50,8 +52,9 @@
       "text": [
         "The Sparkle Swords ran straight to the King. He was sitting in his great golden chair, and he read the note three times, stroking his long white beard.",
         "“Thornwall is three days' ride for most travelers,” he said slowly. “But a dragon will not wait three days. You must ride hard, and you must ride together.” He looked at each of them in turn. “Promise me something. A sword is for protecting, not for winning. Find out what that dragon truly wants.” The girls nodded. They didn't understand yet. But they would.",
+        "Then they ran to the armory and traded their wooden practice blades for the real ones: swords of starlight steel that gleamed like the night sky. Sophia's hummed the moment she lifted it, the way it always did. It knew there was real trouble too.",
         "They packed fast. Luna packed her songbook and a warm blanket. Ruby packed her drumsticks, three apples, and four cookies (two of them for later). Sophia packed a rope, a lantern from the King, and one very small, very excited passenger. Tiny Grumbo saluted from her pocket.",
-        "Then they swung up onto their swift horses and galloped out through the castle gate, as the whole town waved them goodbye. {sfx:hooves|CLOP-CLOP-CLOP!}"
+        "Then they swung up onto their swift horses and thundered out through the castle gate, their capes snapping in the wind like banners, as the whole town waved them goodbye. {sfx:hooves|CLOP-CLOP-CLOP!}"
       ]
     },
     {
@@ -92,10 +95,11 @@
       "scene": "ride",
       "alt": "The three princesses gallop over the hills toward a gray stone castle. A huge red-and-gold dragon blasts fire at its outer wall.",
       "text": [
-        "They rode on through the night and all the next day, stopping only to rest the horses. The closer they got, the warmer the wind became, and the more it smelled like a campfire that had gotten much, much too big.",
+        "They rode on through the night and all the next day, stopping only to rest the horses. The closer they got, the warmer the wind became. The sweet morning air turned hot and dry and smelled of toasted stone, like a campfire that had gotten much, much too big.",
         "At last they crested the final hill. Ruby pulled her horse to a stop and whispered, “Whoa.”",
-        "Thornwall Castle sat on a rocky hill below them, gray and strong, with seven stone towers and walls as thick as a house. Bells clanged as townspeople hurried inside. Hay carts were burning in the fields. Black smoke hung over everything.",
-        "And above it all, wings spread wide enough to cover the sun, was a dragon. She was enormous, bigger than the castle gate, red at the edges and gold in the middle, exactly like the scale in Sophia's pocket. She opened her jaws and blasted a river of fire at the outer wall. {sfx:fire|FWOOOSH!}",
+        "Thornwall Castle sat on a rocky hill below them, gray and strong, with seven stone towers and walls as thick as a house, glowing orange in the heat. Hay carts were burning in the fields. Down in the town, the castle guards were leading the last of the townspeople into the great stone shelter, two by two.",
+        "And above it all, wings spread wide enough to cover the sun, was a dragon as big as a ship. Her scales flashed brilliant red at the edges and gold in the middle, exactly like the scale in Sophia's pocket. She took a deep breath, her chest glowing like a furnace, and blasted a roaring river of fire straight at the outer wall. {sfx:fire|FWOOOSH!}",
+        "“Everyone's getting to shelter,” Luna called over the roar. Then she squinted at the burning wall. “Wait. Who's still up on the wall?”",
         "Sophia gripped her sword. “Sparkle Swords,” she said. “Let's go.”"
       ]
     },
