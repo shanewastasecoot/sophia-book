@@ -8,6 +8,6 @@ Book 1: boing, swish, hum, rumble, burp, roar, chomp, stomp, toot, la, boom, pop
 
 Mermaid City: splash, glub, twinkle, whoosh, boop, clank, squish, giggle, snort, bloop, blink, hoohoo, click, pickup, gate-open
 
-Scorch's Little Flame (new): dragon-roar, dragon-laugh, fire, crash, crack, clang, arrow, hooves, bell, heartbeat, hiccup. It also reuses boom, swish, toot, squeak, giggle and twinkle.
+Scorch's Little Flame (new): dragon-roar, dragon-laugh, fire, crash, crack, clang, arrow, hooves, bell, heartbeat, hiccup, wings, whisper. It also reuses boom, swish, toot, squeak, giggle, twinkle and splash.
 
 The Gate Song notes (ocarina-pink, ocarina-blue, ocarina-gold) stay built in, so the tune is always exactly in pitch.

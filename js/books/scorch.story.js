@@ -1,5 +1,6 @@
 /* Book 3 story: "The Sparkle Swords and Scorch's Little Flame". Everything after the `=` is plain JSON.
-   A chapter book for a slightly older listener: longer pages, real danger, everyone safe in the end.
+   An epic fantasy chapter book for a slightly older listener: a journey, real danger, a mystery, and
+   everyone safe (and friends) in the end. About 35-40 minutes aloud; the chapter breaks make good stopping points.
    Same page fields and text markup as js/books/mermaid-city.story.js:
      {sfx:sound|LABEL} a tappable sound word   {b:bold}   {whisper:quiet}   "{divider}" a scene break
      {bed|bedtime words|daytime words} picks words by bedtime mode (neither part may contain | or {, so no sound words inside) */
@@ -15,8 +16,8 @@
       "id": "cover", "title": "Cover", "scene": "cover", "fx": "sparkles",
       "alt": "Sophia, Ruby and Luna stand with shining swords beside Princess Magnolia and her bow. A huge red-and-gold dragon circles above a stone castle, and Tiny Grumbo peeks out of Sophia's pocket.",
       "text": [
-        "A Sparkle Swords chapter book.",
-        "Tap the bright sound words as you read. Some of them are LOUD."
+        "An epic Sparkle Swords adventure in seven chapters.",
+        "Tap the bright sound words as you read. Some of them are LOUD. And if bedtime comes before the end, every new chapter is a good place to stop."
       ]
     },
     {
@@ -24,10 +25,10 @@
       "scene": "practice", "fx": "sparkles",
       "alt": "In a sunny castle courtyard, Sophia, Ruby and Luna practice a sword dance. Luna's song makes a shining shield, and Tiny Grumbo claps from Sophia's pocket.",
       "text": [
-        "The morning sun poured over Sparkleton like honey, turning every rooftop and tower bright enough to make you squint. In the castle courtyard, three friends danced in a circle of light, their swords flashing. {sfx:clang|CLANG!} Spin. {sfx:twinkle|SPARKLE!}",
-        "“Guard up, Ruby!” called Luna. She sang one high, clear note, and the air in front of her shimmered into a shield of light. Ruby's sword bounced right off it.",
-        "Ruby stumbled backward, laughing, her red cape tangled around her boots. “I had it! I totally had it!” She shook the cape loose and raised her sword again. “Okay. One more time.”",
-        "Sophia led the final pose, sword high, curls bouncing. In her pocket, something wriggled. She gave Tiny Grumbo a gentle pat. “Not yet, little guy,” she whispered. “Save it for the real trouble.”"
+        "The morning sun poured over Sparkleton like honey, turning every rooftop and tower bright enough to make you squint. Flags snapped in the breeze. Bakers called out from their windows. And in the castle courtyard, three friends danced in a circle of light, their swords flashing. {sfx:clang|CLANG!} Spin. {sfx:twinkle|SPARKLE!}",
+        "They were the Sparkle Swords, the bravest band in the whole Kingdom of Sparkleton. Princess Luna could sing a note so pure it turned into a shield of light. Princess Ruby could drum a beat so loud it made the mountains hum. And Princess Sophia had a magic sword that sang whenever she swung it.",
+        "“Guard up, Ruby!” called Luna. She sang one high, clear note, and the air in front of her shimmered gold. Ruby's sword bounced right off it, and Ruby stumbled backward, laughing, her red cape tangled around her boots. “I had it! I totally had it!” She shook the cape loose. “Okay. One more time.”",
+        "Sophia led the final pose, sword high, curls bouncing. In her pocket, something wriggled. She gave Tiny Grumbo a gentle pat. He had once been a shadow demon as big as a mountain. Now he was the size of a jellybean, and the smallest Sparkle Sword of all. “Not yet, little guy,” she whispered. “Save it for the real trouble.”"
       ]
     },
     {
@@ -36,31 +37,77 @@
       "alt": "A dark plume of smoke rises over the far hills while a soot-smudged messenger bird swoops down to Sophia with a burned note.",
       "text": [
         "From the tallest tower, a bell began to ring. {sfx:bell|DONG! DONG!}",
-        "The three friends turned. Far beyond the green hills, a thick gray plume was climbing into the blue sky, twisting like a snake. Smoke. A lot of it.",
-        "Something small and dark tumbled out of the sky toward them. It was a messenger bird, its feathers smudged with soot, a scrap of paper clutched in its feet. It dropped the paper into Sophia's hands and flopped onto the fountain's edge, panting.",
-        "The note was burned around the edges. In shaky letters, it said just three words: {b:HELP. DRAGON. —Princess Magnolia of Thornwall.}"
+        "The three friends turned. Far beyond the green hills, a thick gray plume was climbing into the blue sky, twisting like a snake. Smoke. A lot of it. It was coming from the north, where the roads grew rocky and the forests grew deep, from the old stone kingdom of Thornwall.",
+        "Something small and dark tumbled out of the sky toward them. It was a messenger bird, its feathers smudged with soot, a scrap of paper clutched in its feet. It dropped the paper into Sophia's hands and flopped onto the edge of the fountain, panting, too tired to fly another inch. Luna scooped up some water in her hands and let it drink.",
+        "The note was burned around the edges. In shaky letters, it said just three words: {b:HELP. DRAGON. —Princess Magnolia of Thornwall.}",
+        "Ruby read it twice. Then she looked up at the smoke, and for once, she didn't say anything funny at all."
       ]
     },
     {
-      "id": "ride", "title": "The Ride to Thornwall",
+      "id": "setout", "title": "The King's Blessing",
+      "scene": "setout",
+      "alt": "In the castle stables, the three princesses pack their saddlebags while the kind old King hands Sophia a lantern. Tiny Grumbo salutes from her pocket.",
+      "text": [
+        "The Sparkle Swords ran straight to the King. He was sitting in his great golden chair, and he read the note three times, stroking his long white beard.",
+        "“Thornwall is three days' ride for most travelers,” he said slowly. “But a dragon will not wait three days. You must ride hard, and you must ride together.” He looked at each of them in turn. “Promise me something. A sword is for protecting, not for winning. Find out what that dragon truly wants.” The girls nodded. They didn't understand yet. But they would.",
+        "They packed fast. Luna packed her songbook and a warm blanket. Ruby packed her drumsticks, three apples, and four cookies (two of them for later). Sophia packed a rope, a lantern from the King, and one very small, very excited passenger. Tiny Grumbo saluted from her pocket.",
+        "Then they swung up onto their swift horses and galloped out through the castle gate, as the whole town waved them goodbye. {sfx:hooves|CLOP-CLOP-CLOP!}"
+      ]
+    },
+    {
+      "id": "woods", "title": "The Whispering Wood", "chapter": { "n": 2, "title": "The Road to Thornwall" },
+      "scene": "woods",
+      "alt": "The three princesses ride through a dark forest of tall, twisty trees. Luna sings, and a glowing ribbon of light shows the path ahead.",
+      "text": [
+        "The road to Thornwall ran straight through the Whispering Wood. The trees there were so tall and so old that their branches knotted together overhead, and the sunlight came through only in thin, dusty beams.",
+        "And the trees whispered. Not with words, exactly. More like the rustle of a thousand leaves all trying to say the same thing at once. {sfx:whisper|shhh-hhh-hhh…} Turn back, they seemed to say. Turn back. Fire, fire, fire.",
+        "Ruby's horse snorted and stamped. Ruby patted its neck. “It's okay,” she told it, even though her own voice wobbled a little. “Trees can't hurt you. Probably.”",
+        "The path grew darker and darker, until they could hardly see their own hands. So Luna began to sing. Her voice was soft at first, then steady and bright, and a ribbon of golden light unrolled from her song and floated ahead of them along the path, like a glowing river showing the way. The whispers grew quiet. One by one, the horses calmed. And the Sparkle Swords rode on through the dark, following Luna's light."
+      ]
+    },
+    {
+      "id": "bridge", "title": "The Burned Bridge",
+      "scene": "bridge",
+      "alt": "At a rushing river, the old wooden bridge has burned away, leaving black stumps. Sophia balances across slippery stepping stones while Ruby wobbles behind her.",
+      "text": [
+        "On the far side of the Wood, they came to the Silverrush River. It was wide, and fast, and loud. {sfx:splash|SPLOOSH!} And the old wooden bridge that was supposed to cross it was gone.",
+        "All that was left were a few black, smoking stumps. Something had burned it, right down to the water. Something enormous.",
+        "“Now what?” said Ruby. Sophia looked up and down the river. Then she pointed. A line of round, slippery stepping stones poked out of the rushing water, all the way to the other side. “We cross like we dance,” she said. “Small steps. Arms out. Eyes on the next stone.”",
+        "Sophia went first, sword held out for balance, hopping from stone to stone. Luna went second, humming to keep her steps steady. Ruby went last, leading all three horses by their reins. Halfway across, her boot slipped. She wobbled. She windmilled her arms. Her foot touched the icy water, and then Sophia's hand caught hers and pulled her back up. “Thanks,” Ruby gasped. “That's what Sparkle Swords are for,” said Sophia."
+      ]
+    },
+    {
+      "id": "nest", "title": "The Empty Nest",
+      "scene": "nest",
+      "alt": "On a rocky hilltop, the princesses find a gigantic nest made of whole tree trunks. It is empty, still warm, with one shining golden scale in the middle.",
+      "text": [
+        "As the sun began to set, the road climbed up into the rocky hills. Near the top, Sophia's horse stopped so suddenly that she nearly slid off.",
+        "In front of them was a nest. But not a bird's nest. This nest was made of whole tree trunks, bent and woven together in a ring as big as a swimming pool. The ground inside was scorched black. And it was still {b:warm}. Warm like a stone that has sat all day in the sun.",
+        "It was empty, except for one thing. In the very middle, something glittered. Sophia climbed down and picked it up. It was a scale, as big as her hand, red at the edges and gold in the middle, like a glowing coal. It was warm too. When she held it, she could almost feel a heartbeat.",
+        "“A dragon's nest,” Luna whispered. “But where's the dragon?” Ruby said what they were all thinking: “And why would a dragon leave its nest?” Nobody knew. Sophia tucked the golden scale into her pocket next to Grumbo, and she didn't forget about it. Not for one second."
+      ]
+    },
+    {
+      "id": "ride", "title": "Thornwall in Flames",
       "scene": "ride",
       "alt": "The three princesses gallop over the hills toward a gray stone castle. A huge red-and-gold dragon blasts fire at its outer wall.",
       "text": [
-        "Nobody said a word. They didn't need to. The Sparkle Swords ran for the stables, swung up onto their swift horses, and galloped out through the castle gate. {sfx:hooves|CLOP-CLOP-CLOP!}",
-        "The ride to Thornwall took them over three hills and through one deep, dark forest. The closer they got, the warmer the wind became, and the more it smelled like a campfire that had gotten much too big.",
-        "When they crested the last hill, Ruby pulled her horse to a stop and whispered, “Whoa.”",
-        "Thornwall Castle sat on a rocky hill, gray and strong. Bells clanged as townspeople hurried inside its stone walls. And above it all, wings spread wide enough to cover the sun, a huge red-and-gold dragon opened its jaws and blasted fire at the outer wall. {sfx:fire|FWOOOSH!}"
+        "They rode on through the night and all the next day, stopping only to rest the horses. The closer they got, the warmer the wind became, and the more it smelled like a campfire that had gotten much, much too big.",
+        "At last they crested the final hill. Ruby pulled her horse to a stop and whispered, “Whoa.”",
+        "Thornwall Castle sat on a rocky hill below them, gray and strong, with seven stone towers and walls as thick as a house. Bells clanged as townspeople hurried inside. Hay carts were burning in the fields. Black smoke hung over everything.",
+        "And above it all, wings spread wide enough to cover the sun, was a dragon. She was enormous, bigger than the castle gate, red at the edges and gold in the middle, exactly like the scale in Sophia's pocket. She opened her jaws and blasted a river of fire at the outer wall. {sfx:fire|FWOOOSH!}",
+        "Sophia gripped her sword. “Sparkle Swords,” she said. “Let's go.”"
       ]
     },
     {
-      "id": "magnolia", "title": "Princess Magnolia", "chapter": { "n": 2, "title": "Fire at Thornwall" },
+      "id": "magnolia", "title": "Princess Magnolia", "chapter": { "n": 3, "title": "Fire at Thornwall" },
       "scene": "magnolia",
       "alt": "On top of the castle wall, Princess Magnolia, with a long braid and a green cloak, draws her bow and calls down to the Sparkle Swords.",
       "text": [
-        "On top of the wall stood a girl in a green cloak, a long golden braid swinging down her back. She held a bow taller than she was, and her cheeks were streaked with soot.",
+        "On top of the wall stood a girl in a green cloak, a long golden braid swinging down her back. She was a little older than the Sparkle Swords, and she held a bow taller than she was. Her cheeks were streaked with soot, and her eyes were fierce.",
         "“Up here!” she shouted, waving them toward the stairs. “I'm Magnolia. I sent the note!”",
-        "The Sparkle Swords raced up the stone steps two at a time. From the top, they could see everything: the burning hay carts, the scorched gate, the empty fields. And the dragon, circling back for another pass.",
-        "“Her name is Scorch,” Magnolia said, nocking an arrow. “She showed up three days ago. I've been keeping her away from the gate, but she keeps coming back. Every time, she's angrier.”"
+        "The Sparkle Swords left their horses in the stable and raced up the stone steps two at a time. From the top of the wall, they could see everything: the burning hay carts, the scorched gate, the empty, frightened streets. And the dragon, circling back for another pass.",
+        "“Her name is Scorch,” Magnolia said, drawing an arrow. “Everyone in the north knows that name. She's lived in these hills for a hundred years and never bothered anyone. Then, three days ago, she came out of nowhere and started attacking us. I've been keeping her away from the gate with my arrows. But she keeps coming back.” Her voice cracked, just a little. “And every time, she's angrier.”"
       ]
     },
     {
@@ -68,10 +115,10 @@
       "scene": "tower",
       "alt": "The dragon's tail smashes an empty watchtower. Stones rain down as Luna's glowing shield covers the wall and Ruby leads the guards to safety.",
       "text": [
-        "Scorch swooped low. Her long tail swung like a battering ram and smashed straight into the old watchtower. {sfx:crash|CRASH!}",
-        "Stones the size of pumpkins rained down. Luna planted her feet and sang. Her voice rang out bright and steady, and a dome of shining light spread over the wall. The stones bounced off it. {sfx:boom|BOOM! BOOM!}",
-        "“This way!” Ruby grabbed Magnolia's arm and waved to the guards. “Everybody off the wall! Go, go, go!”",
-        "With a long, groaning rumble, the tower toppled sideways and crashed into the empty moat. Dust billowed up everywhere. When it cleared, Ruby counted heads. Every guard was safe. Nobody had been underneath it."
+        "Scorch swooped low over the wall, so close they could feel the heat of her belly. Her long tail swung like a battering ram and smashed straight into the old watchtower. {sfx:crash|CRASH!}",
+        "Stones the size of pumpkins rained down. Luna planted her feet and sang. Her voice rang out bright and steady, and a dome of shining light spread over the whole wall like a golden umbrella. The stones bounced off it, one after another. {sfx:boom|BOOM! BOOM!}",
+        "“This way!” Ruby grabbed Magnolia's arm and waved to the guards. “Everybody off the wall! Go, go, go!” The guards ran. Ruby ran. Magnolia ran, still looking back over her shoulder at the dragon.",
+        "With a long, groaning rumble, the tower leaned, and leaned, and toppled sideways into the empty moat. Dust billowed up everywhere, thick and choking. When it finally cleared, Ruby counted heads, the way the Sparkle Swords always did. Every single guard was there. Everyone was safe. Nobody had been underneath it."
       ]
     },
     {
@@ -79,10 +126,11 @@
       "scene": "toot",
       "alt": "Fire roars over the wall as everyone ducks. Tiny Grumbo tumbles out of Sophia's pocket and lands in a guard's helmet.",
       "text": [
-        "Scorch wheeled around and breathed again. A river of fire roared over the wall, so hot that the air shimmered. {sfx:fire|FWOOOSH!} Everyone dove flat behind the stones.",
+        "Scorch wheeled around in the sky and breathed again. A river of fire roared over the wall, so hot that the air shimmered and the stones glowed orange. {sfx:fire|FWOOOSH!} Everyone dove flat behind the battlements.",
         "Sophia hit the ground hard. Her pocket bounced. And out popped Tiny Grumbo, jellybean-small, paper crown first.",
-        "He flew through the air, turned one somersault, and landed — {sfx:clang|PLINK!} — right inside a guard's dented helmet.",
-        "For a moment, it was perfectly quiet. Grumbo looked up at the enormous dragon. The enormous dragon looked down at Grumbo. Then Grumbo did the only thing he could think of. He let out one huge, enormous, trumpeting {sfx:toot|TOOT!}"
+        "He flew through the air, turned one perfect somersault, and landed, {sfx:clang|PLINK!}, right inside a guard's dented helmet that was lying upside down on the stones.",
+        "For a moment, it was perfectly quiet. The fire faded. The smoke drifted. Grumbo peeked over the rim of the helmet. He looked up at the enormous dragon. The enormous dragon looked down at Grumbo.",
+        "Then Grumbo did the only thing he could think of. He took the deepest breath his tiny body could hold, and he let out one huge, enormous, trumpeting {sfx:toot|TOOT!}"
       ]
     },
     {
@@ -90,10 +138,11 @@
       "scene": "laugh",
       "alt": "Scorch the dragon throws back her head and laughs, smoke puffing from her nostrils, while Tiny Grumbo grins in the helmet below.",
       "text": [
-        "Scorch froze in midair. Two little puffs of smoke drifted out of her nostrils.",
-        "Then a sound began deep in her chest, low and rumbling, like thunder rolling across the hills. Her shoulders shook. Her wings wobbled. Her long tail thumped against the wall. Scorch was {b:laughing}. {sfx:dragon-laugh|HAW-HAW-HAW!}",
-        "For one whole second, there was no fire at all.",
-        "Ruby stared at the helmet, then at Grumbo, then at the dragon. “You,” she said slowly, “made the dragon {b:laugh}.” Grumbo bowed so low his crown fell off."
+        "Scorch froze in midair. Two little puffs of smoke drifted out of her nostrils, and her golden eyes went very, very wide.",
+        "Then a sound began deep in her chest, low and rumbling, like thunder rolling across the hills. Her shoulders shook. Her wings wobbled. Her long tail thumped against the castle wall so hard that dust fell from the cracks. Scorch, the most fearsome dragon in the north, was {b:laughing}. {sfx:dragon-laugh|HAW-HAW-HAW!}",
+        "For one whole second, there was no fire at all. Just a dragon, laughing so hard her eyes watered.",
+        "Ruby stared at the helmet, then at Grumbo, then at the dragon, then back at Grumbo. “You,” she said slowly, “made the dragon {b:laugh}.” Grumbo bowed so low his crown fell off.",
+        "Magnolia lowered her bow, amazed. “Three days,” she whispered. “Three days I've been fighting her, and I never knew she could laugh.”"
       ]
     },
     {
@@ -101,21 +150,22 @@
       "scene": "talk",
       "alt": "Sophia lowers her sword and steps toward the dragon with one hand held out, while her friends crouch behind Luna's glowing shield.",
       "text": [
-        "Sophia saw her chance. If the dragon could laugh, maybe it could listen. She lowered her sword and stepped out from behind the stones, one hand held out.",
-        "“Scorch,” she called, as calmly as she could. “We don't want to fight you. We can help. Just tell us what you need.”",
-        "For a heartbeat, the dragon's golden eyes locked on hers. Then Scorch threw back her head and roared. {sfx:dragon-roar|RAAAAWR!} Fire came pouring over the wall again.",
-        "Luna dragged Sophia back behind her shield just in time. The four girls crouched together, breathing hard. “Talking isn't enough,” Sophia said. “We're going to have to protect Thornwall, and find out why she's fighting.”"
+        "Sophia saw her chance. If the dragon could laugh, maybe it could listen. She remembered the King's words: {b:find out what that dragon truly wants}. So she lowered her sword and stepped out from behind the stones, one hand held out.",
+        "“Scorch,” she called, as calmly as she could, though her heart was pounding like Ruby's drum. “We don't want to fight you. We came a long way to help. Just tell us what you need.”",
+        "For a heartbeat, the dragon's golden eyes locked on hers. Something flickered in them. Something that looked almost like hope. Then Scorch turned her head and stared past Sophia, at the castle, at the tall towers, and the hope turned to fury. She threw back her head and roared. {sfx:dragon-roar|RAAAAWR!} Fire came pouring over the wall again.",
+        "Luna dragged Sophia back behind her shield just in time. The four girls crouched together, breathing hard, while the fire roared above them. “Talking isn't enough,” Sophia said. “Not yet. We're going to have to protect Thornwall. And we're going to have to find out why she's fighting.”"
       ]
     },
     {
-      "id": "crack", "title": "CRACK!", "chapter": { "n": 3, "title": "The Battle of Thornwall" },
+      "id": "crack", "title": "CRACK!", "chapter": { "n": 4, "title": "The Battle of Thornwall" },
       "scene": "crack",
       "alt": "A blast of dragon fire hits Luna's glowing shield and it cracks. Sophia is knocked down onto the stone with a scraped knee.",
       "text": [
-        "Scorch's next blast hit Luna's shield head-on. The light shuddered. Then a long, jagged line split across it. {sfx:crack|CRACK!}",
-        "A spark leapt onto Ruby's cape and caught, glowing orange. Ruby yelped, beat it out with her hands, and kept pulling Magnolia toward the steps. A burning beam crashed down beside Sophia and knocked her flat. She skidded across the stone and scraped her knee, hard.",
-        "It stung. It really stung. Sophia's eyes watered, and for one second she wanted to stay right there on the ground.",
-        "Then she looked up. Luna was still singing. Ruby was still standing. Magnolia was already reaching down a hand. Sophia took it, gritted her teeth, and stood up. The fire was dangerous. But her friends were right beside her."
+        "The battle of Thornwall began.",
+        "Scorch's next blast hit Luna's shield head-on. The light shuddered and groaned. Then a long, jagged line split across it. {sfx:crack|CRACK!} Luna gasped, but she kept singing.",
+        "A spark leapt onto Ruby's cape and caught, glowing orange. Ruby yelped, beat it out with her bare hands, and kept pulling Magnolia toward the steps. A burning beam crashed down beside Sophia and knocked her flat. She skidded across the rough stone and scraped her knee, hard.",
+        "It stung. It really, really stung. Sophia's eyes watered, and for one second she wanted to stay right there on the ground and cry.",
+        "Then she looked up. Luna was still singing, even with a cracked shield. Ruby was still standing, even with a scorched cape. And Magnolia was already reaching down a hand. Sophia took it, gritted her teeth, and stood up. The fire was dangerous. The dragon was enormous. But her friends were right beside her, and that was the bravest feeling in the world."
       ]
     },
     {
@@ -123,10 +173,11 @@
       "scene": "together",
       "alt": "The four girls fight as a team: Ruby draws the dragon away from the gate, Luna holds up her shield, Sophia knocks falling stones aside, and Magnolia's arrows mark a safe path.",
       "text": [
-        "“Remember the sword-dance?” Sophia called. “Just like practice!”",
-        "Ruby grinned. She grabbed two drumsticks from her belt and beat them on a fallen shield. {sfx:boom|BOOM-BA-BOOM!} Scorch's head swung toward the noise, away from the gate, exactly where Ruby wanted it.",
-        "Luna sang her shield bright again, crack and all, and held it over the guards. Sophia leapt from stone to stone, swinging her sword to knock falling rocks aside before they could hit anyone. {sfx:swish|SWISH! CLANG!}",
-        "And Magnolia fired arrow after arrow, not at the dragon, but into the ground. {sfx:arrow|THWIP! THWIP!} Each one marked a safe path to the shelter. One by one, the last townspeople followed the arrows inside. No one fought alone."
+        "“Remember the sword-dance?” Sophia called. “Just like practice! Everybody, positions!”",
+        "Ruby grinned, a wild, brave grin. She pulled two drumsticks from her belt and beat them on a fallen shield. {sfx:boom|BOOM-BA-BOOM!} The sound echoed off every wall in Thornwall. Scorch's head swung toward the noise, away from the gate, exactly where Ruby wanted it.",
+        "Luna sang her shield bright again, crack and all, and held it over the guards like a glowing roof. Sophia leapt from stone to stone, her sword singing as she swung it, knocking falling rocks aside before they could hit anyone. {sfx:swish|SWISH! CLANG!}",
+        "And Magnolia fired arrow after arrow, faster than anyone had ever seen. {sfx:arrow|THWIP! THWIP!} But not at the dragon. Into the ground. Each arrow stood up in the dirt like a little flag, marking a safe path through the smoke to the great stone shelter. One by one, the last townspeople followed the arrows inside: a baker, a blacksmith, a grandmother carrying a goose.",
+        "Four girls. Four different kinds of brave. And no one fought alone."
       ]
     },
     {
@@ -134,10 +185,11 @@
       "scene": "arrow",
       "alt": "Magnolia's arrow pins a torn banner around the edge of the dragon's wing to a flagpole, and Scorch tumbles down into the castle courtyard.",
       "text": [
-        "Scorch rose high above the courtyard, drawing in a breath so big her whole chest glowed orange. Everyone knew what was coming next.",
-        "Magnolia didn't aim at the dragon. She aimed at a torn banner flapping from the flagpole beside her. She let the arrow fly. {sfx:arrow|THWIP!} It caught the banner, and the banner wrapped around the edge of Scorch's wing and pinned it to the pole.",
-        "Scorch lurched. Her other wing beat wildly. Then she tipped sideways and tumbled down into the courtyard. {sfx:crash|THUD!}",
-        "Luna threw her cracked shield underneath to soften the fall. It caught the dragon like a net, then burst into a shower of sparkles. Scorch lay still in the dust, panting. She was shaken, but not badly hurt."
+        "Scorch rose high above the courtyard, higher than the tallest tower, and drew in a breath so big her whole chest glowed orange, like a furnace. Everyone knew what was coming next. A blast that big could melt the castle gate.",
+        "“Magnolia!” Sophia shouted. “Can you stop her? Without hurting her?” Magnolia narrowed her eyes. “Watch me.”",
+        "She didn't aim at the dragon. She aimed at the torn green banner flapping from the flagpole beside Scorch's wing. She held her breath. She let the arrow fly. {sfx:arrow|THWIP!} It caught the banner and carried it in a perfect loop, and the banner wrapped around the edge of Scorch's wing and pinned it tight to the pole.",
+        "Scorch lurched. The glow in her chest went out. Her free wing beat wildly. Then she tipped sideways and tumbled down, down, down into the courtyard. {sfx:crash|THUD!}",
+        "Luna threw her cracked shield underneath to soften the fall. It caught the dragon like a net, then burst into a shower of golden sparkles. Scorch lay still in the dust, panting. She was shaken. But she was not badly hurt."
       ]
     },
     {
@@ -145,10 +197,11 @@
       "scene": "gaze",
       "alt": "Sophia steps carefully toward the fallen dragon. Scorch isn't looking at her. She is staring at a tall tower where a warm glow pulses behind a locked window.",
       "text": [
-        "Sophia walked toward the dragon slowly, sword ready, one step at a time. Up close, Scorch was even bigger. Her scales were red at the edges and gold in the middle, like coals in a fireplace.",
-        "Sophia waited for a snap or a roar. Neither came.",
-        "Scorch wasn't even looking at her. The dragon was staring past the Sparkle Swords, up at the tallest tower of Thornwall Castle, the treasure tower. Behind its locked iron window, something glowed. Softly. Warmly. On and off, like a heartbeat.",
-        "Scorch made a sound Sophia had never heard a dragon make. It was small and sad. Almost like a whimper."
+        "The courtyard went very quiet. Sophia walked toward the dragon slowly, sword ready, one careful step at a time. Up close, Scorch was even bigger than she looked in the sky. Her breath was hot and smelled like woodsmoke. Her scales were red at the edges and gold in the middle, like coals in a fireplace.",
+        "Sophia waited for a snap. Or a roar. Neither came.",
+        "Scorch wasn't even looking at her. The dragon was staring past the Sparkle Swords, up at the tallest tower of Thornwall Castle: the treasure tower. Behind its locked iron window, something glowed. Softly. Warmly. On and off, on and off, like a heartbeat.",
+        "In Sophia's pocket, the golden scale grew warm. Then warmer. On and off, on and off. In time with the light in the window.",
+        "And Scorch made a sound Sophia had never heard a dragon make. It was small, and sad, and lonely. Almost like a whimper."
       ]
     },
     {
@@ -156,21 +209,34 @@
       "scene": "egg",
       "alt": "Magnolia points up at the treasure tower while Sophia lowers her sword, understanding at last.",
       "text": [
-        "Magnolia followed the dragon's gaze, and her face went pale.",
-        "“Three days ago,” she said quietly, “the guards found a glowing egg out in the hills. They thought it might be dangerous, so they brought it here and locked it in the treasure tower.” She swallowed. “We didn't know it belonged to Scorch.”",
-        "Sophia looked at the tower. Then at the dragon, lying in the dust, still watching that window.",
-        "She lowered her sword all the way down. Now they understood. Scorch had never been trying to destroy Thornwall. She had been trying to get her baby back."
+        "Sophia pulled out the golden scale. It was pulsing with light now, in the very same rhythm as the window. And suddenly she remembered the empty nest in the hills. Still warm. Abandoned. Something missing from it.",
+        "Magnolia followed the dragon's gaze up to the tower, and her face went pale. “Three days ago,” she said quietly, “our guards found a glowing egg out in the northern hills. A huge one. They thought it might be dangerous, so they brought it here and locked it in the treasure tower.” She swallowed hard. “Three days ago. The same day Scorch came.”",
+        "Sophia looked at the tower. Then at the scale in her hand. Then at the dragon lying in the dust, still watching that window like it was the only thing in the whole world.",
+        "She lowered her sword all the way to the ground. “She isn't attacking Thornwall,” Sophia said softly. “She never was.” Her eyes filled up. “She's a mom. And her baby got taken away.”",
+        "The King had been right. A sword is for protecting. And the one who most needed protecting was locked in a tower."
       ]
     },
     {
-      "id": "return", "title": "The Velvet Nest", "chapter": { "n": 4, "title": "A Dragon at Home" },
+      "id": "return", "title": "The Velvet Nest", "chapter": { "n": 5, "title": "Wings Over the Kingdom" },
       "scene": "return",
       "alt": "Ruby carries a glowing egg in a velvet nest toward Scorch, who reaches for it with one careful claw. Sophia gently frees the banner from the dragon's wing.",
       "text": [
-        "Magnolia ran up the tower stairs with the key while Luna held a fresh shield over the doorway, just in case. When the iron door swung open, the whole stairwell filled with warm golden light.",
-        "Ruby carried the egg out herself, nestled in a velvet cushion. It was as big as a pumpkin, speckled red and gold, and warm as fresh bread. {sfx:heartbeat|THUMP-THUMP} went something inside it.",
-        "Scorch lifted her head. She reached out one enormous claw, slowly, carefully, as if the egg were made of soap bubbles, and drew it close against her chest.",
-        "While the dragon held her egg, Sophia climbed up beside the flagpole and gently pulled Magnolia's arrow free. The banner slipped from Scorch's wing. And the flames in Scorch's nostrils faded to two thin curls of smoke."
+        "Magnolia ran up the tower stairs with the great iron key while Luna held a fresh shield over the doorway, just in case. When the iron door swung open, the whole stairwell filled with warm golden light.",
+        "Ruby carried the egg out herself, nestled in a velvet cushion from the treasure room. It was as big as a pumpkin, speckled red and gold, and warm as fresh bread. {sfx:heartbeat|THUMP-THUMP} went something inside it.",
+        "Scorch lifted her head. Slowly, carefully, as if the egg were made of soap bubbles, she reached out one enormous claw and drew it close against her chest. Then she curled her whole body around it, wings and tail and all, until only a little golden glow peeked out.",
+        "While the dragon held her egg, Sophia climbed the flagpole and gently pulled Magnolia's arrow free. The banner slipped from Scorch's wing. Then Sophia climbed down and held out the golden scale. “I think this is yours,” she said. Scorch looked at the scale. She looked at Sophia. And very gently, she pushed it back into Sophia's hand with the tip of her nose.",
+        "The flames in Scorch's nostrils faded to two thin curls of smoke."
+      ]
+    },
+    {
+      "id": "flight", "title": "Flying Home",
+      "scene": "flight",
+      "alt": "At sunset, Scorch flies high over the kingdom with the princesses riding on her back and the egg held safe in her claws. Rivers, forests and castles spread out far below.",
+      "text": [
+        "Magnolia bowed her head to the dragon. “I'm sorry,” she said. “We thought the tower was the safest place in the kingdom. We were wrong.” Scorch gave a low, tired rumble that seemed to say, “It's okay. You didn't know.”",
+        "But Thornwall was full of frightened people who remembered the fire. And Scorch's nest in the hills had been trampled and scorched. Sophia had an idea. High on the hill above Sparkleton was a warm, dry cave, perfect for a dragon. “Come live with us,” she said. “You and your egg. We'll keep you safe.”",
+        "Scorch lowered one wing to the ground, like a ramp. Ruby's mouth fell open. “Is she... does she want us to...” She did. The Sparkle Swords climbed onto the dragon's back, and Magnolia climbed up after them, because she wasn't about to let her new friends go without her.",
+        "With three mighty beats of her wings, {sfx:wings|WHUMP! WHUMP! WHOOSH!} Scorch leapt into the sky. Thornwall shrank below them. The Whispering Wood became a green blanket. The Silverrush River became a silver ribbon. The sun set gold and pink and purple, and the wind roared, and Ruby screamed with joy the whole way. It was, everyone agreed later, the best ride of their entire lives."
       ]
     },
     {
@@ -178,21 +244,34 @@
       "scene": "hatch",
       "alt": "In a warm cave above Sparkleton at night, the egg cracks open and a tiny red-and-gold baby dragon peeks out while the Sparkle Swords sing.",
       "text": [
-        "Magnolia bowed her head to the dragon. “I'm sorry,” she said. “We thought the tower was the safest place. We were wrong.” Scorch gave a low, tired rumble that seemed to say, “It's okay.”",
-        "The Sparkle Swords had an idea. High on the hill above Sparkleton was a warm, dry cave, perfect for a dragon. “Come live with us,” Sophia said. “You and your egg.” So Scorch did.",
-        "That night, the girls sat outside the cave and sang their welcome song. Luna sang the tune, Ruby tapped the beat on a rock, and Sophia's sword hummed along. The egg rocked. It wobbled. Then — {sfx:crack|CRACK!}",
-        "Out peeped a tiny red-and-gold dragon, no bigger than a puppy, with stubby wings and enormous eyes. It sneezed out one little spark, like a birthday candle. “Look at her,” Ruby whispered. “She's a little flame.” And so the baby dragon was named {b:Flicker}."
+        "They landed on the hill above Sparkleton just as the first stars came out. The townspeople came running with lanterns, a little frightened at first, until they saw the princesses waving from the dragon's back.",
+        "Scorch settled into the warm cave with her egg, and the girls sat outside on the soft grass and sang their welcome song. Luna sang the tune, Ruby tapped the beat on a rock, Magnolia whistled the harmony, and Sophia's sword hummed along. Even Tiny Grumbo joined in, squeaking every note slightly wrong.",
+        "The egg rocked. It wobbled. It glowed brighter and brighter. Then: {sfx:crack|CRACK!}",
+        "Out peeped a tiny red-and-gold dragon, no bigger than a puppy, with stubby wings and enormous shining eyes. She blinked at the stars. She blinked at the girls. Then she sneezed out one little spark, like a birthday candle.",
+        "“Look at her,” Ruby whispered, her hands pressed to her heart. “She's a little flame.” Scorch made a soft, happy rumble, and the girls knew right away that the baby's name was {b:Flicker}."
       ]
     },
     {
-      "id": "missing", "title": "The Empty Nest",
+      "id": "missing", "title": "Gone Again", "chapter": { "n": 6, "title": "The Lost Little Flame" },
       "scene": "missing",
       "alt": "Scorch panics in Sparkleton, knocking down an empty bell tower and scorching the garden hedges, while townspeople hurry into the stone hall.",
       "text": [
-        "For three happy days, Flicker toddled around the cave while Tiny Grumbo taught her his favorite game: hide-and-seek. She was terrible at hiding. Her tail always stuck out. Grumbo found her every time.",
-        "On the fourth morning, Sophia woke up and checked her pocket. Empty. Tiny Grumbo was gone. Then from the hill came a sound that made her blood run cold: a dragon, roaring in fear. {sfx:dragon-roar|RAAAAAWR!}",
+        "For three happy days, Flicker toddled around the cave and tumbled down the grassy hill and chased butterflies she could never catch. And Tiny Grumbo taught her his very favorite game: hide-and-seek. She was terrible at hiding. Her tail always stuck out. Grumbo found her every single time.",
+        "On the fourth morning, Sophia woke up and checked her pocket, the way she always did. It was empty. Tiny Grumbo was gone. Then, from the hill, came a sound that made her blood run cold: a dragon, roaring in fear. {sfx:dragon-roar|RAAAAAWR!}",
         "Flicker's nest was empty too. And Scorch had gone wild with fear.",
-        "She stormed down into Sparkleton, searching everywhere for her baby. Her tail knocked down the old bell tower. {sfx:crash|CRASH!} Her frightened breath set the garden hedges smoking. Townspeople ran screaming for the stone hall. Scorch wasn't trying to be bad. She was a mother who had lost her baby, and she was too scared to listen to anyone."
+        "She stormed down into Sparkleton, searching everywhere for her baby, tearing the roofs off sheds and peering into wells. Her tail knocked down the old bell tower. {sfx:crash|CRASH!} Her frightened breath set the garden hedges smoking. Townspeople ran screaming for the stone hall.",
+        "Scorch wasn't trying to be bad. She was a mother who had lost her baby, for the second time in a week. And she was much too scared to listen to anyone."
+      ]
+    },
+    {
+      "id": "search", "title": "Tiny Footprints",
+      "scene": "search",
+      "alt": "Magnolia kneels in a garden path, pointing at a trail of tiny scorched footprints, while Sophia, Ruby and Luna lean in and Scorch searches the rooftops in the background.",
+      "text": [
+        "The Sparkle Swords met in the town square, out of breath. “We have to find Flicker before Scorch burns down half of Sparkleton,” Sophia said. “But where do we even start?”",
+        "Magnolia was already kneeling on the garden path, her nose almost touching the dirt. “Every hunter in Thornwall learns to track,” she said. “Deer. Foxes. Lost sheep.” She pointed. “And baby dragons.”",
+        "There, in the soft dirt, was a footprint. A tiny one, with three little claws. Then another. Then another. Each one was scorched black around the edges, as if Flicker's feet were just a little too warm for the ground. And right beside them, so small you could barely see them, were the footprints of something even tinier, with round little toes. “Grumbo,” Luna breathed.",
+        "The trail wandered everywhere: around the fountain, through the flower beds, under the baker's window (where a cookie had mysteriously disappeared). And it led straight toward the old bandstand at the edge of the square. “They're together,” said Sophia. “They're playing.” Then a shadow fell across the square, and the air grew very hot. Scorch had seen them. And she was coming."
       ]
     },
     {
@@ -200,32 +279,34 @@
       "scene": "shield",
       "alt": "Luna holds a huge glowing shield over the gardens as dragon fire hammers it and a crack spreads across it. Ruby draws Scorch toward an empty field while Sophia knocks burning branches away.",
       "text": [
-        "The Sparkle Swords raced into the town square. They had to stop Scorch before the fire reached the houses.",
-        "Ruby sprinted toward the empty practice field, drumming as loud as she could. {sfx:boom|BOOM! BOOM! BOOM!} “Over here, Scorch! This way!” Luna sang a brand-new shield, wide and bright, over the gardens and the rooftops. Sophia ran along the edge of it, knocking burning branches away with her sword before they could land on anything.",
-        "Fire hammered against the shield. {sfx:fire|FWOOOSH!} Luna's voice wavered. A crack spread across the light, then another, and another, like ice on a pond.",
-        "“I can't hold it much longer!” Luna cried. “Yes, you can,” said Ruby, pressing her back against Luna's. “We hold it together.” And somehow, the three of them held on."
+        "Scorch landed in the square with a thud that rattled every window in town. She didn't know about the footprints. She only knew her baby was gone, and she was too frightened to see anything else. She breathed, and fire rolled toward the houses.",
+        "“Shields up!” cried Sophia. Luna sang a brand-new shield, the biggest she had ever made, stretching wide and bright over the gardens and the rooftops. Ruby sprinted to the empty practice field, drumming as loud as she could. {sfx:boom|BOOM! BOOM! BOOM!} “Over here, Scorch! This way!” Magnolia sent arrows whistling up to snap off burning branches before they could fall. And Sophia ran along the edge of the shield, knocking sparks away with her sword.",
+        "Fire hammered against the shield. {sfx:fire|FWOOOSH!} Luna's voice began to tremble. A crack spread across the light, then another, and another, like ice on a frozen pond.",
+        "“I can't hold it much longer!” Luna cried, her face shining with sweat. Ruby raced back and pressed her back against Luna's. “Yes, you can,” she said. “We hold it together.” Magnolia put her hand on Luna's shoulder. Then Sophia did too. And the shield, somehow, held."
       ]
     },
     {
-      "id": "squeak", "title": "A Tiny Squeak", "chapter": { "n": 5, "title": "Friends" },
+      "id": "squeak", "title": "A Tiny Squeak",
       "scene": "squeak",
       "alt": "Behind the cracking shield, Sophia darts toward a pile of cushions under the old bandstand, where a crooked paper crown pokes out.",
       "text": [
-        "The shield was almost gone. Cracks ran across it everywhere, and pieces of light were flaking off like snow. Sophia's arms ached. Her knee throbbed.",
+        "But it couldn't hold forever. Cracks ran across the shield everywhere now, and pieces of light were flaking off and drifting away like golden snow. Sophia's arms ached. Her scraped knee throbbed.",
         "Then, in a tiny gap between two roars, she heard it. A small, familiar sound, coming from underneath the old bandstand. {sfx:squeak|squeak!}",
-        "Sophia's heart leapt. “Hold her!” she called to her friends. Ruby and Luna dug in their heels and kept Scorch busy behind the last of the shining shield.",
-        "Sophia darted across the square, ducked under the bandstand, and skidded to a stop in front of a pile of old cushions. Poking out of the very top was a crooked paper crown."
+        "Sophia's heart leapt like a frog. “Hold her!” she called to her friends. “Just a little longer!” Ruby and Luna and Magnolia dug in their heels and kept Scorch busy behind the last of the shining shield.",
+        "Sophia sprinted across the square, through the drifting smoke, past the scorched flower beds. She ducked under the bandstand, slid on her knees, and skidded to a stop in front of a big pile of old cushions.",
+        "Poking out of the very top was a crooked paper crown."
       ]
     },
     {
-      "id": "drum", "title": "The Best Hiding Place",
+      "id": "drum", "title": "The Best Hiding Place", "chapter": { "n": 7, "title": "Friends Forever" },
       "scene": "drum",
       "alt": "Under the cushions, inside an old bass drum, Tiny Grumbo and baby Flicker are curled up together, giggling.",
       "text": [
-        "Sophia lifted the cushions one by one. Underneath was an old bass drum lying on its side. It was the perfect hiding place.",
+        "Sophia lifted the cushions one by one, as gently as if she were unwrapping a present. Underneath was an old bass drum lying on its side, left over from some long-ago parade. It was the perfect hiding place.",
         "And curled up inside, cozy as two kittens, were Tiny Grumbo and Flicker. They were giggling so hard they could barely breathe. {sfx:giggle|HEE-HEE-HEE!}",
-        "“We were playing hide-and-seek!” squeaked Grumbo proudly. “She finally found a good spot. Nobody found us for {b:hours}!”",
-        "Sophia let out the biggest breath of her whole life. Flicker wriggled out of the drum, completely safe, not a scale out of place, and went scampering across the square toward her mother as fast as her stubby legs could go."
+        "“We were playing hide-and-seek!” squeaked Grumbo proudly, hopping up onto the rim of the drum. “She finally found a good spot! Nobody found us for {b:hours}! We're the best hiders in the whole kingdom!” Then he saw Sophia's face, all smoky and scared and teary, and his little smile wobbled. “Um,” he said. “Was everybody looking for us?”",
+        "Sophia let out the biggest breath of her whole life. “Just a little bit,” she said, and laughed, and scooped him up and kissed the top of his crown.",
+        "Flicker wriggled out of the drum, completely safe, not a single scale out of place, and went scampering across the square toward her mother as fast as her stubby little legs could go."
       ]
     },
     {
@@ -233,21 +314,33 @@
       "scene": "hiccup",
       "alt": "Flicker presses under Scorch's wing and hiccups a tiny puff of flame that singes the tip of Tiny Grumbo's paper crown, and Scorch laughs.",
       "text": [
-        "Scorch saw her baby, and the fire inside her went quiet all at once. She lowered her great head to the ground, and Flicker pressed in tight beneath her mother's wing.",
-        "Everyone held their breath. Then Flicker opened her little mouth and {sfx:hiccup|HIC!} hiccupped. A tiny puff of flame popped out, sailed through the air, and singed the very tip of Tiny Grumbo's paper crown.",
+        "Scorch saw her baby, and the fire inside her went quiet all at once, like a candle blown out. She lowered her great head all the way to the ground, and Flicker pressed in tight beneath her mother's wing.",
+        "Everyone held their breath. Ruby. Luna. Magnolia. The townspeople peeking out of the stone hall. Even the birds on the rooftops.",
+        "Then Flicker opened her little mouth and {sfx:hiccup|HIC!} hiccupped. A tiny puff of flame popped out, sailed through the air in a perfect little arc, and landed right on the very tip of Tiny Grumbo's paper crown. It singed it. Just a little.",
         "“Eep!” squeaked Grumbo, patting out the smoke with both hands. {sfx:squeak|EEP!}",
-        "Scorch's eyes crinkled. Her shoulders shook. And then she laughed, the same big, rumbling, thundery laugh as at Thornwall, until smoke rings floated up into the sky. {sfx:dragon-laugh|HAW-HAW-HAW!} The last of her flames went out. And this time, the fighting stopped for good."
+        "Scorch's eyes crinkled. Her shoulders shook. And then she laughed, the same big, rumbling, thundery laugh as at Thornwall, until smoke rings floated up over Sparkleton like a string of balloons. {sfx:dragon-laugh|HAW-HAW-HAW!} Then Ruby laughed. Then Luna, and Magnolia, and Sophia, and the townspeople, until the whole square was laughing. The last of Scorch's flames went out. And this time, the fighting stopped for good."
+      ]
+    },
+    {
+      "id": "promise", "title": "The Golden Scale",
+      "scene": "promise",
+      "alt": "In the repaired town square, Scorch bows her head to Sophia, who holds up the glowing golden scale, while Magnolia kneels before the King to become the fourth Sparkle Sword.",
+      "text": [
+        "The next morning, Scorch lowered her head to everyone she had frightened, in Thornwall and in Sparkleton. She promised, in her low, rumbling way, to use her fire only where it was safe: for warming cold houses in winter, for lighting the lanterns at festivals, and for toasting marshmallows, which Ruby taught her the very first night.",
+        "Then she helped rebuild every tower she had knocked down, carrying the heaviest stones in her claws and fitting them into place as gently as a puzzle. The bell tower went up taller than before. The hedges grew back greener.",
+        "Sophia still had the golden scale. When she tried to give it back, Scorch shook her head and nudged it toward her again. It glowed warm in Sophia's hand. “It means you're family now,” Magnolia explained softly. “If you ever need her, hold it up and she'll feel it. Wherever she is.”",
+        "Then the King stepped forward with a brand-new sword, green-handled and shining. Magnolia knelt, and he touched it to each of her shoulders. {sfx:twinkle|SPARKLE!} “Princess Magnolia of Thornwall,” he said, “for your courage, your kindness, and your truly excellent aim, I name you the fourth Sparkle Sword.”"
       ]
     },
     {
       "id": "end", "title": "The End",
       "scene": "finale", "fx": "sparkles",
-      "alt": "At a concert under the stars, Scorch lights the stage with a careful puff of flame while Flicker dances, Tiny Grumbo bows in his singed crown, and the Sparkle Swords and Magnolia strike their final pose.",
+      "alt": "At a concert under the stars, Scorch lights the stage with a careful puff of flame while Flicker dances, Tiny Grumbo bows in his singed crown, and the four Sparkle Swords strike their final pose.",
       "text": [
-        "Scorch lowered her head to everyone she had frightened, in Thornwall and in Sparkleton, and promised to use her fire only where it was safe. Then she helped the townspeople rebuild every tower she had knocked down, carrying the heaviest stones herself.",
-        "Sophia's knee got a bandage with stars on it. Ruby's cape got a bright new patch. Luna's shield, after a good night's sleep, came back brighter than ever.",
-        "At the very next concert, Princess Magnolia sat in the front row, and the Sparkle Swords had two brand-new band members. Scorch lit the stage with one careful puff of flame. {sfx:fire|FWOOSH!} Flicker danced and hiccupped sparks in time with the music. And Tiny Grumbo took a bow in his singed paper crown.",
-        "The Sparkle Swords struck their final pose. {sfx:twinkle|SPARKLE!}",
+        "Sophia's knee got a bandage with stars on it. Ruby's cape got a bright new patch shaped like a flame. And Luna's shield, after a long, long sleep, came back brighter than ever.",
+        "At the very next concert, the whole kingdom came to watch, and Thornwall too. Magnolia played a silver flute. Scorch lit the stage with one careful puff of flame. {sfx:fire|FWOOSH!} Flicker danced on the drums and hiccupped sparks in time with the music. And Tiny Grumbo took a bow in his singed paper crown, which he refused to ever, ever replace.",
+        "The Sparkle Swords struck their final pose, four swords raised high, while a dragon's golden light filled the night sky. {sfx:twinkle|SPARKLE!}",
+        "And somewhere far to the north, in an empty nest in the rocky hills, the wind blew softly through the woven trees... as if it were waiting for the next adventure.",
         "{b:The End.}"
       ]
     }

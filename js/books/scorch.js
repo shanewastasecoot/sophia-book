@@ -18,6 +18,8 @@
   au.register('bell', () => [0, .55].forEach(t => { au.tone(392, 390, 1.1, 'sine', .3, t); au.tone(784, 780, .8, 'sine', .1, t); }));
   au.register('heartbeat', () => [0, .22].forEach(t => au.tone(70, 50, .14, 'sine', .7, t)));
   au.register('hiccup', () => { au.tone(500, 900, .07, 'sine', .3); au.noise(.15, 3000, 1000, .15, .05); });
+  au.register('whisper', () => [0, .35, .7].forEach(t => au.noise(.5, 2500, 5000, .18, t, 'highpass')));
+  au.register('wings', () => { [0, .3].forEach(t => au.noise(.22, 300, 120, .6, t, 'lowpass')); au.noise(.9, 400, 2500, .4, .6); });
 
   /* ---------- Scene helpers ---------- */
   const tiny = (x, y, s = .09) => A.grumbo({ x, y, s, mood: 'cute', crown: true, cls: 'bob' });
@@ -46,6 +48,30 @@
     ride: () => ember() + A.stoneCastle(600, 430, .75) + A.dragon({ x: 520, y: 200, s: .45, mood: 'angry', cls: 'floaty' }) +
       fireFrom(520, 200, .45, false, 680, 320, 40) +
       trio([[90, 476, .7, 'up', 'sword'], [210, 486, .82, 'up', 'sword'], [330, 476, .7, 'up', 'sword']]) + A.word(220, 80, 42, 'FWOOOSH!', '#ffb02e', -5),
+
+    setout: () => day() + A.castle(400, 330, .75, false) +
+      `<circle cx="590" cy="380" r="46" fill="url(#eggGlow)" class="twinkle"/><g transform="translate(590 400)" stroke="${A.OL}" stroke-width="3"><rect x="-14" y="-30" width="28" height="36" rx="4" fill="#ffd27a"/><path d="M-16 -30h32M-8 -40h16" fill="none"/></g>` +
+      trio([[200, 470, .85, 'wave'], [400, 480, 1, 'hold', 'sword'], [600, 470, .85, 'wave']]) + tiny(430, 400) + A.word(400, 70, 44, 'CLOP-CLOP-CLOP!', '#ffc83d', -3),
+
+    woods: () => `<rect width="800" height="500" fill="#14261c"/>` +
+      [60, 170, 290, 520, 640, 750].map((x, k) => `<path d="M${x - 26} 500Q${x - 10} 260 ${x - 30} 0H${x + 30}Q${x + 14} 260 ${x + 26} 500Z" fill="${k % 2 ? '#3a2a1e' : '#2e2218'}" stroke="${A.OL}" stroke-width="3"/>`).join('') +
+      `<path d="M0 0H800V90Q600 140 400 100T0 110Z" fill="#1f4a2c" stroke="${A.OL}" stroke-width="3"/>` +
+      `<path d="M120 500Q300 380 400 400T700 320" fill="none" stroke="#ffd65a" stroke-width="18" stroke-linecap="round" opacity=".55" filter="url(#glow)" class="beam"/>` +
+      trio([[300, 470, .7, 'sing'], [420, 476, .8, 'hold', 'sword'], [540, 470, .7, 'nose']]) + A.note(330, 280, 30, '#ffd65a') + A.note(380, 240, 26, '#fff', '♫') +
+      A.word(640, 110, 30, 'shhh-hhh…', '#cfe8b0', 4),
+
+    bridge: () => A.emberSky('morning') + `<path d="M0 300Q200 280 400 300T800 300V500H0Z" fill="#5fa8e8" stroke="${A.OL}" stroke-width="3"/>` +
+      `<path d="M0 340q40 -10 80 0t80 0t80 0t80 0t80 0t80 0t80 0t80 0t80 0t80 0M0 400q40 -10 80 0t80 0t80 0t80 0t80 0t80 0t80 0t80 0t80 0t80 0" stroke="#d6efff" stroke-width="4" fill="none"/>` +
+      `<g fill="#2a1e18" stroke="${A.OL}" stroke-width="3"><path d="M90 300v-50l14 10v40Z"/><path d="M700 300v-44l14 8v36Z"/></g>` +
+      [[170, 430], [280, 400], [390, 420], [500, 395], [610, 420]].map(([x, y]) => `<ellipse cx="${x}" cy="${y}" rx="44" ry="14" fill="#8a8794" stroke="${A.OL}" stroke-width="3"/>`).join('') +
+      A.princess({ ...SOPHIA, x: 500, y: 396, s: .6, pose: 'wave', prop: 'sword', cls: 'bob' }) + A.princess({ ...LUNA, x: 610, y: 421, s: .55, pose: 'wave', cls: 'sway' }) +
+      A.princess({ ...RUBY, x: 280, y: 401, s: .55, pose: 'wave', cls: 'shake' }) + A.word(400, 80, 46, 'SPLOOSH!', '#d6efff', -4),
+
+    nest: () => ember() + `<g transform="translate(400 420)"><ellipse rx="300" ry="70" fill="#5a3a22" stroke="${A.OL}" stroke-width="4"/>` +
+      [-260, -170, -80, 10, 100, 190].map(x => `<rect x="${x}" y="-60" width="80" height="22" rx="10" fill="#7a5233" stroke="${A.OL}" stroke-width="3" transform="rotate(${x % 3 ? -8 : 7} ${x + 40} -49)"/>`).join('') +
+      `<ellipse rx="220" ry="40" fill="#2a1a12"/></g>` +
+      `<circle cx="400" cy="410" r="40" fill="url(#eggGlow)" class="twinkle"/><path d="M400 390q22 18 0 36q-22 -18 0 -36Z" fill="#ffc23d" stroke="${A.OL}" stroke-width="3"/>` +
+      trio([[150, 476, .6, 'nose'], [560, 480, .7, 'hold'], [670, 476, .6, 'nose']]),
 
     magnolia: () => ember() + `<rect x="0" y="330" width="800" height="170" fill="#9a96a3" stroke="${A.OL}" stroke-width="3"/>` +
       magnolia(400, 420, 1.2) + trio([[140, 470, .7], [250, 476, .8, 'hold', 'sword'], [660, 470, .7, 'drum', 'sticks']]) +
@@ -95,6 +121,14 @@
       A.egg(470, 470, 1) + A.princess({ ...RUBY, x: 540, y: 480, s: .8, pose: 'hold', cls: 'bob' }) +
       A.princess({ ...SOPHIA, x: 700, y: 480, s: .75, pose: 'wave', cls: 'bob' }) + A.word(470, 330, 30, 'thump-thump', '#ffc83d', 0),
 
+    flight: () => A.emberSky('ember') + `<circle cx="680" cy="380" r="70" fill="#ffd27a" opacity=".7"/>` +
+      `<path d="M0 420Q200 380 400 410T800 400V500H0Z" fill="#4f6a3a" stroke="${A.OL}" stroke-width="3"/><path d="M0 470Q260 430 520 470T800 460" fill="none" stroke="#bfe3ff" stroke-width="8"/>` +
+      A.castle(150, 440, .2, false) + A.stoneCastle(660, 440, .18) +
+      A.dragon({ x: 360, y: 330, s: .62, mood: 'calm', cls: 'floaty' }) + A.egg(400, 330, .4) +
+      A.princess({ ...RUBY, x: 300, y: 250, s: .28, pose: 'up', cls: '' }) + A.princess({ ...SOPHIA, x: 340, y: 246, s: .3, pose: 'up', cls: '' }) +
+      A.princess({ ...LUNA, x: 380, y: 250, s: .28, pose: 'up', cls: '' }) + A.princess({ ...MAGNOLIA, x: 270, y: 256, s: .28, pose: 'up', cls: '' }) +
+      A.word(400, 70, 40, 'WHUMP! WHOOSH!', '#ffc83d', -3),
+
     hatch: () => A.sky('night') + A.moon(660, 80) + A.emberHills('#3a2f5a', '#2a2148') +
       `<path d="M60 500V300Q180 200 330 300V500Z" fill="#2a2030" stroke="${A.OL}" stroke-width="3"/>` +
       A.dragon({ x: 200, y: 470, s: .45, mood: 'calm', cls: 'bob', wingsUp: false }) + A.flicker({ x: 410, y: 480, s: .55 }) + A.egg(410, 486, .6, true) +
@@ -104,6 +138,11 @@
       fireFrom(360, 440, .6, false, 640, 420, 50) + A.smokePlume(700, 380, .7) + A.smokePlume(120, 360, .6) +
       `<g fill="#b4b0bb" stroke="${A.OL}" stroke-width="3"><rect x="80" y="400" width="40" height="30" transform="rotate(25 100 415)"/><rect x="140" y="440" width="34" height="28" transform="rotate(-12 157 454)"/></g>` +
       A.word(400, 70, 50, 'RAAAAAWR!', '#ff6a2b', -4),
+
+    search: () => day() + A.castle(620, 330, .55, false) + A.dragon({ x: 640, y: 210, s: .3, mood: 'sad', cls: 'floaty', flip: true }) +
+      [[160, 470], [210, 455], [262, 466], [316, 450], [370, 462], [424, 446]].map(([x, y]) => `<g fill="#3a2420"><circle cx="${x}" cy="${y}" r="5"/><circle cx="${x - 7}" cy="${y - 8}" r="3"/><circle cx="${x}" cy="${y - 10}" r="3"/><circle cx="${x + 7}" cy="${y - 8}" r="3"/></g>`).join('') +
+      A.princess({ ...MAGNOLIA, x: 120, y: 480, s: .75, pose: 'nose', cls: '' }) +
+      trio([[470, 470, .65, 'hold'], [560, 476, .72, 'hold', 'sword'], [650, 470, .65, 'hold']]),
 
     shield: () => day() + A.castle(400, 330, .6, false) + lightShield(400, 470, 380, 330, true) +
       A.dragon({ x: 640, y: 200, s: .45, mood: 'sad', cls: 'floaty', flip: true }) + fireFrom(640, 200, .45, true, 420, 180, 50) +
@@ -122,10 +161,16 @@
       A.flicker({ x: 470, y: 480, s: .3 }) + A.flame(520, 420, 580, 400, 14) + tiny(600, 470, .12) +
       A.word(560, 300, 40, 'HIC!', '#ffb02e', 8) + A.word(300, 90, 46, 'HAW-HAW-HAW!', '#ffc83d', -4),
 
+    promise: () => day() + A.castle(560, 330, .7, false) + A.dragon({ x: 600, y: 470, s: .6, mood: 'calm', cls: 'bob', flip: true }) +
+      A.princess({ ...SOPHIA, x: 380, y: 480, s: .85, pose: 'up', cls: 'bob' }) +
+      `<circle cx="442" cy="368" r="34" fill="url(#eggGlow)" class="twinkle"/><path d="M442 352q16 14 0 30q-16 -16 0 -30Z" fill="#ffc23d" stroke="${A.OL}" stroke-width="3"/>` +
+      A.princess({ ...MAGNOLIA, x: 180, y: 480, s: .8, pose: 'hold', prop: 'sword', cls: '' }) + A.sparkles([[120, 120], [260, 80, 8], [700, 120, 7]]) +
+      A.word(260, 90, 36, 'SPARKLE!', '#ffc83d', -4),
+
     finale: () => A.sky('night') + A.spot(160, 220, 'spotPink') + A.spot(640, 560, 'spotCyan') + A.moon(680, 70) +
       `<rect x="40" y="440" width="720" height="70" rx="10" fill="#8a3fd1" stroke="${A.OL}" stroke-width="3"/>` +
       A.dragon({ x: 640, y: 440, s: .5, mood: 'calm', cls: 'sway', flip: true }) + A.flicker({ x: 480, y: 446, s: .28, mood: 'laugh' }) +
-      trio([[120, 446, .65, 'sing'], [240, 452, .75, 'up', 'sword'], [360, 446, .65, 'drum', 'sticks']]) + tiny(560, 446, .12) +
+      trio([[120, 446, .6, 'sing'], [230, 452, .7, 'up', 'sword'], [340, 446, .6, 'drum', 'sticks']]) + A.princess({ ...MAGNOLIA, x: 440, y: 446, s: .6, pose: 'up', prop: 'sword', cls: 'bob' }) + tiny(540, 446, .12) +
       A.word(400, 70, 46, 'THE END', '#ffc83d', -2) + A.sparkles([[80, 120], [740, 160, 8], [420, 160, 7]]),
   };
 
