@@ -106,7 +106,7 @@
     {
       "id": "magnolia", "title": "Princess Magnolia", "chapter": { "n": 3, "title": "Fire at Thornwall" },
       "scene": "magnolia",
-      "alt": "On top of the castle wall, Princess Magnolia, with a long braid and a green cloak, draws her bow and calls down to the Sparkle Swords.",
+      "alt": "Looking up a steep stone staircase inside the burning castle wall: at the top, Princess Magnolia, with a long golden braid, a silver circlet and a green cloak, draws an arrow as the dragon Scorch circles in the smoky sky. Sophia, Luna and Ruby charge up the steps, swords in hand.",
       "text": [
         "On top of the wall stood a girl in a green cloak, a long golden braid swinging down her back. She was a little older than the Sparkle Swords, and she held a bow taller than she was. Her cheeks were streaked with soot, and her eyes were fierce.",
         "“Up here!” she shouted, waving them toward the stairs. “I'm Magnolia. I sent the note!”",
