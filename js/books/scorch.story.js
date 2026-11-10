@@ -187,7 +187,7 @@
     {
       "id": "arrow", "title": "Magnolia's Arrow",
       "scene": "arrow",
-      "alt": "Magnolia's arrow pins a torn banner around the edge of the dragon's wing to a flagpole, and Scorch tumbles down into the castle courtyard.",
+      "alt": "Princess Magnolia lowers her bow with a proud little smile. Her arrow has looped a torn green banner around the edge of Scorch's wing and tied it tight to a tall flagpole, and the startled dragon lurches in the smoky sky. Sophia stares up in amazement, her sword in hand and Tiny Grumbo in her pocket.",
       "text": [
         "Scorch rose high above the courtyard, higher than the tallest tower, and drew in a breath so big her whole chest glowed orange, like a furnace. Everyone knew what was coming next. A blast that big could melt the castle gate.",
         "“Magnolia!” Sophia shouted. “Can you stop her? Without hurting her?” Magnolia narrowed her eyes. “Watch me.”",
