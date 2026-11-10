@@ -235,7 +235,7 @@
     {
       "id": "flight", "title": "Flying Home",
       "scene": "flight",
-      "alt": "At sunset, Scorch flies high over the kingdom with the princesses riding on her back and the egg held safe in her claws. Rivers, forests and castles spread out far below.",
+      "alt": "At sunset, Scorch soars high over the kingdom with the glowing egg held safe in her claws. Sophia, Ruby, Luna and Magnolia ride on her back, Ruby cheering with her arms in the air and Tiny Grumbo peeking out of Sophia's pocket. Far below, a dark green forest, a silver river and two castles spread out under a pink and gold sky.",
       "text": [
         "Magnolia bowed her head to the dragon. “I'm sorry,” she said. “We thought the tower was the safest place in the kingdom. We were wrong.” Scorch gave a low, tired rumble that seemed to say, “It's okay. You didn't know.”",
         "But Thornwall was full of frightened people who remembered the fire. And Scorch's nest in the hills had been trampled and scorched. Sophia had an idea. High on the hill above Sparkleton was a warm, dry cave, perfect for a dragon. “Come live with us,” she said. “You and your egg. We'll keep you safe.”",
