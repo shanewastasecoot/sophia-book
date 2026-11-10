@@ -140,7 +140,7 @@
     {
       "id": "laugh", "title": "The Dragon Laughs",
       "scene": "laugh",
-      "alt": "Scorch the dragon throws back her head and laughs, smoke puffing from her nostrils, while Tiny Grumbo grins in the helmet below.",
+      "alt": "Scorch hovers above the castle wall, laughing so hard her eyes water, with two puffs of smoke from her nostrils. Below, Tiny Grumbo peeks over a dented knight's helmet as his tiny crown tumbles off, while Sophia, Luna, Ruby and Magnolia stare in amazement.",
       "text": [
         "Scorch froze in midair. Two little puffs of smoke drifted out of her nostrils, and her golden eyes went very, very wide.",
         "Then a sound began deep in her chest, low and rumbling, like thunder rolling across the hills. Her shoulders shook. Her wings wobbled. Her long tail thumped against the castle wall so hard that dust fell from the cracks. Scorch, the most fearsome dragon in the north, was {b:laughing}. {sfx:dragon-laugh|HAW-HAW-HAW!}",
