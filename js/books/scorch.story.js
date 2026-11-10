@@ -28,7 +28,7 @@
         "The morning sun poured over Sparkleton like honey, turning every rooftop and tower bright enough to make you squint. Flags snapped in the breeze. Bakers called out from their windows. And in the castle courtyard, three friends danced in a circle of light, their wooden practice swords flashing. {sfx:clang|CLACK!} Spin. {sfx:twinkle|SPARKLE!}",
         "They were the Sparkle Swords, the bravest band in the whole Kingdom of Sparkleton. Princess Luna could sing a note so pure it turned into a shield of light. Princess Ruby could drum a beat so loud it made the mountains hum. And Princess Sophia had a magic sword that sang whenever she swung it.",
         "“Guard up, Ruby!” called Luna, her voice bright and steady. She twirled, her blue cape spinning around her like a moonbeam, and sang one high, clear note. The air in front of her shimmered gold. Ruby's sword bounced right off it, and Ruby stumbled backward, laughing, her red cape tangled around her boots. “I had it! I totally had it!” She shook the cape loose and raised her sword again. “Okay, okay. One more time.”",
-        "Sophia stood to the side, arms crossed, watching with a small smile. In her pocket, something wriggled. She reached in and gave Tiny Grumbo a gentle pat. He had once been a shadow demon as big as a mountain. Now he was the size of a jellybean, and the smallest Sparkle Sword of all. “Not yet, little guy,” she whispered. “Save it for the real trouble.”",
+        "Sophia stood to the side, arms crossed, watching with a small smile. In her pocket, something wriggled. She reached in and gave Tiny Grumbo a gentle pat. He had once been a shadow demon as big as a mountain. Now he was small enough to ride in a pocket, and the smallest Sparkle Sword of all. “Not yet, little guy,” she whispered. “Save it for the real trouble.”",
         "From the tallest tower, a bell began to ring."
       ]
     },
@@ -128,11 +128,11 @@
     {
       "id": "toot", "title": "Tiny Grumbo",
       "scene": "toot",
-      "alt": "Fire roars over the wall as everyone ducks. Tiny Grumbo tumbles out of Sophia's pocket and lands in a guard's helmet.",
+      "alt": "Scorch roars fire over the castle wall as everyone dives flat. Sophia hits the stones with Luna diving behind her, and Tiny Grumbo tumbles out of Sophia's pocket toward a dented knight's helmet.",
       "text": [
         "Scorch wheeled around in the sky and breathed again. A river of fire roared over the wall, so hot that the air shimmered and the stones glowed orange. {sfx:fire|FWOOOSH!} Everyone dove flat behind the battlements.",
-        "Sophia hit the ground hard. Her pocket bounced. And out popped Tiny Grumbo, jellybean-small, tiny gold crown first.",
-        "He flew through the air, turned one perfect somersault, and landed, {sfx:clang|PLINK!}, right inside a guard's dented helmet that was lying upside down on the stones.",
+        "Sophia hit the ground hard. Her pocket bounced. And out popped Tiny Grumbo, tiny gold crown first.",
+        "He flew through the air, turned one perfect somersault, and landed, {sfx:clang|PLINK!}, right inside a guard's dented helmet that had rolled across the stones.",
         "For a moment, it was perfectly quiet. The fire faded. The smoke drifted. Grumbo peeked over the rim of the helmet. He looked up at the enormous dragon. The enormous dragon looked down at Grumbo.",
         "Then Grumbo did the only thing he could think of. He took the deepest breath his tiny body could hold, and he let out one huge, enormous, trumpeting {sfx:toot|TOOT!}"
       ]
