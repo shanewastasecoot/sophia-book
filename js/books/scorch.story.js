@@ -175,7 +175,7 @@
     {
       "id": "together", "title": "No One Fights Alone",
       "scene": "together",
-      "alt": "The four girls fight as a team: Ruby draws the dragon away from the gate, Luna holds up her shield, Sophia knocks falling stones aside, and Magnolia's arrows mark a safe path.",
+      "alt": "The four girls fight as a team. Ruby grins and drums on a fallen shield so Scorch turns toward her, Luna holds a glowing shield over the guards, Sophia leaps to knock a falling stone aside with Tiny Grumbo in her pocket, and Magnolia shoots arrows into the ground to mark a safe path for a baker, a blacksmith and a grandmother carrying a goose.",
       "text": [
         "“Remember the sword-dance?” Sophia called. “Just like practice! Everybody, positions!”",
         "Ruby grinned, a wild, brave grin. She pulled two drumsticks from her belt and beat them on a fallen shield. {sfx:boom|BOOM-BA-BOOM!} The sound echoed off every wall in Thornwall. Scorch's head swung toward the noise, away from the gate, exactly where Ruby wanted it.",
