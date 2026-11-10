@@ -223,7 +223,7 @@
     {
       "id": "return", "title": "The Velvet Nest", "chapter": { "n": 5, "title": "Wings Over the Kingdom" },
       "scene": "return",
-      "alt": "Ruby carries a glowing egg in a velvet nest toward Scorch, who reaches for it with one careful claw. Sophia gently frees the banner from the dragon's wing.",
+      "alt": "At sunset, Ruby carefully carries a huge speckled red-and-gold egg on a velvet cushion toward Scorch, who reaches out one gentle claw, two thin curls of smoke rising from her nose. Luna and Magnolia stand in the glowing tower doorway, and Sophia, up on the flagpole, has freed the green banner from the dragon's wing.",
       "text": [
         "Magnolia ran up the tower stairs with the great iron key while Luna held a fresh shield over the doorway, just in case. When the iron door swung open, the whole stairwell filled with warm golden light.",
         "Ruby carried the egg out herself, nestled in a velvet cushion from the treasure room. It was as big as a pumpkin, speckled red and gold, and warm as fresh bread. {sfx:heartbeat|THUMP-THUMP} went something inside it.",
