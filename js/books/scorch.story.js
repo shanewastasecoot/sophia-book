@@ -163,7 +163,7 @@
     {
       "id": "crack", "title": "CRACK!", "chapter": { "n": 4, "title": "The Battle of Thornwall" },
       "scene": "crack",
-      "alt": "A blast of dragon fire hits Luna's glowing shield and it cracks. Sophia is knocked down onto the stone with a scraped knee.",
+      "alt": "Scorch's fire slams into Luna's glowing bubble shield, and a jagged crack splits across it. Luna sings through gritted teeth, Ruby beats out a spark on her cape, and Sophia, knocked to her knees with a scraped knee and watery eyes, looks up bravely as Magnolia reaches down to help her. Tiny Grumbo peeks out of Sophia's pocket.",
       "text": [
         "The battle of Thornwall began.",
         "Scorch's next blast hit Luna's shield head-on. The light shuddered and groaned. Then a long, jagged line split across it. {sfx:crack|CRACK!} Luna gasped, but she kept singing.",
