@@ -199,7 +199,7 @@
     {
       "id": "gaze", "title": "The Glowing Window",
       "scene": "gaze",
-      "alt": "Sophia steps carefully toward the fallen dragon. Scorch isn't looking at her. She is staring at a tall tower where a warm glow pulses behind a locked window.",
+      "alt": "In the dim, smoky courtyard, Sophia steps carefully toward the enormous dragon, her sword pointed down and a golden glow shining from her pocket. Scorch isn't looking at her. She lies in the dust, gazing up with sad, lonely eyes at a tall tower where a warm golden light glows behind an iron-grilled window.",
       "text": [
         "The courtyard went very quiet. Sophia walked toward the dragon slowly, sword ready, one careful step at a time. Up close, Scorch was even bigger than she looked in the sky. Her breath was hot and smelled like woodsmoke. Her scales were red at the edges and gold in the middle, like coals in a fireplace.",
         "Sophia waited for a snap. Or a roar. Neither came.",
