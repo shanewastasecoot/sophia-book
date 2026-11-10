@@ -211,7 +211,7 @@
     {
       "id": "egg", "title": "Scorch's Secret",
       "scene": "egg",
-      "alt": "Magnolia points up at the treasure tower while Sophia lowers her sword, understanding at last.",
+      "alt": "Sophia holds up the glowing dragon scale and lowers her sword, her eyes full of tears as she understands at last. Magnolia points up at the treasure tower, and Luna and Ruby cover their mouths in shock. Beside them, the huge dragon Scorch gazes at the glowing window, one tear rolling down her cheek.",
       "text": [
         "Sophia pulled out the golden scale. It was pulsing with light now, in the very same rhythm as the window. And suddenly she remembered the empty nest in the hills. Still warm. Abandoned. Something missing from it.",
         "Magnolia followed the dragon's gaze up to the tower, and her face went pale. “Three days ago,” she said quietly, “our guards found a glowing egg out in the northern hills. A huge one. They thought it might be dangerous, so they brought it here and locked it in the treasure tower.” She swallowed hard. “Three days ago. The same day Scorch came.”",
