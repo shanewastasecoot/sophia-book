@@ -246,7 +246,7 @@
     {
       "id": "hatch", "title": "A Little Flame",
       "scene": "hatch",
-      "alt": "In a warm cave above Sparkleton at night, the egg cracks open and a tiny red-and-gold baby dragon peeks out while the Sparkle Swords sing.",
+      "alt": "Under a big moon and a sky full of stars, Scorch curls around her speckled red-and-gold egg in a glowing cave above Sparkleton. The egg has cracked open, and a tiny baby dragon peeks out, sneezing a little spark. On the grass, Sophia, Luna, Ruby and Magnolia watch in wonder, Ruby tapping a rock like a drum and Tiny Grumbo peeking out of Sophia's pocket.",
       "text": [
         "They landed on the hill above Sparkleton just as the first stars came out. The townspeople came running with lanterns, a little frightened at first, until they saw the princesses waving from the dragon's back.",
         "Scorch settled into the warm cave with her egg, and the girls sat outside on the soft grass and sang their welcome song. Luna sang the tune, Ruby tapped the beat on a rock, Magnolia whistled the harmony, and Sophia's sword hummed along. Even Tiny Grumbo joined in, squeaking every note slightly wrong.",
