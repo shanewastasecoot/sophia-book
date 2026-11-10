@@ -152,7 +152,7 @@
     {
       "id": "talk", "title": "Talking Isn't Enough",
       "scene": "talk",
-      "alt": "Sophia lowers her sword and steps toward the dragon with one hand held out, while her friends crouch behind Luna's glowing shield.",
+      "alt": "Sophia lowers her sword and steps toward the huge dragon Scorch with one hand held out, while smoke curls from the dragon's jaws. Luna, Ruby and Magnolia crouch inside Luna's glowing shield, and Luna reaches out to pull Sophia back. Tiny Grumbo peeks out of Sophia's pocket.",
       "text": [
         "Sophia saw her chance. If the dragon could laugh, maybe it could listen. She remembered the King's words: {b:find out what that dragon truly wants}. So she lowered her sword and stepped out from behind the stones, one hand held out.",
         "“Scorch,” she called, as calmly as she could, though her heart was pounding like Ruby's drum. “We don't want to fight you. We came a long way to help. Just tell us what you need.”",
