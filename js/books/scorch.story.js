@@ -258,7 +258,7 @@
     {
       "id": "missing", "title": "Gone Again", "chapter": { "n": 6, "title": "The Lost Little Flame" },
       "scene": "missing",
-      "alt": "Scorch panics in Sparkleton, knocking down an empty bell tower and scorching the garden hedges, while townspeople hurry into the stone hall.",
+      "alt": "Scorch stomps through Sparkleton, frantic with worry, searching for her baby. Her tail smashes the old wooden bell tower and sends the bell flying, she peers down a stone well, and her worried breath sets a hedge smoking while townspeople run for the stone hall.",
       "text": [
         "For three happy days, Flicker toddled around the cave. She rolled down the grassy hill. She chased butterflies. And Tiny Grumbo taught her his favorite game: hide-and-seek. Flicker was terrible at hiding. Her tail always stuck out.",
         "On the fourth morning, Sophia checked her pocket. It was empty. Tiny Grumbo was gone! Then, from the hill, came a terrible sound. A dragon, roaring in fear. {sfx:dragon-roar|RAAAAAWR!}",
