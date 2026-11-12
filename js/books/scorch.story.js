@@ -270,7 +270,7 @@
     {
       "id": "search", "title": "Tiny Footprints",
       "scene": "search",
-      "alt": "Magnolia kneels in a garden path, pointing at a trail of tiny scorched footprints, while Sophia, Ruby and Luna lean in and Scorch searches the rooftops in the background.",
+      "alt": "In the town square, Magnolia kneels and points at a trail of tiny scorched footprints, with even tinier ones right beside them. Sophia, Luna and Ruby lean in to look. The trail leads past the fountain toward the old bandstand, while the dark shape of Scorch swoops over the rooftops.",
       "text": [
         "The Sparkle Swords met in the town square. “We have to find Flicker,” said Sophia. “Fast! But where do we start?”",
         "Magnolia was already kneeling on the garden path. “In Thornwall, we learn to track,” she said. “Deer. Foxes. Lost sheep.” She pointed. “And baby dragons.”",
