@@ -281,7 +281,7 @@
     {
       "id": "shield", "title": "Hold the Line",
       "scene": "shield",
-      "alt": "Luna holds a huge glowing shield over the gardens as dragon fire hammers it and a crack spreads across it. Ruby draws Scorch toward an empty field while Sophia knocks burning branches away.",
+      "alt": "Under a huge golden shield, cracked all over like ice, the four girls stand close together and hold it up as one. Luna sings with all her might, sweat on her brow, while Magnolia, Ruby and Sophia hold on beside her, gritting their teeth. Outside, Scorch blasts fire against the shield.",
       "text": [
         "Scorch landed in the square with a thud that rattled every window. She didn't know about the footprints. She only knew her baby was gone. She breathed, and fire rolled toward the houses.",
         "“Shields up!” cried Sophia. Luna sang the biggest shield she had ever made. It stretched over the gardens and the rooftops. Ruby ran to the practice field, drumming as loud as she could. {sfx:boom|BOOM! BOOM! BOOM!} “Over here, Scorch!” Magnolia shot down burning branches before they could fall. And Sophia ran along the shield, knocking sparks away with her sword.",
