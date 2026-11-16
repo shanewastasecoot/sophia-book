@@ -292,7 +292,7 @@
     {
       "id": "squeak", "title": "A Tiny Squeak",
       "scene": "squeak",
-      "alt": "Behind the cracking shield, Sophia darts toward a pile of cushions under the old bandstand, where a tiny, crooked gold crown pokes out.",
+      "alt": "Under the old wooden bandstand, Sophia kneels in front of a big pile of faded cushions, eyes wide with hope. A tiny, crooked gold crown peeks out between the top cushions. Far behind her, Luna, Ruby and Magnolia hold back Scorch with a cracking golden shield that is flaking apart like snow.",
       "text": [
         "But it couldn't hold forever. Cracks were everywhere now. Bits of light were falling off like golden snow. Sophia's arms ached. Her scraped knee hurt.",
         "Then, in between two roars, she heard it. A tiny sound from under the old bandstand. {sfx:squeak|squeak!}",
